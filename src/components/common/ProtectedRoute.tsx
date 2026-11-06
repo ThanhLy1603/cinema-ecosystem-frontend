@@ -25,7 +25,7 @@ export function ProtectedRoute({ roles, redirectTo = '/login' }: ProtectedRouteP
    }
 
    if (roles && roles.length > 0) {
-      const hasRequiredRole: boolean = roles.some((role) => user.roles?.includes(role))
+      const hasRequiredRole: boolean = roles.some((userRole) => user.roles?.includes(userRole))
       if (!hasRequiredRole) {
          return <Navigate to="/forbidden" replace />
       }

@@ -9,7 +9,6 @@ export function Navbar(): ReactElement {
    return (
       <header className="sticky top-0 z-40 w-full border-b border-slate-800 bg-slate-950/80 backdrop-blur-md">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            {/* Brand */}
             <Link to="/" className="flex items-center gap-2.5 group">
                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-rose-500 flex items-center justify-center text-white shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform duration-200">
                   <Film className="w-5 h-5" />
@@ -19,7 +18,6 @@ export function Navbar(): ReactElement {
                </span>
             </Link>
 
-            {/* Navigation Links */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
                <Link to="/" className="hover:text-white transition-colors">
                   Phim đang chiếu
@@ -42,7 +40,6 @@ export function Navbar(): ReactElement {
                )}
             </nav>
 
-            {/* User Actions */}
             <div className="flex items-center gap-3">
                {isAuthenticated && user ? (
                   <div className="flex items-center gap-3">

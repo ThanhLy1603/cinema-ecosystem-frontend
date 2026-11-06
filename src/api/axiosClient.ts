@@ -19,89 +19,82 @@ let isRefreshing: boolean = false
 let failedQueue: FailedRequestQueueItem[] = []
 
 function processQueue(error: unknown, token: string | null = null): void {
-   for (const promise of failedQueue) {
+   for (const failedRequestQueueItem of failedQueue) {
       if (error) {
-         promise.reject(error)
+         failedRequestQueueItem.reject(error)
       } else if (token) {
-         promise.resolve(token)
+         failedRequestQueueItem.resolve(token)
       }
    }
    failedQueue = []
 }
 
-/** Park the current request until the in-flight refresh finishes. */
 function waitForTokenRefresh(): Promise<string> {
    return new Promise<string>((resolve, reject): void => {
       failedQueue.push({ resolve, reject })
    })
 }
 
-export const axiosClient: AxiosInstance = axios.create({
+export const axiosInstance: AxiosInstance = axios.create({
    baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
    headers: {
       'Content-Type': 'application/json',
    },
-   withCredentials: true, // Send HttpOnly refresh token cookie
+   withCredentials: true,
 })
 
-// Request Interceptor: Attach in-memory Access Token
-function attachAccessToken(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
+function attachAccessToken(internalAxiosRequestConfig: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
    const accessToken: string | null = useAuthStore.getState().accessToken
-   if (accessToken && config.headers) {
-      config.headers.Authorization = `Bearer ${accessToken}`
+   if (accessToken && internalAxiosRequestConfig.headers) {
+      internalAxiosRequestConfig.headers.Authorization = `Bearer ${accessToken}`
    }
-   return config
+   return internalAxiosRequestConfig
 }
 
-axiosClient.interceptors.request.use(attachAccessToken, (error: unknown) => Promise.reject(error))
+axiosInstance.interceptors.request.use(attachAccessToken, (error: unknown) => Promise.reject(error))
 
-// Response Interceptor: 401 Silent Refresh Queue
-async function handleResponseError(error: AxiosError<ApiResponse>): Promise<unknown> {
-   const originalRequest: RetriableRequestConfig | undefined = error.config as RetriableRequestConfig | undefined
+async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise<unknown> {
+   const retriableRequestConfig: RetriableRequestConfig | undefined = axiosError.config as
+      | RetriableRequestConfig
+      | undefined
 
-   // If no config or error is not 401, reject immediately
-   if (!originalRequest || error.response?.status !== 401) {
-      return Promise.reject(error)
+   if (!retriableRequestConfig || axiosError.response?.status !== 401) {
+      return Promise.reject(axiosError)
    }
 
-   // Prevent infinite loop if the refresh-token endpoint itself returns 401
-   const isRefreshRequest: boolean | undefined = originalRequest.url?.includes('/auth/refresh-token')
-   if (isRefreshRequest || originalRequest._retry) {
+   const isRefreshRequest: boolean | undefined = retriableRequestConfig.url?.includes('/auth/refresh-token')
+   if (isRefreshRequest || retriableRequestConfig._retry) {
       useAuthStore.getState().logout()
-      return Promise.reject(error)
+      return Promise.reject(axiosError)
    }
 
-   originalRequest._retry = true
+   retriableRequestConfig._retry = true
 
    if (isRefreshing) {
       const newToken: string = await waitForTokenRefresh()
-      if (originalRequest.headers) {
-         originalRequest.headers.Authorization = `Bearer ${newToken}`
+      if (retriableRequestConfig.headers) {
+         retriableRequestConfig.headers.Authorization = `Bearer ${newToken}`
       }
-      return axiosClient(originalRequest)
+      return axiosInstance(retriableRequestConfig)
    }
 
    isRefreshing = true
 
    try {
-      // Call silent refresh endpoint with HttpOnly cookie
-      const refreshResponse: AxiosResponse<ApiResponse<RefreshTokenResponse>> = await axios.post<
+      const refreshAxiosResponse: AxiosResponse<ApiResponse<RefreshTokenResponse>> = await axios.post<
          ApiResponse<RefreshTokenResponse>
-      >(`${axiosClient.defaults.baseURL}/auth/refresh-token`, {}, { withCredentials: true })
+      >(`${axiosInstance.defaults.baseURL}/auth/refresh-token`, {}, { withCredentials: true })
 
-      const newAccessToken: string = refreshResponse.data.data.accessToken
+      const newAccessToken: string = refreshAxiosResponse.data.data.accessToken
 
-      // Update in-memory Zustand store
       useAuthStore.getState().setAccessToken(newAccessToken)
 
-      // Replay queued requests
       processQueue(null, newAccessToken)
 
-      // Retry original failed request
-      if (originalRequest.headers) {
-         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+      if (retriableRequestConfig.headers) {
+         retriableRequestConfig.headers.Authorization = `Bearer ${newAccessToken}`
       }
-      return axiosClient(originalRequest)
+      return axiosInstance(retriableRequestConfig)
    } catch (refreshError: unknown) {
       processQueue(refreshError, null)
       useAuthStore.getState().logout()
@@ -111,6 +104,6 @@ async function handleResponseError(error: AxiosError<ApiResponse>): Promise<unkn
    }
 }
 
-axiosClient.interceptors.response.use((response: AxiosResponse) => response, handleResponseError)
+axiosInstance.interceptors.response.use((axiosResponse: AxiosResponse) => axiosResponse, handleResponseError)
 
-export default axiosClient
+export default axiosInstance

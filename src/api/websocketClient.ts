@@ -57,5 +57,5 @@ export class WebSocketClient {
    }
 }
 
-export const wsClient: WebSocketClient = new WebSocketClient()
-export default wsClient
+export const webSocketClient: WebSocketClient = new WebSocketClient()
+export default webSocketClient

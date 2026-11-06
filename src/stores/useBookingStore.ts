@@ -20,11 +20,10 @@ interface BookingState {
    cinemaName: string | null
    hallName: string | null
    selectedSeats: SelectedSeat[]
-   holdExpiresAt: number | null // Timestamp ms
+   holdExpiresAt: number | null
 
-   // Actions
-   setShowtimeInfo: (info: ShowtimeInfo) => void
-   toggleSeat: (seat: SelectedSeat) => void
+   setShowtimeInfo: (showtimeInfo: ShowtimeInfo) => void
+   toggleSeat: (selectedSeat: SelectedSeat) => void
    setHoldExpiresAt: (timestamp: number | null) => void
    clearBooking: () => void
    getTotalAmount: () => number
@@ -38,17 +37,17 @@ export const useBookingStore: UseBoundStore<StoreApi<BookingState>> = create<Boo
    selectedSeats: [],
    holdExpiresAt: null,
 
-   setShowtimeInfo(info: ShowtimeInfo): void {
-      set({ ...info })
+   setShowtimeInfo(showtimeInfo: ShowtimeInfo): void {
+      set({ ...showtimeInfo })
    },
 
-   toggleSeat(seat: SelectedSeat): void {
+   toggleSeat(selectedSeat: SelectedSeat): void {
       const { selectedSeats } = get()
-      const exists: boolean = selectedSeats.some((s) => s.id === seat.id)
+      const exists: boolean = selectedSeats.some((existingSelectedSeat) => existingSelectedSeat.id === selectedSeat.id)
       if (exists) {
-         set({ selectedSeats: selectedSeats.filter((s) => s.id !== seat.id) })
+         set({ selectedSeats: selectedSeats.filter((existingSelectedSeat) => existingSelectedSeat.id !== selectedSeat.id) })
       } else {
-         set({ selectedSeats: [...selectedSeats, seat] })
+         set({ selectedSeats: [...selectedSeats, selectedSeat] })
       }
    },
 
@@ -68,7 +67,7 @@ export const useBookingStore: UseBoundStore<StoreApi<BookingState>> = create<Boo
    },
 
    getTotalAmount(): number {
-      return get().selectedSeats.reduce((sum, seat) => sum + seat.price, 0)
+      return get().selectedSeats.reduce((sum, selectedSeat) => sum + selectedSeat.price, 0)
    },
 }))
 

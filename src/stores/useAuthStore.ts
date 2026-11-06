@@ -7,13 +7,12 @@ interface AuthState {
    isAuthenticated: boolean
    isLoading: boolean
 
-   // Actions
    setAuth: (user: User, accessToken: string) => void
    setAccessToken: (accessToken: string | null) => void
    setUser: (user: User | null) => void
    setLoading: (loading: boolean) => void
    logout: () => void
-   hasRole: (role: UserRole) => boolean
+   hasRole: (userRole: UserRole) => boolean
 }
 
 export const useAuthStore: UseBoundStore<StoreApi<AuthState>> = create<AuthState>((set, get) => ({
@@ -59,8 +58,8 @@ export const useAuthStore: UseBoundStore<StoreApi<AuthState>> = create<AuthState
       })
    },
 
-   hasRole(role: UserRole): boolean {
+   hasRole(userRole: UserRole): boolean {
       const { user } = get()
-      return Boolean(user?.roles?.includes(role))
+      return Boolean(user?.roles?.includes(userRole))
    },
 }))

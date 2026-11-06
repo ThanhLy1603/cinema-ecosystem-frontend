@@ -12,7 +12,6 @@ export function MainLayout(): ReactElement {
             <Outlet />
          </main>
          <Footer />
-         {/* Global AI Chatbot Widget (Phase 8) */}
          <FloatingChatbotWidget />
       </div>
    )

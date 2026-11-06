@@ -1,6 +1,5 @@
 import { useState, type ReactElement } from 'react'
 import { Bot, X, Send, Sparkles } from 'lucide-react'
-
 interface ChatMessage {
    id: string
    sender: 'user' | 'assistant'
@@ -10,7 +9,7 @@ interface ChatMessage {
 export function FloatingChatbotWidget(): ReactElement {
    const [isOpen, setIsOpen] = useState<boolean>(false)
    const [input, setInput] = useState<string>('')
-   const [messages, setMessages] = useState<ChatMessage[]>([
+   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([
       {
          id: 'welcome',
          sender: 'assistant',
@@ -19,26 +18,25 @@ export function FloatingChatbotWidget(): ReactElement {
    ])
 
    function appendMockReply(): void {
-      const reply: ChatMessage = {
+      const assistantChatMessage: ChatMessage = {
          id: (Date.now() + 1).toString(),
          sender: 'assistant',
          text: 'Trợ lý AI sẵn sàng kết nối Spring AI & pgvector khi Backend triển khai!',
       }
-      setMessages((prev) => [...prev, reply])
+      setChatMessages((previousChatMessages) => [...previousChatMessages, assistantChatMessage])
    }
 
    function handleSend(): void {
       if (!input.trim()) return
 
-      const userMsg: ChatMessage = {
+      const userChatMessage: ChatMessage = {
          id: Date.now().toString(),
          sender: 'user',
          text: input,
       }
-      setMessages((prev) => [...prev, userMsg])
+      setChatMessages((previousChatMessages) => [...previousChatMessages, userChatMessage])
       setInput('')
 
-      // Placeholder mock response for setup test
       setTimeout(appendMockReply, 600)
    }
 
@@ -46,7 +44,6 @@ export function FloatingChatbotWidget(): ReactElement {
       <div className="fixed bottom-6 right-6 z-50">
          {isOpen ? (
             <div className="w-80 sm:w-96 h-[460px] bg-slate-900 border border-slate-700/80 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-xl animate-in fade-in duration-200">
-               {/* Header */}
                <div className="px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 flex items-center justify-between text-white">
                   <div className="flex items-center gap-2">
                      <Sparkles className="w-4 h-4 text-amber-300" />
@@ -67,32 +64,30 @@ export function FloatingChatbotWidget(): ReactElement {
                   </button>
                </div>
 
-               {/* Messages */}
                <div className="flex-1 p-3 overflow-y-auto space-y-2.5 text-xs">
-                  {messages.map((m) => (
+                  {chatMessages.map((chatMessage) => (
                      <div
-                        key={m.id}
-                        className={`flex ${m.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                        key={chatMessage.id}
+                        className={`flex ${chatMessage.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                      >
                         <div
-                           className={`max-w-[80%] rounded-2xl px-3.5 py-2 leading-relaxed ${m.sender === 'user'
+                           className={`max-w-[80%] rounded-2xl px-3.5 py-2 leading-relaxed ${chatMessage.sender === 'user'
                                  ? 'bg-indigo-600 text-white rounded-br-xs'
                                  : 'bg-slate-800 text-slate-200 border border-slate-700/60 rounded-bl-xs'
                               }`}
                         >
-                           {m.text}
+                           {chatMessage.text}
                         </div>
                      </div>
                   ))}
                </div>
 
-               {/* Input */}
                <div className="p-2.5 border-t border-slate-800 bg-slate-950/60 flex items-center gap-2">
                   <input
                      type="text"
                      value={input}
-                     onChange={(e) => setInput(e.target.value)}
-                     onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+                     onChange={(changeEvent) => setInput(changeEvent.target.value)}
+                     onKeyDown={(keyboardEvent) => keyboardEvent.key === 'Enter' && handleSend()}
                      placeholder="Hỏi về suất chiếu, giá vé..."
                      className="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-500 placeholder:text-slate-400"
                   />

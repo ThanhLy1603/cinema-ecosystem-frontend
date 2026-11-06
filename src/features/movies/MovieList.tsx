@@ -48,11 +48,10 @@ const MOCK_MOVIES: MovieItem[] = [
 ]
 
 export function MovieList(): ReactElement {
-   const [activeTab, setActiveTab] = useState<MovieTab>('NOW_SHOWING')
+   const [activeMovieTab, setActiveMovieTab] = useState<MovieTab>('NOW_SHOWING')
 
    return (
       <div className="space-y-8">
-         {/* Hero Banner */}
          <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-950 via-slate-900 to-purple-950 border border-slate-800 p-8 sm:p-12 shadow-2xl">
             <div className="relative z-10 max-w-2xl space-y-4">
                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
@@ -71,13 +70,12 @@ export function MovieList(): ReactElement {
             </div>
          </section>
 
-         {/* Filter Tabs */}
          <div className="flex items-center justify-between border-b border-slate-800 pb-4">
             <div className="flex items-center gap-3">
                <button
                   type="button"
-                  onClick={() => setActiveTab('NOW_SHOWING')}
-                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'NOW_SHOWING'
+                  onClick={() => setActiveMovieTab('NOW_SHOWING')}
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeMovieTab === 'NOW_SHOWING'
                         ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/25'
                         : 'text-slate-400 hover:text-slate-200'
                      }`}
@@ -86,8 +84,8 @@ export function MovieList(): ReactElement {
                </button>
                <button
                   type="button"
-                  onClick={() => setActiveTab('COMING_SOON')}
-                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeTab === 'COMING_SOON'
+                  onClick={() => setActiveMovieTab('COMING_SOON')}
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${activeMovieTab === 'COMING_SOON'
                         ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/25'
                         : 'text-slate-400 hover:text-slate-200'
                      }`}
@@ -100,47 +98,44 @@ export function MovieList(): ReactElement {
             </span>
          </div>
 
-         {/* Movie Cards Grid */}
          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {MOCK_MOVIES.map((movie) => (
+            {MOCK_MOVIES.map((movieItem) => (
                <div
-                  key={movie.id}
+                  key={movieItem.id}
                   className="group relative bg-slate-900 border border-slate-800 hover:border-indigo-500/50 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-indigo-500/10 flex flex-col"
                >
-                  {/* Poster Thumbnail */}
                   <div className="relative aspect-16/10 overflow-hidden bg-slate-800">
                      <img
-                        src={movie.posterUrl}
-                        alt={movie.title}
+                        src={movieItem.posterUrl}
+                        alt={movieItem.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                      />
                      <span className="absolute top-3 right-3 px-2 py-1 rounded-lg text-xs font-bold bg-slate-900/80 backdrop-blur-md text-amber-400 border border-amber-500/30">
-                        {movie.ageRating}
+                        {movieItem.ageRating}
                      </span>
                   </div>
 
-                  {/* Content */}
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                      <div className="space-y-1.5">
                         <div className="flex items-center gap-1.5 text-xs text-amber-400">
                            <Star className="w-3.5 h-3.5 fill-amber-400" />
-                           <span className="font-semibold">{movie.rating}</span>
+                           <span className="font-semibold">{movieItem.rating}</span>
                            <span className="text-slate-400">/ 10</span>
                         </div>
                         <h3 className="font-bold text-lg text-white group-hover:text-indigo-400 transition-colors">
-                           {movie.title}
+                           {movieItem.title}
                         </h3>
-                        <p className="text-xs text-slate-400">{movie.genre}</p>
+                        <p className="text-xs text-slate-400">{movieItem.genre}</p>
                      </div>
 
                      <div className="pt-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
                         <span className="flex items-center gap-1">
                            <Clock className="w-3.5 h-3.5" />
-                           {movie.durationMinutes} phút
+                           {movieItem.durationMinutes} phút
                         </span>
                         <span className="flex items-center gap-1">
                            <Calendar className="w-3.5 h-3.5" />
-                           {movie.releaseDate}
+                           {movieItem.releaseDate}
                         </span>
                      </div>
 

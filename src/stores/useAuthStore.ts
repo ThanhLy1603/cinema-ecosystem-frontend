@@ -1,4 +1,4 @@
-import { create } from 'zustand'
+import { create, type StoreApi, type UseBoundStore } from 'zustand'
 import type { User, UserRole } from '@/types/auth'
 
 interface AuthState {
@@ -16,45 +16,50 @@ interface AuthState {
    hasRole: (role: UserRole) => boolean
 }
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore: UseBoundStore<StoreApi<AuthState>> = create<AuthState>((set, get) => ({
    user: null,
    accessToken: null,
    isAuthenticated: false,
    isLoading: true,
 
-   setAuth: (user: User, accessToken: string) =>
+   setAuth(user: User, accessToken: string): void {
       set({
          user,
          accessToken,
          isAuthenticated: true,
          isLoading: false,
-      }),
+      })
+   },
 
-   setAccessToken: (accessToken: string | null) =>
+   setAccessToken(accessToken: string | null): void {
       set({
          accessToken,
          isAuthenticated: Boolean(accessToken),
-      }),
+      })
+   },
 
-   setUser: (user: User | null) =>
+   setUser(user: User | null): void {
       set({
          user,
-      }),
+      })
+   },
 
-   setLoading: (isLoading: boolean) =>
+   setLoading(isLoading: boolean): void {
       set({
          isLoading,
-      }),
+      })
+   },
 
-   logout: () =>
+   logout(): void {
       set({
          user: null,
          accessToken: null,
          isAuthenticated: false,
          isLoading: false,
-      }),
+      })
+   },
 
-   hasRole: (role: UserRole) => {
+   hasRole(role: UserRole): boolean {
       const { user } = get()
       return Boolean(user?.roles?.includes(role))
    },

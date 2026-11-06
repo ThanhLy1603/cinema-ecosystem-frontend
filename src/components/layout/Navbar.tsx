@@ -1,8 +1,9 @@
+import type { ReactElement } from 'react'
 import { Link } from 'react-router-dom'
 import { Film, User, Ticket, MessageSquareText, Shield } from 'lucide-react'
 import { useAuthStore } from '@/stores/useAuthStore'
 
-export function Navbar() {
+export function Navbar(): ReactElement {
    const { user, isAuthenticated, logout, hasRole } = useAuthStore()
 
    return (

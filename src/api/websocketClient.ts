@@ -1,27 +1,29 @@
-import { Client, type IMessage, type StompSubscription } from '@stomp/stompjs'
+import { Client, type IFrame, type IMessage, type StompSubscription } from '@stomp/stompjs'
 import SockJS from 'sockjs-client'
+
+function logStompDebug(message: string): void {
+   if (import.meta.env.DEV) {
+      console.debug('[STOMP]', message)
+   }
+}
 
 export class WebSocketClient {
    private client: Client | null = null
 
-   public connect(onConnected?: () => void, onError?: (error: unknown) => void) {
+   public connect(onConnected?: () => void, onError?: (error: unknown) => void): void {
+      function handleStompError(frame: IFrame): void {
+         console.error('[STOMP Error]', frame.headers['message'], frame.body)
+         onError?.(frame)
+      }
+
       this.client = new Client({
          webSocketFactory: () => new SockJS('/ws'),
          reconnectDelay: 5000,
          heartbeatIncoming: 4000,
          heartbeatOutgoing: 4000,
-         debug: (str) => {
-            if (import.meta.env.DEV) {
-               console.debug('[STOMP]', str)
-            }
-         },
-         onConnect: () => {
-            onConnected?.()
-         },
-         onStompError: (frame) => {
-            console.error('[STOMP Error]', frame.headers['message'], frame.body)
-            onError?.(frame)
-         },
+         debug: logStompDebug,
+         onConnect: () => onConnected?.(),
+         onStompError: handleStompError,
       })
 
       this.client.activate()
@@ -34,7 +36,7 @@ export class WebSocketClient {
       return this.client.subscribe(destination, callback)
    }
 
-   public publish(destination: string, body: unknown) {
+   public publish(destination: string, body: unknown): void {
       if (this.client && this.client.connected) {
          this.client.publish({
             destination,
@@ -43,7 +45,7 @@ export class WebSocketClient {
       }
    }
 
-   public disconnect() {
+   public disconnect(): void {
       if (this.client) {
          this.client.deactivate()
          this.client = null
@@ -55,5 +57,5 @@ export class WebSocketClient {
    }
 }
 
-export const wsClient = new WebSocketClient()
+export const wsClient: WebSocketClient = new WebSocketClient()
 export default wsClient

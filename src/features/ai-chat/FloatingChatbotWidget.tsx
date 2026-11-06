@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactElement } from 'react'
 import { Bot, X, Send, Sparkles } from 'lucide-react'
 
 interface ChatMessage {
@@ -7,9 +7,9 @@ interface ChatMessage {
    text: string
 }
 
-export function FloatingChatbotWidget() {
-   const [isOpen, setIsOpen] = useState(false)
-   const [input, setInput] = useState('')
+export function FloatingChatbotWidget(): ReactElement {
+   const [isOpen, setIsOpen] = useState<boolean>(false)
+   const [input, setInput] = useState<string>('')
    const [messages, setMessages] = useState<ChatMessage[]>([
       {
          id: 'welcome',
@@ -18,7 +18,16 @@ export function FloatingChatbotWidget() {
       },
    ])
 
-   const handleSend = () => {
+   function appendMockReply(): void {
+      const reply: ChatMessage = {
+         id: (Date.now() + 1).toString(),
+         sender: 'assistant',
+         text: 'Trợ lý AI sẵn sàng kết nối Spring AI & pgvector khi Backend triển khai!',
+      }
+      setMessages((prev) => [...prev, reply])
+   }
+
+   function handleSend(): void {
       if (!input.trim()) return
 
       const userMsg: ChatMessage = {
@@ -30,16 +39,7 @@ export function FloatingChatbotWidget() {
       setInput('')
 
       // Placeholder mock response for setup test
-      setTimeout(() => {
-         setMessages((prev) => [
-            ...prev,
-            {
-               id: (Date.now() + 1).toString(),
-               sender: 'assistant',
-               text: 'Trợ lý AI sẵn sàng kết nối Spring AI & pgvector khi Backend triển khai!',
-            },
-         ])
-      }, 600)
+      setTimeout(appendMockReply, 600)
    }
 
    return (

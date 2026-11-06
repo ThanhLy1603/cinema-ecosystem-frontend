@@ -1,4 +1,5 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import type { ReactElement } from 'react'
+import { Navigate, Outlet, useLocation, type Location } from 'react-router-dom'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { UserRole } from '@/types/auth'
 
@@ -7,9 +8,9 @@ interface ProtectedRouteProps {
    redirectTo?: string
 }
 
-export function ProtectedRoute({ roles, redirectTo = '/login' }: ProtectedRouteProps) {
+export function ProtectedRoute({ roles, redirectTo = '/login' }: ProtectedRouteProps): ReactElement {
    const { isAuthenticated, user, isLoading } = useAuthStore()
-   const location = useLocation()
+   const location: Location = useLocation()
 
    if (isLoading) {
       return (
@@ -24,7 +25,7 @@ export function ProtectedRoute({ roles, redirectTo = '/login' }: ProtectedRouteP
    }
 
    if (roles && roles.length > 0) {
-      const hasRequiredRole = roles.some((role) => user.roles?.includes(role))
+      const hasRequiredRole: boolean = roles.some((role) => user.roles?.includes(role))
       if (!hasRequiredRole) {
          return <Navigate to="/forbidden" replace />
       }

@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useState, type ReactElement } from 'react'
 import { Sparkles, Star, Clock, Calendar, Ticket } from 'lucide-react'
+
+type MovieTab = 'NOW_SHOWING' | 'COMING_SOON'
 
 interface MovieItem {
    id: number
@@ -45,8 +47,8 @@ const MOCK_MOVIES: MovieItem[] = [
    },
 ]
 
-export function MovieList() {
-   const [activeTab, setActiveTab] = useState<'NOW_SHOWING' | 'COMING_SOON'>('NOW_SHOWING')
+export function MovieList(): ReactElement {
+   const [activeTab, setActiveTab] = useState<MovieTab>('NOW_SHOWING')
 
    return (
       <div className="space-y-8">

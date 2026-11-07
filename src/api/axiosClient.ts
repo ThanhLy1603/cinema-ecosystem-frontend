@@ -15,6 +15,13 @@ interface FailedRequestQueueItem {
 
 type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean }
 
+const CREDENTIAL_ENDPOINTS: string[] = [
+   '/auth/login',
+   '/auth/register',
+   '/auth/forgot-password',
+   '/auth/reset-password',
+]
+
 let isRefreshing: boolean = false
 let failedQueue: FailedRequestQueueItem[] = []
 
@@ -62,7 +69,15 @@ async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise
       return Promise.reject(axiosError)
    }
 
-   const isRefreshRequest: boolean | undefined = retriableRequestConfig.url?.includes('/auth/refresh-token')
+   const requestUrl: string = retriableRequestConfig.url ?? ''
+   const isCredentialRequest: boolean = CREDENTIAL_ENDPOINTS.some((credentialEndpoint) =>
+      requestUrl.includes(credentialEndpoint),
+   )
+   if (isCredentialRequest) {
+      return Promise.reject(axiosError)
+   }
+
+   const isRefreshRequest: boolean = requestUrl.includes('/auth/refresh-token')
    if (isRefreshRequest || retriableRequestConfig._retry) {
       useAuthStore.getState().logout()
       return Promise.reject(axiosError)
@@ -85,9 +100,10 @@ async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise
          ApiResponse<RefreshTokenResponse>
       >(`${axiosInstance.defaults.baseURL}/auth/refresh-token`, {}, { withCredentials: true })
 
-      const newAccessToken: string = refreshAxiosResponse.data.data.accessToken
+      const refreshTokenResponse: RefreshTokenResponse = refreshAxiosResponse.data.data
+      const newAccessToken: string = refreshTokenResponse.accessToken
 
-      useAuthStore.getState().setAccessToken(newAccessToken)
+      useAuthStore.getState().setAuth(refreshTokenResponse.user, newAccessToken)
 
       processQueue(null, newAccessToken)
 

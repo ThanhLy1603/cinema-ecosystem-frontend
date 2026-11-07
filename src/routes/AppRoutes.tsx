@@ -1,40 +1,81 @@
+import { Building2, Clapperboard, MessagesSquare, Tag, Ticket } from 'lucide-react'
 import type { ReactElement } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
-import { MainLayout } from '@/components/layout/MainLayout'
-import { MovieList } from '@/features/movies/MovieList'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import ComingSoonPage from '@/components/common/ComingSoonPage'
+import ForbiddenPage from '@/components/common/ForbiddenPage'
+import AuthLayout from '@/components/layout/AuthLayout'
+import MainLayout from '@/components/layout/MainLayout'
+import GuestRoute from '@/features/auth/guards/GuestRoute'
+import ProtectedRoute from '@/features/auth/guards/ProtectedRoute'
+import LoginPage from '@/features/auth/pages/LoginPage'
+import RegisterPage from '@/features/auth/pages/RegisterPage'
+import HomePage from '@/features/home/pages/HomePage'
 
 export function AppRoutes(): ReactElement {
    return (
       <Routes>
+         <Route element={<GuestRoute />}>
+            <Route element={<AuthLayout />}>
+               <Route path="/login" element={<LoginPage />} />
+               <Route path="/register" element={<RegisterPage />} />
+            </Route>
+         </Route>
+
          <Route element={<MainLayout />}>
-            <Route path="/" element={<MovieList />} />
+            <Route path="/" element={<HomePage />} />
             <Route
-               path="/cinemas"
+               path="/movies"
                element={
-                  <div className="py-12 text-center text-slate-400">
-                     <h2 className="text-xl font-bold text-white mb-2">Cụm Rạp Chiếu Phim</h2>
-                     <p className="text-sm">Danh sách cụm rạp, phòng chiếu IMAX & VIP đang được đồng bộ...</p>
-                  </div>
+                  <ComingSoonPage
+                     title="Phim đang chiếu"
+                     description="Danh sách phim, lịch chiếu và đặt vé sẽ sớm có mặt tại đây."
+                     icon={Clapperboard}
+                  />
                }
             />
             <Route
-               path="/community"
+               path="/cinemas"
                element={
-                  <div className="py-12 text-center text-slate-400">
-                     <h2 className="text-xl font-bold text-white mb-2">Diễn Đàn Điện Ảnh & Đánh Giá</h2>
-                     <p className="text-sm">Trình soạn thảo TipTap và hệ thống bình luận nhiều cấp sẵn sàng.</p>
-                  </div>
+                  <ComingSoonPage
+                     title="Hệ thống rạp chiếu"
+                     description="Thông tin các cụm rạp, phòng chiếu và tiện ích đang được hoàn thiện."
+                     icon={Building2}
+                  />
                }
             />
             <Route
                path="/promotions"
                element={
-                  <div className="py-12 text-center text-slate-400">
-                     <h2 className="text-xl font-bold text-white mb-2">Chương Trình Khuyến Mãi</h2>
-                     <p className="text-sm">Ưu đãi giảm giá và chính sách tích điểm thành viên.</p>
-                  </div>
+                  <ComingSoonPage
+                     title="Khuyến mãi"
+                     description="Ưu đãi giảm giá và chương trình tích điểm thành viên sắp được cập nhật."
+                     icon={Tag}
+                  />
                }
             />
+            <Route
+               path="/community"
+               element={
+                  <ComingSoonPage
+                     title="Cộng đồng & Blog"
+                     description="Nơi chia sẻ đánh giá phim và bài viết điện ảnh đang được xây dựng."
+                     icon={MessagesSquare}
+                  />
+               }
+            />
+            <Route element={<ProtectedRoute />}>
+               <Route
+                  path="/tickets"
+                  element={
+                     <ComingSoonPage
+                        title="Vé của tôi"
+                        description="Lịch sử đặt vé và mã QR vé điện tử của bạn sẽ hiển thị ở đây."
+                        icon={Ticket}
+                     />
+                  }
+               />
+            </Route>
+            <Route path="/forbidden" element={<ForbiddenPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
          </Route>
       </Routes>

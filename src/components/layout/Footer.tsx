@@ -1,59 +1,91 @@
+import { CreditCard, Mail, MapPin, Phone } from 'lucide-react'
 import type { ReactElement } from 'react'
-import { Film, ShieldCheck, Heart } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import Logo from '@/components/brand/Logo'
+
+interface FooterLink {
+   label: string
+   to: string
+}
+
+const EXPLORE_LINKS: FooterLink[] = [
+   { label: 'Phim đang chiếu', to: '/movies' },
+   { label: 'Hệ thống rạp', to: '/cinemas' },
+   { label: 'Khuyến mãi', to: '/promotions' },
+   { label: 'Cộng đồng & Blog', to: '/community' },
+]
+
+const ACCOUNT_LINKS: FooterLink[] = [
+   { label: 'Đăng nhập', to: '/login' },
+   { label: 'Đăng ký thành viên', to: '/register' },
+   { label: 'Vé của tôi', to: '/tickets' },
+]
 
 export function Footer(): ReactElement {
    return (
-      <footer className="w-full border-t border-slate-800/80 bg-slate-950 text-slate-400 py-12 px-4 sm:px-6 lg:px-8">
-         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+      <footer className="border-t border-ink-100 bg-sand/60">
+         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:px-8">
             <div className="space-y-4">
-               <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
-                     <Film className="w-4 h-4" />
-                  </div>
-                  <span className="font-bold text-lg text-white">Cinema Ecosystem</span>
-               </div>
-               <p className="text-xs text-slate-400 leading-relaxed">
-                  Hệ thống đặt vé xem phim trực tuyến thời gian thực tích hợp thanh toán tự động VNPay/MoMo, trợ lý ảo AI và quản lý cụm rạp thông minh.
+               <Logo />
+               <p className="max-w-xs text-sm leading-relaxed text-ink-500">
+                  Đặt vé xem phim trực tuyến nhanh chóng, chọn ghế theo thời gian thực và nhận vé điện tử ngay trên
+                  điện thoại.
                </p>
             </div>
 
             <div>
-               <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Tính năng</h4>
-               <ul className="space-y-2 text-xs">
-                  <li>Đặt vé sơ đồ ghế Realtime</li>
-                  <li>Đồ ăn & Combo F&B</li>
-                  <li>Tích điểm thành viên & Voucher</li>
-                  <li>Hỏi đáp chính sách cùng AI Bot</li>
+               <h3 className="text-sm font-bold text-ink-900">Khám phá</h3>
+               <ul className="mt-4 space-y-2.5 text-sm">
+                  {EXPLORE_LINKS.map((footerLink) => (
+                     <li key={footerLink.to}>
+                        <Link to={footerLink.to} className="text-ink-500 transition-colors hover:text-brand-700">
+                           {footerLink.label}
+                        </Link>
+                     </li>
+                  ))}
                </ul>
             </div>
 
             <div>
-               <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Đối tác thanh toán</h4>
-               <ul className="space-y-2 text-xs">
-                  <li className="flex items-center gap-2">
-                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-                     VNPay QR Sandbox
-                  </li>
-                  <li className="flex items-center gap-2">
-                     <ShieldCheck className="w-3.5 h-3.5 text-pink-400" />
-                     MoMo Sandbox E-Wallet
-                  </li>
+               <h3 className="text-sm font-bold text-ink-900">Tài khoản</h3>
+               <ul className="mt-4 space-y-2.5 text-sm">
+                  {ACCOUNT_LINKS.map((footerLink) => (
+                     <li key={footerLink.to}>
+                        <Link to={footerLink.to} className="text-ink-500 transition-colors hover:text-brand-700">
+                           {footerLink.label}
+                        </Link>
+                     </li>
+                  ))}
                </ul>
             </div>
 
             <div>
-               <h4 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">Công nghệ lõi</h4>
-               <p className="text-xs text-slate-400 leading-relaxed mb-2">
-                  Spring Boot 3.3, Redis Redisson, PostgreSQL 16 (pgvector), React 18, Vite, TanStack Query, STOMP WebSocket.
-               </p>
-               <div className="text-xs text-slate-400 flex items-center gap-1">
-                  Built with <Heart className="w-3 h-3 text-rose-500 fill-rose-500" /> for Cinema Ecosystem
-               </div>
+               <h3 className="text-sm font-bold text-ink-900">Liên hệ & thanh toán</h3>
+               <ul className="mt-4 space-y-2.5 text-sm text-ink-500">
+                  <li className="flex items-center gap-2.5">
+                     <Phone className="size-4 text-brand-500" aria-hidden="true" />
+                     Hotline hỗ trợ
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                     <Mail className="size-4 text-brand-500" aria-hidden="true" />
+                     Email hỗ trợ khách hàng
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                     <MapPin className="size-4 text-brand-500" aria-hidden="true" />
+                     Hệ thống rạp toàn quốc
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                     <CreditCard className="size-4 text-brand-500" aria-hidden="true" />
+                     Thanh toán VNPay & MoMo
+                  </li>
+               </ul>
             </div>
          </div>
 
-         <div className="max-w-7xl mx-auto mt-8 pt-6 border-t border-slate-900 text-center text-xs text-slate-400">
-            © 2026 Cinema Ecosystem. All rights reserved.
+         <div className="border-t border-ink-100">
+            <p className="mx-auto max-w-7xl px-4 py-5 text-center text-xs text-ink-400 sm:px-6 lg:px-8">
+               © 2026 CinemaSphere. Mọi quyền được bảo lưu.
+            </p>
          </div>
       </footer>
    )

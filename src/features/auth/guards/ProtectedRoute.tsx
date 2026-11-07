@@ -2,6 +2,7 @@ import type { ReactElement } from 'react'
 import { Navigate, Outlet, useLocation, type Location } from 'react-router-dom'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { UserRole } from '@/types/auth'
+import FullPageSpinner from '@/components/common/FullPageSpinner'
 
 interface ProtectedRouteProps {
    roles?: UserRole[]
@@ -13,11 +14,7 @@ export function ProtectedRoute({ roles, redirectTo = '/login' }: ProtectedRouteP
    const location: Location = useLocation()
 
    if (isLoading) {
-      return (
-         <div className="min-h-[50vh] flex items-center justify-center">
-            <div className="w-8 h-8 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin" />
-         </div>
-      )
+      return <FullPageSpinner />
    }
 
    if (!isAuthenticated || !user) {

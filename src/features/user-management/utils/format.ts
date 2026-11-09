@@ -4,7 +4,7 @@ export function formatDateTime(isoDateTime: string | undefined): string {
    if (!isoDateTime) {
       return 'Chưa có';
    }
-   return new Date(isoDateTime).toLocaleString('vi-VN');
+   return new Date(isoDateTime).toLocaleString('vi-VN', { dateStyle: 'short', timeStyle: 'short' });
 }
 
 function formatDetailValue(detailValue: unknown): string {

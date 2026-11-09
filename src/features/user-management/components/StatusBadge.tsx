@@ -18,7 +18,7 @@ export function StatusBadge({ userStatus }: StatusBadgeProps): ReactElement {
    return (
       <span
          className={cn(
-            'inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1',
+            'inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-0.5 text-xs font-semibold ring-1',
             STATUS_CLASSES[userStatus],
          )}
       >

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
-import { ChevronDown, LogOut, MonitorSmartphone, Ticket, UserCog, Users } from 'lucide-react';
+import { ChevronDown, LayoutDashboard, LogOut, MonitorSmartphone, Store, Ticket, UserCog } from 'lucide-react';
 import { useCallback, useRef, useState, type ReactElement } from 'react';
-import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
+import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
 import { logout, logoutAll } from '@/api/authApi';
 import { getErrorMessage } from '@/lib/apiError';
 import UserAvatar from '@/components/common/UserAvatar';
@@ -21,6 +21,7 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
    const containerRef = useRef<HTMLDivElement>(null);
    const queryClient: QueryClient = useQueryClient();
    const navigate: NavigateFunction = useNavigate();
+   const location: Location = useLocation();
    const clearSession: () => void = useAuthStore((authState) => authState.logout);
 
    const closeMenu: () => void = useCallback((): void => setIsOpen(false), []);
@@ -50,7 +51,8 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
       onError: handleSignOutError,
    });
    const isSigningOut: boolean = logoutMutation.isPending || logoutAllMutation.isPending;
-   const canManageUsers: boolean = user.roles.includes('ROLE_ADMIN') || user.roles.includes('ROLE_MANAGER');
+   const canAccessAdmin: boolean = user.roles.includes('ROLE_ADMIN') || user.roles.includes('ROLE_MANAGER');
+   const isInAdminRoute: boolean = location.pathname.startsWith('/admin');
 
    return (
       <div ref={containerRef} className="relative">
@@ -107,15 +109,19 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
                      <Ticket className="size-[18px]" aria-hidden="true" />
                      Vé của tôi
                   </Link>
-                  {canManageUsers && (
+                  {canAccessAdmin && (
                      <Link
-                        to="/admin/users"
+                        to={isInAdminRoute ? '/' : '/admin'}
                         role="menuitem"
                         onClick={closeMenu}
                         className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 transition-colors hover:bg-brand-50 hover:text-brand-700"
                      >
-                        <Users className="size-[18px]" aria-hidden="true" />
-                        Quản lý người dùng
+                        {isInAdminRoute ? (
+                           <Store className="size-[18px]" aria-hidden="true" />
+                        ) : (
+                           <LayoutDashboard className="size-[18px]" aria-hidden="true" />
+                        )}
+                        {isInAdminRoute ? 'Trang khách hàng' : 'Trang quản trị'}
                      </Link>
                   )}
                   <button

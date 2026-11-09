@@ -13,7 +13,7 @@ import type { AdminUser } from '@/types/admin';
 import type { User } from '@/types/auth';
 import AuditLogCard from '../components/AuditLogCard';
 import DeleteUserCard from '../components/DeleteUserCard';
-import SectionCard from '../components/SectionCard';
+import SectionCard from '@/components/common/SectionCard';
 import StaffProfileForm from '../components/StaffProfileForm';
 import StatusBadge from '../components/StatusBadge';
 import UserBranchCard from '../components/UserBranchCard';
@@ -45,7 +45,7 @@ export function UserDetailPage(): ReactElement {
 
    if (!isValidUserId) {
       return (
-         <div className="mx-auto w-full max-w-3xl space-y-4 px-4 py-16 sm:px-6">
+         <div className="w-full max-w-3xl space-y-4">
             <Alert variant="error">Mã người dùng không hợp lệ.</Alert>
             {backLink}
          </div>
@@ -56,7 +56,7 @@ export function UserDetailPage(): ReactElement {
    }
    if (userQuery.isError) {
       return (
-         <div className="mx-auto w-full max-w-3xl space-y-4 px-4 py-16 sm:px-6">
+         <div className="w-full max-w-3xl space-y-4">
             <Alert variant="error">{getErrorMessage(userQuery.error)}</Alert>
             {backLink}
          </div>
@@ -69,7 +69,7 @@ export function UserDetailPage(): ReactElement {
    const isDeleted: boolean = adminUser.status === 'DELETED';
 
    return (
-      <div className="mx-auto w-full max-w-5xl space-y-8 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="w-full max-w-6xl space-y-8">
          {backLink}
 
          <header className="flex flex-wrap items-center gap-5 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100">

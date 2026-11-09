@@ -20,7 +20,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import type { CreateStaffRequest, StaffPosition, StaffResponse, StaffRole } from '@/types/staff';
 import type { CinemaOption } from '@/types/cinema';
 import BranchPicker from '../components/BranchPicker';
-import SectionCard from '../components/SectionCard';
+import SectionCard from '@/components/common/SectionCard';
 import { useCinemaOptions } from '../hooks/useCinemaOptions';
 import { STAFF_POSITION_OPTIONS } from '../utils/labels';
 import { ADMIN_USER_LIST_KEY } from '../utils/queryKeys';
@@ -129,7 +129,7 @@ export function CreateStaffPage(): ReactElement {
    }
 
    return (
-      <div className="mx-auto w-full max-w-3xl space-y-6 px-4 py-10 sm:px-6 lg:px-8">
+      <div className="w-full max-w-3xl space-y-6">
          <Link to="/admin/users" className="inline-flex items-center gap-2 text-sm font-semibold text-brand-700">
             <ArrowLeft className="size-4" aria-hidden="true" />
             Về danh sách người dùng

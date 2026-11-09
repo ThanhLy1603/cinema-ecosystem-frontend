@@ -6,9 +6,17 @@ interface ComingSoonPageProps {
    title: string;
    description: string;
    icon: LucideIcon;
+   backTo?: string;
+   backLabel?: string;
 }
 
-export function ComingSoonPage({ title, description, icon: Icon }: ComingSoonPageProps): ReactElement {
+export function ComingSoonPage({
+   title,
+   description,
+   icon: Icon,
+   backTo = '/',
+   backLabel = 'Về trang chủ',
+}: ComingSoonPageProps): ReactElement {
    return (
       <section className="mx-auto grid min-h-[60vh] max-w-2xl place-items-center px-4 py-20 text-center">
          <div className="space-y-6">
@@ -22,8 +30,8 @@ export function ComingSoonPage({ title, description, icon: Icon }: ComingSoonPag
                <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">{title}</h1>
                <p className="mx-auto max-w-md text-ink-500">{description}</p>
             </div>
-            <LinkButton to="/" variant="secondary" icon={<ArrowLeft className="size-4" />}>
-               Về trang chủ
+            <LinkButton to={backTo} variant="secondary" icon={<ArrowLeft className="size-4" />}>
+               {backLabel}
             </LinkButton>
          </div>
       </section>

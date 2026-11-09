@@ -7,14 +7,15 @@ type LogoTone = 'default' | 'light';
 
 interface LogoProps {
    tone?: LogoTone;
+   to?: string;
    className?: string;
 }
 
-export function Logo({ tone = 'default', className }: LogoProps): ReactElement {
+export function Logo({ tone = 'default', to = '/', className }: LogoProps): ReactElement {
    const isLight: boolean = tone === 'light';
    return (
       <Link
-         to="/"
+         to={to}
          aria-label="CinemaSphere - Trang chủ"
          className={cn('group inline-flex items-center gap-2.5', className)}
       >

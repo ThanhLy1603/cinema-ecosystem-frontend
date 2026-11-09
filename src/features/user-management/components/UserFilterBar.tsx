@@ -3,6 +3,7 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
+import { cn } from '@/lib/utils';
 import type { CinemaOption } from '@/types/cinema';
 import { ROLE_FILTER_OPTIONS, STATUS_FILTER_OPTIONS } from '../utils/labels';
 
@@ -33,47 +34,46 @@ export function UserFilterBar({ userFilters, isAdmin, cinemaOptions, onChange }:
    }
 
    return (
-      <form
-         onSubmit={handleSubmit}
-         className="grid gap-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 md:grid-cols-2 lg:grid-cols-5"
-      >
-         <div className="lg:col-span-2">
-            <TextField
-               id="user-search"
-               label="Tìm kiếm"
-               value={searchText}
-               onChange={setSearchText}
-               icon={Search}
-               placeholder="Tên, email hoặc số điện thoại"
-            />
-         </div>
-         {isAdmin && (
-            <SelectField
-               id="user-role-filter"
-               label="Role"
-               value={userFilters.role}
-               onChange={(role) => onChange({ ...userFilters, role })}
-               options={ROLE_FILTER_OPTIONS}
-            />
-         )}
-         <SelectField
-            id="user-status-filter"
-            label="Trạng thái"
-            value={userFilters.status}
-            onChange={(status) => onChange({ ...userFilters, status })}
-            options={STATUS_FILTER_OPTIONS}
-         />
-         <SelectField
-            id="user-cinema-filter"
-            label="Chi nhánh"
-            value={userFilters.cinemaId}
-            onChange={(cinemaId) => onChange({ ...userFilters, cinemaId })}
-            options={cinemaFilterOptions}
-         />
-         <div className="flex items-end">
-            <Button type="submit" fullWidth icon={<Search className="size-4" aria-hidden="true" />}>
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100">
+         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+            <div className="flex-1">
+               <TextField
+                  id="user-search"
+                  label="Tìm kiếm"
+                  value={searchText}
+                  onChange={setSearchText}
+                  icon={Search}
+                  placeholder="Tên, email hoặc số điện thoại"
+               />
+            </div>
+            <Button type="submit" className="sm:w-40" icon={<Search className="size-4" aria-hidden="true" />}>
                Tìm
             </Button>
+         </div>
+         <div className={cn('grid gap-4 sm:grid-cols-2', isAdmin ? 'lg:grid-cols-3' : 'lg:grid-cols-2')}>
+            {isAdmin && (
+               <SelectField
+                  id="user-role-filter"
+                  label="Role"
+                  value={userFilters.role}
+                  onChange={(role) => onChange({ ...userFilters, role })}
+                  options={ROLE_FILTER_OPTIONS}
+               />
+            )}
+            <SelectField
+               id="user-status-filter"
+               label="Trạng thái"
+               value={userFilters.status}
+               onChange={(status) => onChange({ ...userFilters, status })}
+               options={STATUS_FILTER_OPTIONS}
+            />
+            <SelectField
+               id="user-cinema-filter"
+               label="Chi nhánh"
+               value={userFilters.cinemaId}
+               onChange={(cinemaId) => onChange({ ...userFilters, cinemaId })}
+               options={cinemaFilterOptions}
+            />
          </div>
       </form>
    );

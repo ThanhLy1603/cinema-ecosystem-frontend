@@ -1,10 +1,12 @@
-import { Building2, Clapperboard, MessagesSquare, Tag, Ticket } from 'lucide-react';
+import { CalendarClock, Clapperboard, MessagesSquare, Tag, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
 import ForbiddenPage from '@/components/common/ForbiddenPage';
+import AdminLayout from '@/components/layout/AdminLayout';
 import AuthLayout from '@/components/layout/AuthLayout';
 import MainLayout from '@/components/layout/MainLayout';
+import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import GuestRoute from '@/features/auth/guards/GuestRoute';
 import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
 import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage';
@@ -13,6 +15,13 @@ import ProfilePage from '@/features/auth/pages/ProfilePage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
 import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage';
 import VerifyEmailPage from '@/features/auth/pages/VerifyEmailPage';
+import CinemaCreatePage from '@/features/cinema-management/pages/CinemaCreatePage';
+import CinemaDetailPage from '@/features/cinema-management/pages/CinemaDetailPage';
+import CinemaManagementPage from '@/features/cinema-management/pages/CinemaManagementPage';
+import FacilityManagementPage from '@/features/cinema-management/pages/FacilityManagementPage';
+import SeatMapEditorPage from '@/features/cinema-management/pages/SeatMapEditorPage';
+import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
+import CinemaPublicPage from '@/features/cinemas/pages/CinemaPublicPage';
 import HomePage from '@/features/home/pages/HomePage';
 import CreateStaffPage from '@/features/user-management/pages/CreateStaffPage';
 import UserDetailPage from '@/features/user-management/pages/UserDetailPage';
@@ -46,16 +55,8 @@ export function AppRoutes(): ReactElement {
                   />
                }
             />
-            <Route
-               path="/cinemas"
-               element={
-                  <ComingSoonPage
-                     title="Hệ thống rạp chiếu"
-                     description="Thông tin các cụm rạp, phòng chiếu và tiện ích đang được hoàn thiện."
-                     icon={Building2}
-                  />
-               }
-            />
+            <Route path="/cinemas" element={<CinemaListPage />} />
+            <Route path="/cinemas/:slug" element={<CinemaPublicPage />} />
             <Route
                path="/promotions"
                element={
@@ -89,13 +90,71 @@ export function AppRoutes(): ReactElement {
                   }
                />
             </Route>
-            <Route element={<ProtectedRoute roles={['ROLE_ADMIN', 'ROLE_MANAGER']} />}>
-               <Route path="/admin/users" element={<UserManagementPage />} />
-               <Route path="/admin/users/new" element={<CreateStaffPage />} />
-               <Route path="/admin/users/:userId" element={<UserDetailPage />} />
-            </Route>
             <Route path="/forbidden" element={<ForbiddenPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
+         </Route>
+
+         <Route element={<ProtectedRoute roles={['ROLE_ADMIN', 'ROLE_MANAGER']} />}>
+            <Route path="/admin" element={<AdminLayout />}>
+               <Route index element={<AdminDashboardPage />} />
+               <Route path="users" element={<UserManagementPage />} />
+               <Route path="users/new" element={<CreateStaffPage />} />
+               <Route path="users/:userId" element={<UserDetailPage />} />
+               <Route path="cinemas" element={<CinemaManagementPage />} />
+               <Route path="cinemas/new" element={<CinemaCreatePage />} />
+               <Route path="cinemas/facilities" element={<FacilityManagementPage />} />
+               <Route path="cinemas/:cinemaId" element={<CinemaDetailPage />} />
+               <Route path="halls/:hallId/seat-map" element={<SeatMapEditorPage />} />
+               <Route
+                  path="movies"
+                  element={
+                     <ComingSoonPage
+                        title="Quản lý phim"
+                        description="Danh mục phim, thể loại, diễn viên và trailer sẽ được quản lý tại đây."
+                        icon={Clapperboard}
+                        backTo="/admin"
+                        backLabel="Về trang quản trị"
+                     />
+                  }
+               />
+               <Route
+                  path="showtimes"
+                  element={
+                     <ComingSoonPage
+                        title="Quản lý suất chiếu & giá vé"
+                        description="Xếp lịch chiếu theo phòng, phát hiện trùng giờ và cấu hình quy tắc giá vé sẽ sớm có mặt."
+                        icon={CalendarClock}
+                        backTo="/admin"
+                        backLabel="Về trang quản trị"
+                     />
+                  }
+               />
+               <Route
+                  path="promotions"
+                  element={
+                     <ComingSoonPage
+                        title="Quản lý khuyến mãi & F&B"
+                        description="Chương trình khuyến mãi theo hạng thành viên và danh mục bắp nước sẽ được cập nhật tại đây."
+                        icon={Tag}
+                        backTo="/admin"
+                        backLabel="Về trang quản trị"
+                     />
+                  }
+               />
+               <Route
+                  path="community"
+                  element={
+                     <ComingSoonPage
+                        title="Quản lý cộng đồng & blog"
+                        description="Soạn bài viết điện ảnh và kiểm duyệt bình luận, đánh giá sẽ sớm có mặt."
+                        icon={MessagesSquare}
+                        backTo="/admin"
+                        backLabel="Về trang quản trị"
+                     />
+                  }
+               />
+               <Route path="*" element={<Navigate to="/admin" replace />} />
+            </Route>
          </Route>
       </Routes>
    );

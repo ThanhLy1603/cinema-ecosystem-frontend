@@ -31,21 +31,21 @@ export function UserTable({ adminUsers }: UserTableProps): ReactElement {
 
    return (
       <div className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-100">
-         <table className="w-full min-w-[760px] text-left text-sm">
+         <table className="w-full min-w-[860px] text-left text-sm">
             <thead className="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-500">
                <tr>
-                  <th className="px-5 py-4 font-semibold">Người dùng</th>
-                  <th className="px-5 py-4 font-semibold">Role</th>
-                  <th className="px-5 py-4 font-semibold">Trạng thái</th>
-                  <th className="px-5 py-4 font-semibold">Chi nhánh</th>
-                  <th className="px-5 py-4 font-semibold">Đăng nhập gần nhất</th>
-                  <th className="px-5 py-4" />
+                  <th className="px-4 py-4 font-semibold">Người dùng</th>
+                  <th className="px-4 py-4 font-semibold">Role</th>
+                  <th className="px-4 py-4 font-semibold">Trạng thái</th>
+                  <th className="px-4 py-4 font-semibold">Chi nhánh</th>
+                  <th className="whitespace-nowrap px-4 py-4 font-semibold">Đăng nhập gần nhất</th>
+                  <th className="px-4 py-4" />
                </tr>
             </thead>
             <tbody className="divide-y divide-ink-100">
                {adminUsers.map((adminUser) => (
                   <tr key={adminUser.id} className="hover:bg-ink-50/60">
-                     <td className="px-5 py-4">
+                     <td className="max-w-[300px] px-4 py-4">
                         <div className="flex items-center gap-3">
                            <UserAvatar user={adminUser} className="size-10 shrink-0" />
                            <div className="min-w-0">
@@ -54,15 +54,17 @@ export function UserTable({ adminUsers }: UserTableProps): ReactElement {
                            </div>
                         </div>
                      </td>
-                     <td className="px-5 py-4 text-ink-700">{getPrimaryRoleLabel(adminUser)}</td>
-                     <td className="px-5 py-4">
+                     <td className="whitespace-nowrap px-4 py-4 text-ink-700">{getPrimaryRoleLabel(adminUser)}</td>
+                     <td className="px-4 py-4">
                         <StatusBadge userStatus={adminUser.status} />
                      </td>
-                     <td className="max-w-[220px] truncate px-5 py-4 text-ink-700">
+                     <td className="max-w-[180px] truncate px-4 py-4 text-ink-700">
                         {formatBranches(adminUser.branches)}
                      </td>
-                     <td className="px-5 py-4 text-ink-600">{formatDateTime(adminUser.lastLoginAt)}</td>
-                     <td className="px-5 py-4 text-right">
+                     <td className="whitespace-nowrap px-4 py-4 text-ink-600">
+                        {formatDateTime(adminUser.lastLoginAt)}
+                     </td>
+                     <td className="whitespace-nowrap px-4 py-4 text-right">
                         <Link
                            to={`/admin/users/${adminUser.id}`}
                            className="font-semibold text-brand-700 hover:underline"

@@ -5,6 +5,7 @@ import Logo from '@/components/brand/Logo'
 import LinkButton from '@/components/ui/LinkButton'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/stores/useAuthStore'
+import type { User } from '@/types/auth'
 import UserMenu from './UserMenu'
 
 interface NavItem {
@@ -29,7 +30,7 @@ function getNavLinkClassName(isActive: boolean): string {
 
 export function Navbar(): ReactElement {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-   const user = useAuthStore((authState) => authState.user)
+   const user: User | null = useAuthStore((authState) => authState.user)
    const isLoading: boolean = useAuthStore((authState) => authState.isLoading)
 
    function closeMobileMenu(): void {

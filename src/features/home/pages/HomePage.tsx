@@ -68,7 +68,7 @@ function getFirstName(user: User): string {
 }
 
 export function HomePage(): ReactElement {
-   const user = useAuthStore((authState) => authState.user)
+   const user: User | null = useAuthStore((authState) => authState.user)
 
    return (
       <>

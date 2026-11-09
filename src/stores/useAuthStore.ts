@@ -3,12 +3,10 @@ import type { User, UserRole } from '@/types/auth'
 
 interface AuthState {
    user: User | null
-   accessToken: string | null
    isAuthenticated: boolean
    isLoading: boolean
 
-   setAuth: (user: User, accessToken: string) => void
-   setAccessToken: (accessToken: string | null) => void
+   setAuth: (user: User) => void
    setUser: (user: User | null) => void
    setLoading: (loading: boolean) => void
    logout: () => void
@@ -17,23 +15,14 @@ interface AuthState {
 
 export const useAuthStore: UseBoundStore<StoreApi<AuthState>> = create<AuthState>((set, get) => ({
    user: null,
-   accessToken: null,
    isAuthenticated: false,
    isLoading: true,
 
-   setAuth(user: User, accessToken: string): void {
+   setAuth(user: User): void {
       set({
          user,
-         accessToken,
          isAuthenticated: true,
          isLoading: false,
-      })
-   },
-
-   setAccessToken(accessToken: string | null): void {
-      set({
-         accessToken,
-         isAuthenticated: Boolean(accessToken),
       })
    },
 
@@ -52,7 +41,6 @@ export const useAuthStore: UseBoundStore<StoreApi<AuthState>> = create<AuthState
    logout(): void {
       set({
          user: null,
-         accessToken: null,
          isAuthenticated: false,
          isLoading: false,
       })

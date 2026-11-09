@@ -1,15 +1,10 @@
-import axios, {
-   type AxiosError,
-   type AxiosInstance,
-   type AxiosResponse,
-   type InternalAxiosRequestConfig,
-} from 'axios'
+import axios, { type AxiosError, type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
 import { useAuthStore } from '@/stores/useAuthStore'
 import type { ApiResponse } from '@/types/api'
 import type { RefreshTokenResponse } from '@/types/auth'
 
 interface FailedRequestQueueItem {
-   resolve: (token: string) => void
+   resolve: () => void
    reject: (error: unknown) => void
 }
 
@@ -17,27 +12,32 @@ type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean }
 
 const CREDENTIAL_ENDPOINTS: string[] = [
    '/auth/login',
+   '/auth/google',
    '/auth/register',
    '/auth/forgot-password',
    '/auth/reset-password',
 ]
 
+const CSRF_GUARD_HEADERS: Record<string, string> = {
+   'X-Requested-With': 'XMLHttpRequest',
+}
+
 let isRefreshing: boolean = false
 let failedQueue: FailedRequestQueueItem[] = []
 
-function processQueue(error: unknown, token: string | null = null): void {
+function processQueue(error: unknown): void {
    for (const failedRequestQueueItem of failedQueue) {
       if (error) {
          failedRequestQueueItem.reject(error)
-      } else if (token) {
-         failedRequestQueueItem.resolve(token)
+      } else {
+         failedRequestQueueItem.resolve()
       }
    }
    failedQueue = []
 }
 
-function waitForTokenRefresh(): Promise<string> {
-   return new Promise<string>((resolve, reject): void => {
+function waitForTokenRefresh(): Promise<void> {
+   return new Promise<void>((resolve, reject): void => {
       failedQueue.push({ resolve, reject })
    })
 }
@@ -46,19 +46,10 @@ export const axiosInstance: AxiosInstance = axios.create({
    baseURL: import.meta.env.VITE_API_BASE_URL || '/api/v1',
    headers: {
       'Content-Type': 'application/json',
+      ...CSRF_GUARD_HEADERS,
    },
    withCredentials: true,
 })
-
-function attachAccessToken(internalAxiosRequestConfig: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
-   const accessToken: string | null = useAuthStore.getState().accessToken
-   if (accessToken && internalAxiosRequestConfig.headers) {
-      internalAxiosRequestConfig.headers.Authorization = `Bearer ${accessToken}`
-   }
-   return internalAxiosRequestConfig
-}
-
-axiosInstance.interceptors.request.use(attachAccessToken, (error: unknown) => Promise.reject(error))
 
 async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise<unknown> {
    const retriableRequestConfig: RetriableRequestConfig | undefined = axiosError.config as
@@ -86,10 +77,7 @@ async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise
    retriableRequestConfig._retry = true
 
    if (isRefreshing) {
-      const newToken: string = await waitForTokenRefresh()
-      if (retriableRequestConfig.headers) {
-         retriableRequestConfig.headers.Authorization = `Bearer ${newToken}`
-      }
+      await waitForTokenRefresh()
       return axiosInstance(retriableRequestConfig)
    }
 
@@ -98,21 +86,15 @@ async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise
    try {
       const refreshAxiosResponse: AxiosResponse<ApiResponse<RefreshTokenResponse>> = await axios.post<
          ApiResponse<RefreshTokenResponse>
-      >(`${axiosInstance.defaults.baseURL}/auth/refresh-token`, {}, { withCredentials: true })
+      >(`${axiosInstance.defaults.baseURL}/auth/refresh-token`, {}, { withCredentials: true, headers: CSRF_GUARD_HEADERS })
 
-      const refreshTokenResponse: RefreshTokenResponse = refreshAxiosResponse.data.data
-      const newAccessToken: string = refreshTokenResponse.accessToken
+      useAuthStore.getState().setAuth(refreshAxiosResponse.data.data.user)
 
-      useAuthStore.getState().setAuth(refreshTokenResponse.user, newAccessToken)
+      processQueue(null)
 
-      processQueue(null, newAccessToken)
-
-      if (retriableRequestConfig.headers) {
-         retriableRequestConfig.headers.Authorization = `Bearer ${newAccessToken}`
-      }
       return axiosInstance(retriableRequestConfig)
    } catch (refreshError: unknown) {
-      processQueue(refreshError, null)
+      processQueue(refreshError)
       useAuthStore.getState().logout()
       return Promise.reject(refreshError)
    } finally {

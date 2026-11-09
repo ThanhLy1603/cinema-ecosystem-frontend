@@ -7,7 +7,7 @@ let sessionRestorePromise: Promise<void> | null = null
 async function restoreSession(): Promise<void> {
    try {
       const refreshTokenResponse: RefreshTokenResponse = await refreshSession()
-      useAuthStore.getState().setAuth(refreshTokenResponse.user, refreshTokenResponse.accessToken)
+      useAuthStore.getState().setAuth(refreshTokenResponse.user)
    } catch {
       useAuthStore.getState().logout()
    }

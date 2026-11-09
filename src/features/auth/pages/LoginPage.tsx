@@ -8,7 +8,8 @@ import Button from '@/components/ui/Button'
 import TextField from '@/components/ui/TextField'
 import { getErrorMessage, getFieldErrors } from '@/lib/apiError'
 import { useAuthStore } from '@/stores/useAuthStore'
-import type { LoginRequest, LoginResponse } from '@/types/auth'
+import type { LoginRequest, LoginResponse, User } from '@/types/auth'
+import GoogleAuthSection from '../components/GoogleAuthSection'
 import { getRedirectPath } from '../utils/redirect'
 import { validateEmail, validateLoginPassword } from '../utils/validation'
 
@@ -20,7 +21,7 @@ interface LoginFieldErrors {
 export function LoginPage(): ReactElement {
    const navigate: NavigateFunction = useNavigate()
    const location: Location = useLocation()
-   const setAuth = useAuthStore((authState) => authState.setAuth)
+   const setAuth: (user: User) => void = useAuthStore((authState) => authState.setAuth)
    const [email, setEmail] = useState<string>('')
    const [password, setPassword] = useState<string>('')
    const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({})
@@ -28,7 +29,7 @@ export function LoginPage(): ReactElement {
    const isRedirectedFromProtectedPage: boolean = redirectPath !== '/'
 
    function handleLoginSuccess(loginResponse: LoginResponse): void {
-      setAuth(loginResponse.user, loginResponse.accessToken)
+      setAuth(loginResponse.user)
       navigate(redirectPath, { replace: true })
    }
 
@@ -105,6 +106,8 @@ export function LoginPage(): ReactElement {
                {loginMutation.isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}
             </Button>
          </form>
+
+         <GoogleAuthSection />
 
          <p className="mt-8 text-center text-sm text-ink-500">
             Chưa có tài khoản?{' '}

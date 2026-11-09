@@ -8,7 +8,8 @@ import Button from '@/components/ui/Button'
 import TextField from '@/components/ui/TextField'
 import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError'
 import { useAuthStore } from '@/stores/useAuthStore'
-import type { LoginResponse, RegisterRequest } from '@/types/auth'
+import type { LoginResponse, RegisterRequest, User } from '@/types/auth'
+import GoogleAuthSection from '../components/GoogleAuthSection'
 import PasswordStrength from '../components/PasswordStrength'
 import { getRedirectPath } from '../utils/redirect'
 import {
@@ -35,7 +36,7 @@ async function registerAndSignIn(registerRequest: RegisterRequest): Promise<Logi
 export function RegisterPage(): ReactElement {
    const navigate: NavigateFunction = useNavigate()
    const location: Location = useLocation()
-   const setAuth = useAuthStore((authState) => authState.setAuth)
+   const setAuth: (user: User) => void = useAuthStore((authState) => authState.setAuth)
    const [fullName, setFullName] = useState<string>('')
    const [email, setEmail] = useState<string>('')
    const [phone, setPhone] = useState<string>('')
@@ -45,7 +46,7 @@ export function RegisterPage(): ReactElement {
    const redirectPath: string = getRedirectPath(location.state)
 
    function handleRegisterSuccess(loginResponse: LoginResponse): void {
-      setAuth(loginResponse.user, loginResponse.accessToken)
+      setAuth(loginResponse.user)
       navigate(redirectPath, { replace: true })
    }
 
@@ -176,6 +177,8 @@ export function RegisterPage(): ReactElement {
                {registerMutation.isPending ? 'Đang tạo tài khoản...' : 'Tạo tài khoản'}
             </Button>
          </form>
+
+         <GoogleAuthSection />
 
          <p className="mt-8 text-center text-sm text-ink-500">
             Đã có tài khoản?{' '}

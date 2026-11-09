@@ -19,9 +19,9 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
    const containerRef = useRef<HTMLDivElement>(null)
    const queryClient: QueryClient = useQueryClient()
    const navigate: NavigateFunction = useNavigate()
-   const clearSession = useAuthStore((authState) => authState.logout)
+   const clearSession: () => void = useAuthStore((authState) => authState.logout)
 
-   const closeMenu = useCallback((): void => setIsOpen(false), [])
+   const closeMenu: () => void = useCallback((): void => setIsOpen(false), [])
    useOutsideClick(containerRef, closeMenu)
 
    function finishSignOut(): void {

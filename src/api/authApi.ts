@@ -1,7 +1,14 @@
 import type { AxiosResponse } from 'axios'
 import axiosInstance from '@/api/axiosClient'
 import type { ApiResponse } from '@/types/api'
-import type { LoginRequest, LoginResponse, RefreshTokenResponse, RegisterRequest, User } from '@/types/auth'
+import type {
+   GoogleLoginRequest,
+   LoginRequest,
+   LoginResponse,
+   RefreshTokenResponse,
+   RegisterRequest,
+   User,
+} from '@/types/auth'
 
 export async function register(registerRequest: RegisterRequest): Promise<User> {
    const axiosResponse: AxiosResponse<ApiResponse<User>> = await axiosInstance.post<ApiResponse<User>>(
@@ -15,6 +22,13 @@ export async function login(loginRequest: LoginRequest): Promise<LoginResponse> 
    const axiosResponse: AxiosResponse<ApiResponse<LoginResponse>> = await axiosInstance.post<
       ApiResponse<LoginResponse>
    >('/auth/login', loginRequest)
+   return axiosResponse.data.data
+}
+
+export async function loginWithGoogle(googleLoginRequest: GoogleLoginRequest): Promise<LoginResponse> {
+   const axiosResponse: AxiosResponse<ApiResponse<LoginResponse>> = await axiosInstance.post<
+      ApiResponse<LoginResponse>
+   >('/auth/google', googleLoginRequest)
    return axiosResponse.data.data
 }
 

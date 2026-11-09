@@ -24,16 +24,14 @@ export interface LoginRequest {
   password: string
 }
 
-export interface AuthTokens {
-  accessToken: string
+export interface GoogleLoginRequest {
+  idToken: string
 }
 
 export interface LoginResponse {
   user: User
-  accessToken: string
 }
 
 export interface RefreshTokenResponse {
-  accessToken: string
   user: User
 }

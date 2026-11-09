@@ -2,6 +2,8 @@ const EMAIL_PATTERN: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN: RegExp = /^\+?[0-9]{9,15}$/;
 const LETTER_PATTERN: RegExp = /\p{L}/u;
 const DIGIT_PATTERN: RegExp = /\d/;
+const AVATAR_URL_PATTERN: RegExp = /^https:\/\/\S+$/;
+const MAX_AVATAR_URL_LENGTH: number = 500;
 const MAX_PASSWORD_BYTES: number = 72;
 const MIN_PASSWORD_LENGTH: number = 8;
 
@@ -57,6 +59,30 @@ export function validatePhone(phone: string): string | undefined {
       return undefined;
    }
    return PHONE_PATTERN.test(trimmedPhone) ? undefined : 'Số điện thoại không hợp lệ (9 đến 15 chữ số)';
+}
+
+export function validateDateOfBirth(dateOfBirth: string): string | undefined {
+   if (dateOfBirth.length === 0) {
+      return undefined;
+   }
+   const parsedTime: number = Date.parse(dateOfBirth);
+   if (Number.isNaN(parsedTime) || parsedTime >= Date.now()) {
+      return 'Ngày sinh phải là một ngày trong quá khứ';
+   }
+   return undefined;
+}
+
+export function validateAvatarUrl(avatarUrl: string): string | undefined {
+   const trimmedAvatarUrl: string = avatarUrl.trim();
+   if (trimmedAvatarUrl.length === 0) {
+      return undefined;
+   }
+   if (trimmedAvatarUrl.length > MAX_AVATAR_URL_LENGTH) {
+      return `Đường dẫn ảnh tối đa ${MAX_AVATAR_URL_LENGTH} ký tự`;
+   }
+   return AVATAR_URL_PATTERN.test(trimmedAvatarUrl)
+      ? undefined
+      : 'Ảnh đại diện phải là đường dẫn bắt đầu bằng https://';
 }
 
 export function getPasswordStrength(password: string): number {

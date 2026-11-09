@@ -1,4 +1,6 @@
 import axios, { type AxiosError, type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import { getErrorCode, REFRESH_IN_PROGRESS_ERROR_CODE } from '@/lib/apiError';
+import { wait } from '@/lib/utils';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { ApiResponse } from '@/types/api';
 import type { RefreshTokenResponse } from '@/types/auth';
@@ -21,6 +23,8 @@ const CREDENTIAL_ENDPOINTS: string[] = [
 const CSRF_GUARD_HEADERS: Record<string, string> = {
    'X-Requested-With': 'XMLHttpRequest',
 };
+
+const REFRESH_RETRY_DELAY_MS: number = 300;
 
 let isRefreshing: boolean = false;
 let failedQueue: FailedRequestQueueItem[] = [];
@@ -51,6 +55,10 @@ export const axiosInstance: AxiosInstance = axios.create({
    withCredentials: true,
 });
 
+function isUnauthorizedError(error: unknown): boolean {
+   return axios.isAxiosError(error) && error.response?.status === 401;
+}
+
 async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise<unknown> {
    const retriableRequestConfig: RetriableRequestConfig | undefined = axiosError.config as
       RetriableRequestConfig | undefined;
@@ -69,7 +77,9 @@ async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise
 
    const isRefreshRequest: boolean = requestUrl.includes('/auth/refresh-token');
    if (isRefreshRequest || retriableRequestConfig._retry) {
-      useAuthStore.getState().logout();
+      if (getErrorCode(axiosError) !== REFRESH_IN_PROGRESS_ERROR_CODE) {
+         useAuthStore.getState().logout();
+      }
       return Promise.reject(axiosError);
    }
 
@@ -97,8 +107,15 @@ async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise
 
       return axiosInstance(retriableRequestConfig);
    } catch (refreshError: unknown) {
+      if (getErrorCode(refreshError) === REFRESH_IN_PROGRESS_ERROR_CODE) {
+         await wait(REFRESH_RETRY_DELAY_MS);
+         processQueue(null);
+         return axiosInstance(retriableRequestConfig);
+      }
       processQueue(refreshError);
-      useAuthStore.getState().logout();
+      if (isUnauthorizedError(refreshError)) {
+         useAuthStore.getState().logout();
+      }
       return Promise.reject(refreshError);
    } finally {
       isRefreshing = false;

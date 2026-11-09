@@ -7,7 +7,7 @@ interface TextFieldProps {
    label: string;
    value: string;
    onChange: (value: string) => void;
-   type?: 'text' | 'email' | 'password' | 'tel';
+   type?: 'text' | 'email' | 'password' | 'tel' | 'date';
    icon?: LucideIcon;
    error?: string;
    hint?: string;
@@ -16,6 +16,7 @@ interface TextFieldProps {
    disabled?: boolean;
    optional?: boolean;
    maxLength?: number;
+   max?: string;
    autoFocus?: boolean;
 }
 
@@ -33,6 +34,7 @@ export function TextField({
    disabled = false,
    optional = false,
    maxLength,
+   max,
    autoFocus = false,
 }: TextFieldProps): ReactElement {
    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
@@ -68,6 +70,7 @@ export function TextField({
                autoComplete={autoComplete}
                disabled={disabled}
                maxLength={maxLength}
+               max={max}
                autoFocus={autoFocus}
                aria-invalid={hasError}
                aria-describedby={error || hint ? messageId : undefined}

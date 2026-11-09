@@ -1,6 +1,8 @@
 import axios from 'axios';
 import type { ApiResponse } from '@/types/api';
 
+export const REFRESH_IN_PROGRESS_ERROR_CODE: string = 'REFRESH_IN_PROGRESS';
+
 const NETWORK_ERROR_MESSAGE: string = 'Không thể kết nối tới máy chủ. Vui lòng kiểm tra mạng và thử lại.';
 const SERVER_UNAVAILABLE_MESSAGE: string = 'Máy chủ đang tạm thời không phản hồi. Vui lòng thử lại sau ít phút.';
 const UNKNOWN_ERROR_MESSAGE: string = 'Đã có lỗi xảy ra. Vui lòng thử lại sau.';

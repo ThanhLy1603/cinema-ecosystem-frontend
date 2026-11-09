@@ -7,9 +7,35 @@ export interface User {
   phone?: string;
   avatarUrl?: string;
   roles: UserRole[];
-  loyaltyPoints?: number;
-  tier?: string;
+  loyaltyPoints: number;
+  tier: MembershipTier;
   emailVerified: boolean;
+}
+
+export type MembershipTier = 'STAR' | 'GOLD' | 'DIAMOND';
+
+export type Gender = 'MALE' | 'FEMALE' | 'OTHER';
+
+export type AuthProvider = 'GOOGLE';
+
+export interface UserProfile extends User {
+  dateOfBirth?: string;
+  gender?: Gender;
+  hasPassword: boolean;
+  linkedProviders: AuthProvider[];
+}
+
+export interface UpdateProfileRequest {
+  fullName: string;
+  phone: string | null;
+  dateOfBirth: string | null;
+  gender: Gender | null;
+  avatarUrl: string | null;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword?: string;
+  newPassword: string;
 }
 
 export interface RegisterRequest {

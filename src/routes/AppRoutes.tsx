@@ -8,6 +8,7 @@ import MainLayout from '@/components/layout/MainLayout';
 import GuestRoute from '@/features/auth/guards/GuestRoute';
 import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
 import LoginPage from '@/features/auth/pages/LoginPage';
+import ProfilePage from '@/features/auth/pages/ProfilePage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
 import HomePage from '@/features/home/pages/HomePage';
 
@@ -64,6 +65,7 @@ export function AppRoutes(): ReactElement {
                }
             />
             <Route element={<ProtectedRoute />}>
+               <Route path="/profile" element={<ProfilePage />} />
                <Route
                   path="/tickets"
                   element={

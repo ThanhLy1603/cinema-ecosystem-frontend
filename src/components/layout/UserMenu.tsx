@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
-import { ChevronDown, LogOut, MonitorSmartphone, Ticket } from 'lucide-react';
+import { ChevronDown, LogOut, MonitorSmartphone, Ticket, UserCog } from 'lucide-react';
 import { useCallback, useRef, useState, type ReactElement } from 'react';
 import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
 import { logout, logoutAll } from '@/api/authApi';
+import { getErrorMessage } from '@/lib/apiError';
 import UserAvatar from '@/components/common/UserAvatar';
 import { getPrimaryRoleLabel } from '@/features/auth/utils/roleLabels';
 import { cn } from '@/lib/utils';
@@ -16,6 +17,7 @@ interface UserMenuProps {
 
 export function UserMenu({ user }: UserMenuProps): ReactElement {
    const [isOpen, setIsOpen] = useState<boolean>(false);
+   const [signOutErrorMessage, setSignOutErrorMessage] = useState<string | null>(null);
    const containerRef = useRef<HTMLDivElement>(null);
    const queryClient: QueryClient = useQueryClient();
    const navigate: NavigateFunction = useNavigate();
@@ -31,13 +33,21 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
       navigate('/', { replace: true });
    }
 
+   function handleSignOutError(error: unknown): void {
+      setSignOutErrorMessage(getErrorMessage(error));
+   }
+
    const logoutMutation: UseMutationResult<void, unknown, void> = useMutation<void, unknown, void>({
       mutationFn: logout,
-      onSettled: finishSignOut,
+      onMutate: () => setSignOutErrorMessage(null),
+      onSuccess: finishSignOut,
+      onError: handleSignOutError,
    });
    const logoutAllMutation: UseMutationResult<void, unknown, void> = useMutation<void, unknown, void>({
       mutationFn: logoutAll,
-      onSettled: finishSignOut,
+      onMutate: () => setSignOutErrorMessage(null),
+      onSuccess: finishSignOut,
+      onError: handleSignOutError,
    });
    const isSigningOut: boolean = logoutMutation.isPending || logoutAllMutation.isPending;
 
@@ -79,6 +89,15 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
 
                <div className="p-2">
                   <Link
+                     to="/profile"
+                     role="menuitem"
+                     onClick={closeMenu}
+                     className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 transition-colors hover:bg-brand-50 hover:text-brand-700"
+                  >
+                     <UserCog className="size-[18px]" aria-hidden="true" />
+                     Hồ sơ của tôi
+                  </Link>
+                  <Link
                      to="/tickets"
                      role="menuitem"
                      onClick={closeMenu}
@@ -107,6 +126,11 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
                      <LogOut className="size-[18px]" aria-hidden="true" />
                      {logoutMutation.isPending ? 'Đang đăng xuất...' : 'Đăng xuất'}
                   </button>
+                  {signOutErrorMessage && (
+                     <p role="alert" className="px-3 pb-1 pt-2 text-[13px] font-medium text-brand-700">
+                        {signOutErrorMessage}
+                     </p>
+                  )}
                </div>
             </div>
          )}

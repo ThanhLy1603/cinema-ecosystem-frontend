@@ -7,9 +7,12 @@ import AuthLayout from '@/components/layout/AuthLayout';
 import MainLayout from '@/components/layout/MainLayout';
 import GuestRoute from '@/features/auth/guards/GuestRoute';
 import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
+import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage';
 import LoginPage from '@/features/auth/pages/LoginPage';
 import ProfilePage from '@/features/auth/pages/ProfilePage';
 import RegisterPage from '@/features/auth/pages/RegisterPage';
+import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage';
+import VerifyEmailPage from '@/features/auth/pages/VerifyEmailPage';
 import HomePage from '@/features/home/pages/HomePage';
 
 export function AppRoutes(): ReactElement {
@@ -20,6 +23,12 @@ export function AppRoutes(): ReactElement {
                <Route path="/login" element={<LoginPage />} />
                <Route path="/register" element={<RegisterPage />} />
             </Route>
+         </Route>
+
+         <Route element={<AuthLayout />}>
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
          </Route>
 
          <Route element={<MainLayout />}>

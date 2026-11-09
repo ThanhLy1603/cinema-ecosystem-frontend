@@ -15,6 +15,7 @@ type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 const CREDENTIAL_ENDPOINTS: string[] = [
    '/auth/login',
    '/auth/google',
+   '/auth/verify-email',
    '/auth/register',
    '/auth/forgot-password',
    '/auth/reset-password',

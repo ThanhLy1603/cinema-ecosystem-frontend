@@ -10,6 +10,7 @@ import { getErrorMessage, getFieldErrors } from '@/lib/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { LoginRequest, LoginResponse, User } from '@/types/auth';
 import GoogleAuthSection from '../components/GoogleAuthSection';
+import { getLoginNotice, PASSWORD_RESET_NOTICE } from '../utils/loginNotice';
 import { getRedirectPath } from '../utils/redirect';
 import { validateEmail, validateLoginPassword } from '../utils/validation';
 
@@ -27,6 +28,7 @@ export function LoginPage(): ReactElement {
    const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
    const redirectPath: string = getRedirectPath(location.state);
    const isRedirectedFromProtectedPage: boolean = redirectPath !== '/';
+   const isPasswordResetNotice: boolean = getLoginNotice(location.state) === PASSWORD_RESET_NOTICE;
 
    function handleLoginSuccess(loginResponse: LoginResponse): void {
       setAuth(loginResponse.user);
@@ -69,7 +71,10 @@ export function LoginPage(): ReactElement {
          </div>
 
          <form onSubmit={handleSubmit} noValidate className="space-y-5">
-            {isRedirectedFromProtectedPage && !loginMutation.isError && (
+            {isPasswordResetNotice && !loginMutation.isError && (
+               <Alert variant="success">Đặt lại mật khẩu thành công. Hãy đăng nhập bằng mật khẩu mới.</Alert>
+            )}
+            {isRedirectedFromProtectedPage && !isPasswordResetNotice && !loginMutation.isError && (
                <Alert variant="info">Vui lòng đăng nhập để tiếp tục.</Alert>
             )}
             {loginMutation.isError && !hasServerFieldErrors && (
@@ -101,6 +106,14 @@ export function LoginPage(): ReactElement {
                error={fieldErrors.password ?? serverFieldErrors.password}
                disabled={loginMutation.isPending}
             />
+            <div className="-mt-2 text-right">
+               <Link
+                  to="/forgot-password"
+                  className="text-sm font-semibold text-brand-600 transition-colors hover:text-brand-700 hover:underline"
+               >
+                  Quên mật khẩu?
+               </Link>
+            </div>
 
             <Button type="submit" size="lg" fullWidth isLoading={loginMutation.isPending}>
                {loginMutation.isPending ? 'Đang đăng nhập...' : 'Đăng nhập'}

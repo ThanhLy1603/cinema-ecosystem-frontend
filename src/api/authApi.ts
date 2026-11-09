@@ -2,12 +2,15 @@ import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
 import type { ApiResponse } from '@/types/api';
 import type {
+   ForgotPasswordRequest,
    GoogleLoginRequest,
    LoginRequest,
    LoginResponse,
    RefreshTokenResponse,
    RegisterRequest,
+   ResetPasswordRequest,
    User,
+   VerifyEmailRequest,
 } from '@/types/auth';
 
 export async function register(registerRequest: RegisterRequest): Promise<User> {
@@ -44,4 +47,24 @@ export async function logout(): Promise<void> {
 
 export async function logoutAll(): Promise<void> {
    await axiosInstance.post<ApiResponse<null>>('/auth/logout-all');
+}
+
+export async function forgotPassword(forgotPasswordRequest: ForgotPasswordRequest): Promise<string> {
+   const axiosResponse: AxiosResponse<ApiResponse<null>> = await axiosInstance.post<ApiResponse<null>>(
+      '/auth/forgot-password',
+      forgotPasswordRequest,
+   );
+   return axiosResponse.data.message;
+}
+
+export async function resetPassword(resetPasswordRequest: ResetPasswordRequest): Promise<void> {
+   await axiosInstance.post<ApiResponse<null>>('/auth/reset-password', resetPasswordRequest);
+}
+
+export async function verifyEmail(verifyEmailRequest: VerifyEmailRequest): Promise<void> {
+   await axiosInstance.post<ApiResponse<null>>('/auth/verify-email', verifyEmailRequest);
+}
+
+export async function resendVerification(): Promise<void> {
+   await axiosInstance.post<ApiResponse<null>>('/auth/resend-verification');
 }

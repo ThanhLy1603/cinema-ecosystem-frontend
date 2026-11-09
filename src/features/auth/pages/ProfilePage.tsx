@@ -8,7 +8,9 @@ import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/apiError';
 import type { MembershipTier, UserProfile } from '@/types/auth';
+import BranchAssignmentList from '../components/BranchAssignmentList';
 import ChangePasswordForm from '../components/ChangePasswordForm';
+import EmailVerificationNotice from '../components/EmailVerificationNotice';
 import ProfileForm from '../components/ProfileForm';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
 import { getPrimaryRoleLabel } from '../utils/roleLabels';
@@ -81,6 +83,15 @@ export function ProfilePage(): ReactElement {
                </div>
             </dl>
          </header>
+
+         {!userProfile.emailVerified && <EmailVerificationNotice />}
+
+         {userProfile.branches.length > 0 && (
+            <section className="rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 sm:p-8">
+               <h2 className="mb-6 text-xl font-bold text-ink-900">Chi nhánh làm việc</h2>
+               <BranchAssignmentList branchAssignments={userProfile.branches} />
+            </section>
+         )}
 
          <div className="grid gap-8 lg:grid-cols-2">
             <section className="rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 sm:p-8">

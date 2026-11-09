@@ -3,6 +3,14 @@ import axiosInstance from '@/api/axiosClient';
 import type { ApiResponse } from '@/types/api';
 import type { GenerateSeatsRequest, Hall, HallRequest, SeatLayout, SeatMapRequest } from '@/types/cinema';
 
+export async function listHalls(cinemaId: number, deleted: boolean): Promise<Hall[]> {
+   const axiosResponse: AxiosResponse<ApiResponse<Hall[]>> = await axiosInstance.get<ApiResponse<Hall[]>>(
+      `/admin/cinemas/${cinemaId}/halls`,
+      { params: { deleted } },
+   );
+   return axiosResponse.data.data;
+}
+
 export async function createHall(cinemaId: number, hallRequest: HallRequest): Promise<Hall> {
    const axiosResponse: AxiosResponse<ApiResponse<Hall>> = await axiosInstance.post<ApiResponse<Hall>>(
       `/admin/cinemas/${cinemaId}/halls`,
@@ -42,6 +50,13 @@ export async function generateSeats(hallId: number, generateSeatsRequest: Genera
    const axiosResponse: AxiosResponse<ApiResponse<SeatLayout>> = await axiosInstance.post<ApiResponse<SeatLayout>>(
       `/admin/halls/${hallId}/generate-seats`,
       generateSeatsRequest,
+   );
+   return axiosResponse.data.data;
+}
+
+export async function restoreHall(hallId: number): Promise<Hall> {
+   const axiosResponse: AxiosResponse<ApiResponse<Hall>> = await axiosInstance.post<ApiResponse<Hall>>(
+      `/admin/halls/${hallId}/restore`,
    );
    return axiosResponse.data.data;
 }

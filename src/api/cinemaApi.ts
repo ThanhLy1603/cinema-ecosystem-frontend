@@ -87,9 +87,11 @@ export async function deleteCinema(cinemaId: number): Promise<void> {
    await axiosInstance.delete<ApiResponse<null>>(`/admin/cinemas/${cinemaId}`);
 }
 
-export async function getFacilities(): Promise<Facility[]> {
-   const axiosResponse: AxiosResponse<ApiResponse<Facility[]>> =
-      await axiosInstance.get<ApiResponse<Facility[]>>('/admin/cinema-facilities');
+export async function getFacilities(deleted: boolean): Promise<Facility[]> {
+   const axiosResponse: AxiosResponse<ApiResponse<Facility[]>> = await axiosInstance.get<ApiResponse<Facility[]>>(
+      '/admin/cinema-facilities',
+      { params: { deleted } },
+   );
    return axiosResponse.data.data;
 }
 
@@ -111,4 +113,18 @@ export async function updateFacility(facilityId: number, facilityRequest: Facili
 
 export async function deleteFacility(facilityId: number): Promise<void> {
    await axiosInstance.delete<ApiResponse<null>>(`/admin/cinema-facilities/${facilityId}`);
+}
+
+export async function restoreCinema(cinemaId: number): Promise<CinemaDetail> {
+   const axiosResponse: AxiosResponse<ApiResponse<CinemaDetail>> = await axiosInstance.post<ApiResponse<CinemaDetail>>(
+      `/admin/cinemas/${cinemaId}/restore`,
+   );
+   return axiosResponse.data.data;
+}
+
+export async function restoreFacility(facilityId: number): Promise<Facility> {
+   const axiosResponse: AxiosResponse<ApiResponse<Facility>> = await axiosInstance.post<ApiResponse<Facility>>(
+      `/admin/cinema-facilities/${facilityId}/restore`,
+   );
+   return axiosResponse.data.data;
 }

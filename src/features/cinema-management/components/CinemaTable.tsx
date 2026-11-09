@@ -1,13 +1,17 @@
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
+import { restoreCinema } from '@/api/cinemaApi';
 import type { Cinema } from '@/types/cinema';
 import CinemaStatusBadge from './CinemaStatusBadge';
+import RestoreButton from './RestoreButton';
 
 interface CinemaTableProps {
    cinemas: Cinema[];
+   canRestore: boolean;
+   onRestored: () => void;
 }
 
-export function CinemaTable({ cinemas }: CinemaTableProps): ReactElement {
+export function CinemaTable({ cinemas, canRestore, onRestored }: CinemaTableProps): ReactElement {
    if (cinemas.length === 0) {
       return (
          <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-100">
@@ -46,15 +50,21 @@ export function CinemaTable({ cinemas }: CinemaTableProps): ReactElement {
                            : cinema.facilities.map((facility) => facility.name).join(', ')}
                      </td>
                      <td className="px-4 py-4">
-                        <CinemaStatusBadge cinemaStatus={cinema.status} />
+                        <CinemaStatusBadge cinemaStatus={cinema.status} isDeleted={cinema.deleted} />
                      </td>
                      <td className="whitespace-nowrap px-4 py-4 text-right">
-                        <Link
-                           to={`/admin/cinemas/${cinema.id}`}
-                           className="font-semibold text-brand-700 hover:underline"
-                        >
-                           Chi tiết
-                        </Link>
+                        {cinema.deleted ? (
+                           canRestore && (
+                              <RestoreButton restore={() => restoreCinema(cinema.id)} onRestored={onRestored} />
+                           )
+                        ) : (
+                           <Link
+                              to={`/admin/cinemas/${cinema.id}`}
+                              className="font-semibold text-brand-700 hover:underline"
+                           >
+                              Chi tiết
+                           </Link>
+                        )}
                      </td>
                   </tr>
                ))}

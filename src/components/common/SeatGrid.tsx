@@ -1,9 +1,10 @@
 import { useRef, type PointerEvent, type ReactElement } from 'react';
 import {
    EMPTY_CELL_CLASS_NAME,
-   MAINTENANCE_SEAT_CLASS_NAME,
-   SEAT_CELL_PITCH,
-   SEAT_CELL_SIZE,
+   SEAT_CELL_HEIGHT,
+   SEAT_CELL_PITCH_X,
+   SEAT_CELL_PITCH_Y,
+   SEAT_CELL_WIDTH,
    SEAT_LABEL_WIDTH,
    SEAT_SCREEN_HEIGHT,
    getCellX,
@@ -12,11 +13,13 @@ import {
    getGridWidth,
    getRowIndex,
    getSeatLabel,
-   getSeatTypeStyle,
+   getSeatWidth,
+   type SeatVisualState,
    type GridCell,
    type GridSeat,
 } from '@/lib/seatMap';
 import { cn } from '@/lib/utils';
+import SeatIcon from './SeatIcon';
 
 interface SeatGridProps {
    rows: string[];
@@ -42,6 +45,16 @@ function buildCells(rows: string[], columns: number): GridCell[] {
    return gridCells;
 }
 
+function buildOccupiedCellKeys(seats: GridSeat[]): Set<string> {
+   const occupiedCellKeys: Set<string> = new Set<string>();
+   for (const gridSeat of seats) {
+      for (let column: number = gridSeat.number; column < gridSeat.number + gridSeat.span; column += 1) {
+         occupiedCellKeys.add(`${gridSeat.row}:${column}`);
+      }
+   }
+   return occupiedCellKeys;
+}
+
 function buildColumnNumbers(columns: number): number[] {
    const columnNumbers: number[] = [];
    for (let column: number = 1; column <= columns; column += 1) {
@@ -55,40 +68,30 @@ interface SeatShapeProps {
    isSelected: boolean;
 }
 
+function resolveVisualState(gridSeat: GridSeat, isSelected: boolean): SeatVisualState {
+   if (gridSeat.visualState) {
+      return gridSeat.visualState;
+   }
+   if (gridSeat.status === 'MAINTENANCE') {
+      return 'maintenance';
+   }
+   return isSelected ? 'selected' : 'available';
+}
+
 function SeatShape({ gridSeat, isSelected }: SeatShapeProps): ReactElement {
-   const seatLabel: string = getSeatLabel(gridSeat.row, gridSeat.number);
-   const seatWidth: number = gridSeat.span * SEAT_CELL_SIZE + (gridSeat.span - 1) * (SEAT_CELL_PITCH - SEAT_CELL_SIZE);
-   const x: number = getCellX(gridSeat.number);
-   const y: number = getCellY(getRowIndex(gridSeat.row));
-   const isMaintenance: boolean = gridSeat.status === 'MAINTENANCE';
-   const seatClassName: string = isMaintenance
-      ? MAINTENANCE_SEAT_CLASS_NAME
-      : getSeatTypeStyle(gridSeat.type).seatClassName;
-   const crossPath: string = `M ${x + 8} ${y + 8} L ${x + seatWidth - 8} ${y + SEAT_CELL_SIZE - 8} M ${x + seatWidth - 8} ${y + 8} L ${x + 8} ${y + SEAT_CELL_SIZE - 8}`;
+   const seatLabel: string =
+      gridSeat.span > 1 ? `${gridSeat.number}-${gridSeat.number + gridSeat.span - 1}` : String(gridSeat.number);
 
    return (
-      <g aria-label={`Ghế ${seatLabel}`}>
-         <rect
-            x={x}
-            y={y}
-            width={seatWidth}
-            height={SEAT_CELL_SIZE}
-            rx={8}
-            strokeWidth={isSelected ? 3 : 1.5}
-            className={seatClassName}
+      <g aria-label={`Ghế ${getSeatLabel(gridSeat.row, gridSeat.number)}`}>
+         <SeatIcon
+            x={getCellX(gridSeat.number)}
+            y={getCellY(getRowIndex(gridSeat.row))}
+            width={getSeatWidth(gridSeat.span)}
+            seatTypeCode={gridSeat.type}
+            visualState={resolveVisualState(gridSeat, isSelected)}
+            label={seatLabel}
          />
-         {isMaintenance ? (
-            <path d={crossPath} className="stroke-ink-500" strokeWidth={2} strokeLinecap="round" />
-         ) : (
-            <text
-               x={x + seatWidth / 2}
-               y={y + SEAT_CELL_SIZE / 2 + 4}
-               textAnchor="middle"
-               className="pointer-events-none fill-ink-800 text-[11px] font-semibold"
-            >
-               {gridSeat.number}
-            </text>
-         )}
       </g>
    );
 }
@@ -112,7 +115,10 @@ export function SeatGrid({
    const isInteractive: boolean = Boolean(onCellPointerDown);
    const width: number = getGridWidth(columns);
    const height: number = getGridHeight(rows.length);
-   const gridCells: GridCell[] = showEmptyCells ? buildCells(rows, columns) : [];
+   const occupiedCellKeys: Set<string> = buildOccupiedCellKeys(seats);
+   const gridCells: GridCell[] = showEmptyCells
+      ? buildCells(rows, columns).filter((gridCell) => !occupiedCellKeys.has(`${gridCell.row}:${gridCell.column}`))
+      : [];
    const columnNumbers: number[] = buildColumnNumbers(columns);
    const rowsWithSeats: Set<string> = new Set(seats.map((gridSeat) => gridSeat.row));
    const labelledRows: string[] = showEmptyCells ? rows : rows.filter((row) => rowsWithSeats.has(row));
@@ -126,8 +132,8 @@ export function SeatGrid({
       const scale: number = width / boundingClientRect.width;
       const x: number = (pointerEvent.clientX - boundingClientRect.left) * scale;
       const y: number = (pointerEvent.clientY - boundingClientRect.top) * scale;
-      const column: number = Math.floor((x - SEAT_LABEL_WIDTH) / SEAT_CELL_PITCH) + 1;
-      const rowIndex: number = Math.floor((y - SEAT_SCREEN_HEIGHT) / SEAT_CELL_PITCH);
+      const column: number = Math.floor((x - SEAT_LABEL_WIDTH) / SEAT_CELL_PITCH_X) + 1;
+      const rowIndex: number = Math.floor((y - SEAT_SCREEN_HEIGHT) / SEAT_CELL_PITCH_Y);
       if (column < 1 || column > columns || rowIndex < 0 || rowIndex >= rows.length) {
          return null;
       }
@@ -210,8 +216,8 @@ export function SeatGrid({
                   key={`empty-${gridCell.row}-${gridCell.column}`}
                   x={getCellX(gridCell.column)}
                   y={getCellY(getRowIndex(gridCell.row))}
-                  width={SEAT_CELL_SIZE}
-                  height={SEAT_CELL_SIZE}
+                  width={SEAT_CELL_WIDTH}
+                  height={SEAT_CELL_HEIGHT}
                   rx={8}
                   strokeDasharray="3 3"
                   className={EMPTY_CELL_CLASS_NAME}
@@ -222,7 +228,7 @@ export function SeatGrid({
                <text
                   key={`row-${row}`}
                   x={SEAT_LABEL_WIDTH / 2}
-                  y={getCellY(getRowIndex(row)) + SEAT_CELL_SIZE / 2 + 4}
+                  y={getCellY(getRowIndex(row)) + SEAT_CELL_HEIGHT / 2 + 4}
                   textAnchor="middle"
                   className={cn(
                      'fill-ink-500 text-[12px] font-bold',
@@ -239,7 +245,7 @@ export function SeatGrid({
                columnNumbers.map((column) => (
                   <text
                      key={`column-${column}`}
-                     x={getCellX(column) + SEAT_CELL_SIZE / 2}
+                     x={getCellX(column) + SEAT_CELL_WIDTH / 2}
                      y={height - 8}
                      textAnchor="middle"
                      className="cursor-pointer fill-ink-400 text-[10px] font-semibold hover:fill-brand-600"

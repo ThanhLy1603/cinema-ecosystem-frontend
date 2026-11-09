@@ -1,7 +1,7 @@
 import { Eraser } from 'lucide-react';
 import type { ReactElement, ReactNode } from 'react';
 import { SeatSwatch } from '@/components/common/SeatLegend';
-import { MAINTENANCE_SEAT_CLASS_NAME, formatSurcharge, getSeatTypeStyle } from '@/lib/seatMap';
+import { formatSurcharge } from '@/lib/seatMap';
 import { cn } from '@/lib/utils';
 import type { SeatType } from '@/types/cinema';
 import type { EditorTool } from '../utils/seatMapEditing';
@@ -51,9 +51,7 @@ export function SeatToolPalette({ seatTypes, editorTool, onSelect }: SeatToolPal
                isActive={editorTool.kind === 'seat' && editorTool.seatTypeCode === seatType.code}
                title={seatType.name}
                description={`${formatSurcharge(seatType.defaultSurcharge)}${seatType.span > 1 ? ` · chiếm ${seatType.span} ô` : ''}`}
-               visual={
-                  <SeatSwatch className={getSeatTypeStyle(seatType.code).seatClassName} widthUnits={seatType.span} />
-               }
+               visual={<SeatSwatch seatTypeCode={seatType.code} span={seatType.span} />}
                onClick={() => onSelect({ kind: 'seat', seatTypeCode: seatType.code })}
             />
          ))}
@@ -68,7 +66,7 @@ export function SeatToolPalette({ seatTypes, editorTool, onSelect }: SeatToolPal
             isActive={editorTool.kind === 'maintenance'}
             title="Đánh dấu bảo trì"
             description="Bấm vào ghế để bật/tắt bảo trì"
-            visual={<SeatSwatch className={MAINTENANCE_SEAT_CLASS_NAME} widthUnits={1} />}
+            visual={<SeatSwatch variant="maintenance" />}
             onClick={() => onSelect({ kind: 'maintenance' })}
          />
       </div>

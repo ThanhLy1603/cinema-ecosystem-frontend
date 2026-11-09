@@ -3,21 +3,24 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { CINEMA_STATUS_FILTER_OPTIONS } from '../utils/labels';
+import { cn } from '@/lib/utils';
+import { CINEMA_STATUS_FILTER_OPTIONS, DELETED_FILTER_OPTIONS } from '../utils/labels';
 import { buildCityFilterOptions } from '../utils/provinces';
 
 export interface CinemaFilters {
    search: string;
    city: string;
    status: string;
+   deleted: string;
 }
 
 interface CinemaFilterBarProps {
    cinemaFilters: CinemaFilters;
+   isAdmin: boolean;
    onChange: (cinemaFilters: CinemaFilters) => void;
 }
 
-export function CinemaFilterBar({ cinemaFilters, onChange }: CinemaFilterBarProps): ReactElement {
+export function CinemaFilterBar({ cinemaFilters, isAdmin, onChange }: CinemaFilterBarProps): ReactElement {
    const [searchText, setSearchText] = useState<string>(cinemaFilters.search);
 
    function handleSubmit(formEvent: FormEvent<HTMLFormElement>): void {
@@ -42,7 +45,7 @@ export function CinemaFilterBar({ cinemaFilters, onChange }: CinemaFilterBarProp
                Tìm
             </Button>
          </div>
-         <div className="grid gap-4 sm:grid-cols-2">
+         <div className={cn('grid gap-4 sm:grid-cols-2', isAdmin && 'lg:grid-cols-3')}>
             <SelectField
                id="cinema-city-filter"
                label="Tỉnh/Thành phố"
@@ -57,6 +60,16 @@ export function CinemaFilterBar({ cinemaFilters, onChange }: CinemaFilterBarProp
                onChange={(status) => onChange({ ...cinemaFilters, status })}
                options={CINEMA_STATUS_FILTER_OPTIONS}
             />
+            {isAdmin && (
+               <SelectField
+                  id="cinema-deleted-filter"
+                  label="Hiển thị"
+                  value={cinemaFilters.deleted}
+                  onChange={(deleted) => onChange({ ...cinemaFilters, deleted })}
+                  options={DELETED_FILTER_OPTIONS}
+                  placeholder="Đang sử dụng"
+               />
+            )}
          </div>
       </form>
    );

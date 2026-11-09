@@ -11,16 +11,18 @@ import type { PageResponse } from '@/types/api';
 import type { Cinema, CinemaSearchParams, CinemaStatus } from '@/types/cinema';
 import CinemaFilterBar, { type CinemaFilters } from '../components/CinemaFilterBar';
 import CinemaTable from '../components/CinemaTable';
+import { useCinemaRefresh } from '../hooks/useCinemaRefresh';
 import { ADMIN_CINEMA_LIST_KEY } from '../utils/queryKeys';
 
 const PAGE_SIZE: number = 20;
-const EMPTY_FILTERS: CinemaFilters = { search: '', city: '', status: '' };
+const EMPTY_FILTERS: CinemaFilters = { search: '', city: '', status: '', deleted: '' };
 
 function toSearchParams(cinemaFilters: CinemaFilters, page: number): CinemaSearchParams {
    return {
       search: cinemaFilters.search || undefined,
       city: cinemaFilters.city || undefined,
       status: (cinemaFilters.status || undefined) as CinemaStatus | undefined,
+      deleted: cinemaFilters.deleted === 'true',
       page,
       size: PAGE_SIZE,
    };
@@ -36,6 +38,8 @@ export function CinemaManagementPage(): ReactElement {
       queryFn: () => searchAdminCinemas(cinemaSearchParams),
       placeholderData: keepPreviousData,
    });
+
+   const refreshCinemas: () => void = useCinemaRefresh(null);
 
    function handleFiltersChange(nextCinemaFilters: CinemaFilters): void {
       setCinemaFilters(nextCinemaFilters);
@@ -67,12 +71,12 @@ export function CinemaManagementPage(): ReactElement {
             </div>
          </header>
 
-         <CinemaFilterBar cinemaFilters={cinemaFilters} onChange={handleFiltersChange} />
+         <CinemaFilterBar cinemaFilters={cinemaFilters} isAdmin={isAdmin} onChange={handleFiltersChange} />
 
          {cinemasQuery.isError && <Alert variant="error">{getErrorMessage(cinemasQuery.error)}</Alert>}
          {cinemasQuery.data && (
             <>
-               <CinemaTable cinemas={cinemasQuery.data.content} />
+               <CinemaTable cinemas={cinemasQuery.data.content} canRestore={isAdmin} onRestored={refreshCinemas} />
                <Pagination
                   page={cinemasQuery.data.page}
                   totalPages={cinemasQuery.data.totalPages}

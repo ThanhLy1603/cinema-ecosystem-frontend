@@ -1,7 +1,8 @@
-import { Plus } from 'lucide-react';
+import { History, Plus } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import type { Hall } from '@/types/cinema';
+import DeletedHallList from './DeletedHallList';
 import HallForm from './HallForm';
 import HallRow from './HallRow';
 
@@ -13,6 +14,7 @@ interface HallSectionProps {
 export function HallSection({ cinemaId, halls }: HallSectionProps): ReactElement {
    const [editingHallId, setEditingHallId] = useState<number | null>(null);
    const [isCreating, setIsCreating] = useState<boolean>(false);
+   const [isShowingDeleted, setIsShowingDeleted] = useState<boolean>(false);
 
    function closeForms(): void {
       setEditingHallId(null);
@@ -54,6 +56,16 @@ export function HallSection({ cinemaId, halls }: HallSectionProps): ReactElement
                Thêm phòng chiếu
             </Button>
          )}
+         <div className="space-y-3 border-t border-ink-100 pt-4">
+            <Button
+               variant="ghost"
+               icon={<History className="size-4" aria-hidden="true" />}
+               onClick={() => setIsShowingDeleted(!isShowingDeleted)}
+            >
+               {isShowingDeleted ? 'Ẩn phòng đã xóa' : 'Xem phòng đã xóa'}
+            </Button>
+            {isShowingDeleted && <DeletedHallList cinemaId={cinemaId} />}
+         </div>
       </div>
    );
 }

@@ -4,7 +4,7 @@ export interface CinemaOption {
   city: string;
 }
 
-export type CinemaStatus = 'ACTIVE' | 'INACTIVE' | 'DELETED';
+export type CinemaStatus = 'ACTIVE' | 'INACTIVE';
 
 export type HallStatus = 'ACTIVE' | 'MAINTENANCE';
 
@@ -17,6 +17,7 @@ export interface Facility {
   name: string;
   iconUrl: string | null;
   description: string | null;
+  deleted: boolean;
 }
 
 export interface Hall {
@@ -26,6 +27,7 @@ export interface Hall {
   screenType: ScreenType;
   totalSeats: number;
   status: HallStatus;
+  deleted: boolean;
 }
 
 export interface Cinema {
@@ -40,6 +42,7 @@ export interface Cinema {
   status: CinemaStatus;
   facilities: Facility[];
   hallCount: number;
+  deleted: boolean;
 }
 
 export interface CinemaDetail {
@@ -54,6 +57,7 @@ export interface CinemaDetail {
   status: CinemaStatus;
   facilities: Facility[];
   halls: Hall[];
+  deleted: boolean;
 }
 
 export interface SeatType {
@@ -90,6 +94,7 @@ export interface CinemaSearchParams {
   search?: string;
   city?: string;
   status?: CinemaStatus;
+  deleted: boolean;
   page: number;
   size: number;
 }

@@ -67,7 +67,7 @@ export function HallRow({ hall, onEdit }: HallRowProps): ReactElement {
          </div>
          {isConfirmingDelete && (
             <div className="flex flex-wrap items-center gap-3 rounded-xl bg-brand-50 px-4 py-3 text-sm text-brand-800">
-               <span className="font-medium">Xóa phòng chiếu này cùng toàn bộ sơ đồ ghế?</span>
+               <span className="font-medium">Xóa phòng chiếu này? Sơ đồ ghế được giữ lại và có thể khôi phục sau.</span>
                <Button
                   className="h-9 px-4"
                   isLoading={deleteMutation.isPending}

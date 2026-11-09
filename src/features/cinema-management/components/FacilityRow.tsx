@@ -1,13 +1,14 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { deleteFacility } from '@/api/cinemaApi';
+import { deleteFacility, restoreFacility } from '@/api/cinemaApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/apiError';
 import { PUBLIC_CINEMAS_KEY } from '@/lib/cinemaQueryKeys';
 import type { Facility } from '@/types/cinema';
 import { ADMIN_CINEMA_LIST_KEY, ADMIN_FACILITIES_KEY } from '../utils/queryKeys';
+import RestoreButton from './RestoreButton';
 
 interface FacilityRowProps {
    facility: Facility;
@@ -46,7 +47,10 @@ export function FacilityRow({ facility, canManage, onEdit }: FacilityRowProps): 
                   {facility.description && <p className="truncate text-xs text-ink-500">{facility.description}</p>}
                </div>
             </div>
-            {canManage && !isConfirmingDelete && (
+            {canManage && facility.deleted && (
+               <RestoreButton restore={() => restoreFacility(facility.id)} onRestored={handleDeleted} />
+            )}
+            {canManage && !facility.deleted && !isConfirmingDelete && (
                <div className="flex gap-2">
                   <Button
                      variant="secondary"
@@ -69,7 +73,9 @@ export function FacilityRow({ facility, canManage, onEdit }: FacilityRowProps): 
          </div>
          {isConfirmingDelete && (
             <div className="flex flex-wrap items-center gap-3 rounded-xl bg-brand-50 px-4 py-3 text-sm text-brand-800">
-               <span className="font-medium">Xóa tiện ích này khỏi mọi cụm rạp đang dùng?</span>
+               <span className="font-medium">
+                  Xóa tiện ích này? Tiện ích sẽ ẩn khỏi các cụm rạp và có thể khôi phục sau.
+               </span>
                <Button
                   className="h-9 px-4"
                   isLoading={deleteMutation.isPending}

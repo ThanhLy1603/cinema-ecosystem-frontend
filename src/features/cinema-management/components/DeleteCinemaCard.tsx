@@ -31,8 +31,8 @@ export function DeleteCinemaCard({ cinemaId }: DeleteCinemaCardProps): ReactElem
       <div className="space-y-5">
          {deleteMutation.isError && <Alert variant="error">{getErrorMessage(deleteMutation.error)}</Alert>}
          <p className="text-sm text-ink-600">
-            Cụm rạp bị xóa mềm: ẩn khỏi danh sách và trang khách hàng nhưng dữ liệu vẫn được giữ lại. Không thể xóa khi
-            còn suất chiếu chưa diễn ra.
+            Cụm rạp bị xóa mềm: ẩn khỏi danh sách và trang khách hàng nhưng dữ liệu vẫn được giữ lại, có thể khôi phục
+            trong bộ lọc «Đã xóa». Không thể xóa khi còn suất chiếu chưa diễn ra.
          </p>
          {!isConfirming ? (
             <Button

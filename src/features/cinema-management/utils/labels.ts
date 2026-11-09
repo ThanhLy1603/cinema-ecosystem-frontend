@@ -4,13 +4,17 @@ import type { CinemaStatus, HallStatus, ScreenType } from '@/types/cinema';
 export const CINEMA_STATUS_LABELS: Record<CinemaStatus, string> = {
    ACTIVE: 'Đang hoạt động',
    INACTIVE: 'Tạm ngưng',
-   DELETED: 'Đã xóa',
 };
 
 export const HALL_STATUS_LABELS: Record<HallStatus, string> = {
    ACTIVE: 'Đang hoạt động',
    MAINTENANCE: 'Bảo trì',
 };
+
+export const DELETED_FILTER_OPTIONS: SelectOption[] = [
+   { value: '', label: 'Đang sử dụng' },
+   { value: 'true', label: 'Đã xóa' },
+];
 
 export const SCREEN_TYPES: ScreenType[] = ['2D', '3D', 'IMAX', '4DX'];
 

@@ -5,16 +5,19 @@ import { Link } from 'react-router-dom';
 import SectionCard from '@/components/common/SectionCard';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
+import SelectField from '@/components/ui/SelectField';
 import { getErrorMessage } from '@/lib/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { Facility } from '@/types/cinema';
+import { DELETED_FILTER_OPTIONS } from '../utils/labels';
 import FacilityForm from '../components/FacilityForm';
 import FacilityRow from '../components/FacilityRow';
 import { useFacilities } from '../hooks/useFacilities';
 
 export function FacilityManagementPage(): ReactElement {
    const isAdmin: boolean = useAuthStore((authState) => authState.hasRole('ROLE_ADMIN'));
-   const facilitiesQuery: UseQueryResult<Facility[]> = useFacilities();
+   const [isShowingDeleted, setIsShowingDeleted] = useState<boolean>(false);
+   const facilitiesQuery: UseQueryResult<Facility[]> = useFacilities(isShowingDeleted);
    const [editingFacilityId, setEditingFacilityId] = useState<number | null>(null);
    const [isCreating, setIsCreating] = useState<boolean>(false);
 
@@ -49,6 +52,18 @@ export function FacilityManagementPage(): ReactElement {
             }
          >
             <div className="space-y-4">
+               {isAdmin && (
+                  <div className="max-w-xs">
+                     <SelectField
+                        id="facility-deleted-filter"
+                        label="Hiển thị"
+                        value={isShowingDeleted ? 'true' : ''}
+                        onChange={(deleted) => setIsShowingDeleted(deleted === 'true')}
+                        options={DELETED_FILTER_OPTIONS}
+                        placeholder="Đang sử dụng"
+                     />
+                  </div>
+               )}
                {facilitiesQuery.isError && <Alert variant="error">{getErrorMessage(facilitiesQuery.error)}</Alert>}
                {facilitiesQuery.isPending && <p className="text-sm text-ink-500">Đang tải danh mục...</p>}
                <ul className="space-y-3">
@@ -68,6 +83,7 @@ export function FacilityManagementPage(): ReactElement {
                   </p>
                )}
                {isAdmin &&
+                  !isShowingDeleted &&
                   (isCreating ? (
                      <FacilityForm onDone={closeForms} onCancel={closeForms} />
                   ) : (

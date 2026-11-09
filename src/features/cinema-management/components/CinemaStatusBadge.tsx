@@ -6,17 +6,28 @@ import { CINEMA_STATUS_LABELS, HALL_STATUS_LABELS } from '../utils/labels';
 interface CinemaStatusBadgeProps {
    cinemaStatus?: CinemaStatus;
    hallStatus?: HallStatus;
+   isDeleted?: boolean;
 }
 
 const STATUS_CLASSES: Record<CinemaStatus | HallStatus, string> = {
    ACTIVE: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
    INACTIVE: 'bg-gold-50 text-ink-800 ring-gold-200',
    MAINTENANCE: 'bg-gold-50 text-ink-800 ring-gold-200',
-   DELETED: 'bg-ink-100 text-ink-500 ring-ink-200',
 };
 
-export function CinemaStatusBadge({ cinemaStatus, hallStatus }: CinemaStatusBadgeProps): ReactElement | null {
+export function CinemaStatusBadge({
+   cinemaStatus,
+   hallStatus,
+   isDeleted = false,
+}: CinemaStatusBadgeProps): ReactElement | null {
    const status: CinemaStatus | HallStatus | undefined = cinemaStatus ?? hallStatus;
+   if (isDeleted) {
+      return (
+         <span className="inline-flex items-center whitespace-nowrap rounded-full bg-ink-100 px-2.5 py-0.5 text-xs font-semibold text-ink-500 ring-1 ring-ink-200">
+            Đã xóa
+         </span>
+      );
+   }
    if (!status) {
       return null;
    }

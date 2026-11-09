@@ -1,45 +1,45 @@
-import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query'
-import { ChevronDown, LogOut, MonitorSmartphone, Ticket } from 'lucide-react'
-import { useCallback, useRef, useState, type ReactElement } from 'react'
-import { Link, useNavigate, type NavigateFunction } from 'react-router-dom'
-import { logout, logoutAll } from '@/api/authApi'
-import UserAvatar from '@/components/common/UserAvatar'
-import { getPrimaryRoleLabel } from '@/features/auth/utils/roleLabels'
-import { cn } from '@/lib/utils'
-import { useOutsideClick } from '@/lib/useOutsideClick'
-import { useAuthStore } from '@/stores/useAuthStore'
-import type { User } from '@/types/auth'
+import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
+import { ChevronDown, LogOut, MonitorSmartphone, Ticket } from 'lucide-react';
+import { useCallback, useRef, useState, type ReactElement } from 'react';
+import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
+import { logout, logoutAll } from '@/api/authApi';
+import UserAvatar from '@/components/common/UserAvatar';
+import { getPrimaryRoleLabel } from '@/features/auth/utils/roleLabels';
+import { cn } from '@/lib/utils';
+import { useOutsideClick } from '@/lib/useOutsideClick';
+import { useAuthStore } from '@/stores/useAuthStore';
+import type { User } from '@/types/auth';
 
 interface UserMenuProps {
-   user: User
+   user: User;
 }
 
 export function UserMenu({ user }: UserMenuProps): ReactElement {
-   const [isOpen, setIsOpen] = useState<boolean>(false)
-   const containerRef = useRef<HTMLDivElement>(null)
-   const queryClient: QueryClient = useQueryClient()
-   const navigate: NavigateFunction = useNavigate()
-   const clearSession: () => void = useAuthStore((authState) => authState.logout)
+   const [isOpen, setIsOpen] = useState<boolean>(false);
+   const containerRef = useRef<HTMLDivElement>(null);
+   const queryClient: QueryClient = useQueryClient();
+   const navigate: NavigateFunction = useNavigate();
+   const clearSession: () => void = useAuthStore((authState) => authState.logout);
 
-   const closeMenu: () => void = useCallback((): void => setIsOpen(false), [])
-   useOutsideClick(containerRef, closeMenu)
+   const closeMenu: () => void = useCallback((): void => setIsOpen(false), []);
+   useOutsideClick(containerRef, closeMenu);
 
    function finishSignOut(): void {
-      clearSession()
-      queryClient.clear()
-      setIsOpen(false)
-      navigate('/', { replace: true })
+      clearSession();
+      queryClient.clear();
+      setIsOpen(false);
+      navigate('/', { replace: true });
    }
 
    const logoutMutation: UseMutationResult<void, unknown, void> = useMutation<void, unknown, void>({
       mutationFn: logout,
       onSettled: finishSignOut,
-   })
+   });
    const logoutAllMutation: UseMutationResult<void, unknown, void> = useMutation<void, unknown, void>({
       mutationFn: logoutAll,
       onSettled: finishSignOut,
-   })
-   const isSigningOut: boolean = logoutMutation.isPending || logoutAllMutation.isPending
+   });
+   const isSigningOut: boolean = logoutMutation.isPending || logoutAllMutation.isPending;
 
    return (
       <div ref={containerRef} className="relative">
@@ -111,7 +111,7 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
             </div>
          )}
       </div>
-   )
+   );
 }
 
-export default UserMenu
+export default UserMenu;

@@ -1,23 +1,22 @@
-import { Armchair, Crown, QrCode, Star, type LucideIcon } from 'lucide-react'
-import type { ReactElement } from 'react'
-import Logo from '@/components/brand/Logo'
+import { Armchair, Crown, QrCode, Star, type LucideIcon } from 'lucide-react';
+import type { ReactElement } from 'react';
+import Logo from '@/components/brand/Logo';
 
 interface ShowcaseBenefit {
-   icon: LucideIcon
-   title: string
-   description: string
+   icon: LucideIcon;
+   title: string;
+   description: string;
 }
 
 const SHOWCASE_BENEFITS: ShowcaseBenefit[] = [
    { icon: Armchair, title: 'Chọn ghế realtime', description: 'Giữ chỗ tức thì, không lo trùng ghế' },
    { icon: QrCode, title: 'Vé QR điện tử', description: 'Quét mã là vào phòng chiếu' },
    { icon: Crown, title: 'Tích điểm thành viên', description: 'Mỗi lần xem phim là một lần tích lũy' },
-]
+];
 
 const FILM_STRIP_STYLE: Record<string, string> = {
-   backgroundImage:
-      'repeating-linear-gradient(to bottom, rgba(255,255,255,0.55) 0 14px, transparent 14px 30px)',
-}
+   backgroundImage: 'repeating-linear-gradient(to bottom, rgba(255,255,255,0.55) 0 14px, transparent 14px 30px)',
+};
 
 export function AuthShowcase(): ReactElement {
    return (
@@ -26,12 +25,22 @@ export function AuthShowcase(): ReactElement {
          <div className="pointer-events-none absolute -bottom-32 -right-20 size-[28rem] rounded-full bg-brand-800/30 blur-3xl" />
          <div
             className="pointer-events-none absolute inset-y-0 left-0 w-3 opacity-70"
-            style={{ ...FILM_STRIP_STYLE, backgroundSize: '6px 30px', backgroundRepeat: 'repeat-y', backgroundPosition: '3px 8px' }}
+            style={{
+               ...FILM_STRIP_STYLE,
+               backgroundSize: '6px 30px',
+               backgroundRepeat: 'repeat-y',
+               backgroundPosition: '3px 8px',
+            }}
             aria-hidden="true"
          />
          <div
             className="pointer-events-none absolute inset-y-0 right-0 w-3 opacity-70"
-            style={{ ...FILM_STRIP_STYLE, backgroundSize: '6px 30px', backgroundRepeat: 'repeat-y', backgroundPosition: '3px 8px' }}
+            style={{
+               ...FILM_STRIP_STYLE,
+               backgroundSize: '6px 30px',
+               backgroundRepeat: 'repeat-y',
+               backgroundPosition: '3px 8px',
+            }}
             aria-hidden="true"
          />
 
@@ -78,7 +87,7 @@ export function AuthShowcase(): ReactElement {
             Đặt vé xem phim trực tuyến
          </div>
       </aside>
-   )
+   );
 }
 
-export default AuthShowcase
+export default AuthShowcase;

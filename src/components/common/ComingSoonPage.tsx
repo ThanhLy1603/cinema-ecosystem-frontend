@@ -1,11 +1,11 @@
-import { ArrowLeft, type LucideIcon } from 'lucide-react'
-import type { ReactElement } from 'react'
-import LinkButton from '@/components/ui/LinkButton'
+import { ArrowLeft, type LucideIcon } from 'lucide-react';
+import type { ReactElement } from 'react';
+import LinkButton from '@/components/ui/LinkButton';
 
 interface ComingSoonPageProps {
-   title: string
-   description: string
-   icon: LucideIcon
+   title: string;
+   description: string;
+   icon: LucideIcon;
 }
 
 export function ComingSoonPage({ title, description, icon: Icon }: ComingSoonPageProps): ReactElement {
@@ -27,7 +27,7 @@ export function ComingSoonPage({ title, description, icon: Icon }: ComingSoonPag
             </LinkButton>
          </div>
       </section>
-   )
+   );
 }
 
-export default ComingSoonPage
+export default ComingSoonPage;

@@ -1,11 +1,11 @@
-import { CreditCard, Mail, MapPin, Phone } from 'lucide-react'
-import type { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '@/components/brand/Logo'
+import { CreditCard, Mail, MapPin, Phone } from 'lucide-react';
+import type { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
+import Logo from '@/components/brand/Logo';
 
 interface FooterLink {
-   label: string
-   to: string
+   label: string;
+   to: string;
 }
 
 const EXPLORE_LINKS: FooterLink[] = [
@@ -13,13 +13,13 @@ const EXPLORE_LINKS: FooterLink[] = [
    { label: 'Hệ thống rạp', to: '/cinemas' },
    { label: 'Khuyến mãi', to: '/promotions' },
    { label: 'Cộng đồng & Blog', to: '/community' },
-]
+];
 
 const ACCOUNT_LINKS: FooterLink[] = [
    { label: 'Đăng nhập', to: '/login' },
    { label: 'Đăng ký thành viên', to: '/register' },
    { label: 'Vé của tôi', to: '/tickets' },
-]
+];
 
 export function Footer(): ReactElement {
    return (
@@ -28,8 +28,8 @@ export function Footer(): ReactElement {
             <div className="space-y-4">
                <Logo />
                <p className="max-w-xs text-sm leading-relaxed text-ink-500">
-                  Đặt vé xem phim trực tuyến nhanh chóng, chọn ghế theo thời gian thực và nhận vé điện tử ngay trên
-                  điện thoại.
+                  Đặt vé xem phim trực tuyến nhanh chóng, chọn ghế theo thời gian thực và nhận vé điện tử ngay trên điện
+                  thoại.
                </p>
             </div>
 
@@ -88,7 +88,7 @@ export function Footer(): ReactElement {
             </p>
          </div>
       </footer>
-   )
+   );
 }
 
-export default Footer
+export default Footer;

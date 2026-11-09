@@ -1,15 +1,15 @@
-import { Building2, Clapperboard, MessagesSquare, Tag, Ticket } from 'lucide-react'
-import type { ReactElement } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import ComingSoonPage from '@/components/common/ComingSoonPage'
-import ForbiddenPage from '@/components/common/ForbiddenPage'
-import AuthLayout from '@/components/layout/AuthLayout'
-import MainLayout from '@/components/layout/MainLayout'
-import GuestRoute from '@/features/auth/guards/GuestRoute'
-import ProtectedRoute from '@/features/auth/guards/ProtectedRoute'
-import LoginPage from '@/features/auth/pages/LoginPage'
-import RegisterPage from '@/features/auth/pages/RegisterPage'
-import HomePage from '@/features/home/pages/HomePage'
+import { Building2, Clapperboard, MessagesSquare, Tag, Ticket } from 'lucide-react';
+import type { ReactElement } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import ComingSoonPage from '@/components/common/ComingSoonPage';
+import ForbiddenPage from '@/components/common/ForbiddenPage';
+import AuthLayout from '@/components/layout/AuthLayout';
+import MainLayout from '@/components/layout/MainLayout';
+import GuestRoute from '@/features/auth/guards/GuestRoute';
+import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
+import LoginPage from '@/features/auth/pages/LoginPage';
+import RegisterPage from '@/features/auth/pages/RegisterPage';
+import HomePage from '@/features/home/pages/HomePage';
 
 export function AppRoutes(): ReactElement {
    return (
@@ -79,7 +79,7 @@ export function AppRoutes(): ReactElement {
             <Route path="*" element={<Navigate to="/" replace />} />
          </Route>
       </Routes>
-   )
+   );
 }
 
-export default AppRoutes
+export default AppRoutes;

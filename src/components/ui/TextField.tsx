@@ -1,22 +1,22 @@
-import { CircleAlert, Eye, EyeOff, type LucideIcon } from 'lucide-react'
-import { useState, type ReactElement } from 'react'
-import { cn } from '@/lib/utils'
+import { CircleAlert, Eye, EyeOff, type LucideIcon } from 'lucide-react';
+import { useState, type ReactElement } from 'react';
+import { cn } from '@/lib/utils';
 
 interface TextFieldProps {
-   id: string
-   label: string
-   value: string
-   onChange: (value: string) => void
-   type?: 'text' | 'email' | 'password' | 'tel'
-   icon?: LucideIcon
-   error?: string
-   hint?: string
-   placeholder?: string
-   autoComplete?: string
-   disabled?: boolean
-   optional?: boolean
-   maxLength?: number
-   autoFocus?: boolean
+   id: string;
+   label: string;
+   value: string;
+   onChange: (value: string) => void;
+   type?: 'text' | 'email' | 'password' | 'tel';
+   icon?: LucideIcon;
+   error?: string;
+   hint?: string;
+   placeholder?: string;
+   autoComplete?: string;
+   disabled?: boolean;
+   optional?: boolean;
+   maxLength?: number;
+   autoFocus?: boolean;
 }
 
 export function TextField({
@@ -35,11 +35,11 @@ export function TextField({
    maxLength,
    autoFocus = false,
 }: TextFieldProps): ReactElement {
-   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false)
-   const isPasswordField: boolean = type === 'password'
-   const inputType: string = isPasswordField && isPasswordVisible ? 'text' : type
-   const messageId: string = `${id}-message`
-   const hasError: boolean = Boolean(error)
+   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
+   const isPasswordField: boolean = type === 'password';
+   const inputType: string = isPasswordField && isPasswordVisible ? 'text' : type;
+   const messageId: string = `${id}-message`;
+   const hasError: boolean = Boolean(error);
 
    return (
       <div className="space-y-1.5">
@@ -105,7 +105,7 @@ export function TextField({
             )
          )}
       </div>
-   )
+   );
 }
 
-export default TextField
+export default TextField;

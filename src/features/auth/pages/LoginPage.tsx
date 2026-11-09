@@ -1,36 +1,36 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query'
-import { LogIn, Lock, Mail } from 'lucide-react'
-import { useState, type FormEvent, type ReactElement } from 'react'
-import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom'
-import { login } from '@/api/authApi'
-import Alert from '@/components/ui/Alert'
-import Button from '@/components/ui/Button'
-import TextField from '@/components/ui/TextField'
-import { getErrorMessage, getFieldErrors } from '@/lib/apiError'
-import { useAuthStore } from '@/stores/useAuthStore'
-import type { LoginRequest, LoginResponse, User } from '@/types/auth'
-import GoogleAuthSection from '../components/GoogleAuthSection'
-import { getRedirectPath } from '../utils/redirect'
-import { validateEmail, validateLoginPassword } from '../utils/validation'
+import { useMutation, type UseMutationResult } from '@tanstack/react-query';
+import { LogIn, Lock, Mail } from 'lucide-react';
+import { useState, type FormEvent, type ReactElement } from 'react';
+import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
+import { login } from '@/api/authApi';
+import Alert from '@/components/ui/Alert';
+import Button from '@/components/ui/Button';
+import TextField from '@/components/ui/TextField';
+import { getErrorMessage, getFieldErrors } from '@/lib/apiError';
+import { useAuthStore } from '@/stores/useAuthStore';
+import type { LoginRequest, LoginResponse, User } from '@/types/auth';
+import GoogleAuthSection from '../components/GoogleAuthSection';
+import { getRedirectPath } from '../utils/redirect';
+import { validateEmail, validateLoginPassword } from '../utils/validation';
 
 interface LoginFieldErrors {
-   email?: string
-   password?: string
+   email?: string;
+   password?: string;
 }
 
 export function LoginPage(): ReactElement {
-   const navigate: NavigateFunction = useNavigate()
-   const location: Location = useLocation()
-   const setAuth: (user: User) => void = useAuthStore((authState) => authState.setAuth)
-   const [email, setEmail] = useState<string>('')
-   const [password, setPassword] = useState<string>('')
-   const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({})
-   const redirectPath: string = getRedirectPath(location.state)
-   const isRedirectedFromProtectedPage: boolean = redirectPath !== '/'
+   const navigate: NavigateFunction = useNavigate();
+   const location: Location = useLocation();
+   const setAuth: (user: User) => void = useAuthStore((authState) => authState.setAuth);
+   const [email, setEmail] = useState<string>('');
+   const [password, setPassword] = useState<string>('');
+   const [fieldErrors, setFieldErrors] = useState<LoginFieldErrors>({});
+   const redirectPath: string = getRedirectPath(location.state);
+   const isRedirectedFromProtectedPage: boolean = redirectPath !== '/';
 
    function handleLoginSuccess(loginResponse: LoginResponse): void {
-      setAuth(loginResponse.user)
-      navigate(redirectPath, { replace: true })
+      setAuth(loginResponse.user);
+      navigate(redirectPath, { replace: true });
    }
 
    const loginMutation: UseMutationResult<LoginResponse, unknown, LoginRequest> = useMutation<
@@ -40,22 +40,22 @@ export function LoginPage(): ReactElement {
    >({
       mutationFn: login,
       onSuccess: handleLoginSuccess,
-   })
+   });
 
-   const serverFieldErrors: Record<string, string> = loginMutation.isError ? getFieldErrors(loginMutation.error) : {}
-   const hasServerFieldErrors: boolean = Object.keys(serverFieldErrors).length > 0
+   const serverFieldErrors: Record<string, string> = loginMutation.isError ? getFieldErrors(loginMutation.error) : {};
+   const hasServerFieldErrors: boolean = Object.keys(serverFieldErrors).length > 0;
 
    function handleSubmit(formEvent: FormEvent<HTMLFormElement>): void {
-      formEvent.preventDefault()
+      formEvent.preventDefault();
       const nextFieldErrors: LoginFieldErrors = {
          email: validateEmail(email),
          password: validateLoginPassword(password),
-      }
-      setFieldErrors(nextFieldErrors)
+      };
+      setFieldErrors(nextFieldErrors);
       if (nextFieldErrors.email || nextFieldErrors.password) {
-         return
+         return;
       }
-      loginMutation.mutate({ email: email.trim(), password })
+      loginMutation.mutate({ email: email.trim(), password });
    }
 
    return (
@@ -120,7 +120,7 @@ export function LoginPage(): ReactElement {
             </Link>
          </p>
       </div>
-   )
+   );
 }
 
-export default LoginPage
+export default LoginPage;

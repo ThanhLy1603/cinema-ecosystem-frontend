@@ -1,16 +1,16 @@
-import { Menu, X } from 'lucide-react'
-import { useState, type ReactElement } from 'react'
-import { NavLink } from 'react-router-dom'
-import Logo from '@/components/brand/Logo'
-import LinkButton from '@/components/ui/LinkButton'
-import { cn } from '@/lib/utils'
-import { useAuthStore } from '@/stores/useAuthStore'
-import type { User } from '@/types/auth'
-import UserMenu from './UserMenu'
+import { Menu, X } from 'lucide-react';
+import { useState, type ReactElement } from 'react';
+import { NavLink } from 'react-router-dom';
+import Logo from '@/components/brand/Logo';
+import LinkButton from '@/components/ui/LinkButton';
+import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/useAuthStore';
+import type { User } from '@/types/auth';
+import UserMenu from './UserMenu';
 
 interface NavItem {
-   label: string
-   to: string
+   label: string;
+   to: string;
 }
 
 const NAV_ITEMS: NavItem[] = [
@@ -19,22 +19,22 @@ const NAV_ITEMS: NavItem[] = [
    { label: 'Rạp chiếu', to: '/cinemas' },
    { label: 'Khuyến mãi', to: '/promotions' },
    { label: 'Cộng đồng', to: '/community' },
-]
+];
 
 function getNavLinkClassName(isActive: boolean): string {
    return cn(
       'relative rounded-lg px-3 py-2 text-sm font-semibold transition-colors',
       isActive ? 'text-brand-700' : 'text-ink-600 hover:text-brand-700',
-   )
+   );
 }
 
 export function Navbar(): ReactElement {
-   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false)
-   const user: User | null = useAuthStore((authState) => authState.user)
-   const isLoading: boolean = useAuthStore((authState) => authState.isLoading)
+   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+   const user: User | null = useAuthStore((authState) => authState.user);
+   const isLoading: boolean = useAuthStore((authState) => authState.isLoading);
 
    function closeMobileMenu(): void {
-      setIsMobileMenuOpen(false)
+      setIsMobileMenuOpen(false);
    }
 
    return (
@@ -121,7 +121,7 @@ export function Navbar(): ReactElement {
             </div>
          )}
       </header>
-   )
+   );
 }
 
-export default Navbar
+export default Navbar;

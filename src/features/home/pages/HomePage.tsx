@@ -9,24 +9,24 @@ import {
    Sparkles,
    Ticket,
    type LucideIcon,
-} from 'lucide-react'
-import type { ReactElement } from 'react'
-import LinkButton from '@/components/ui/LinkButton'
-import { useAuthStore } from '@/stores/useAuthStore'
-import type { User } from '@/types/auth'
-import HeroIllustration from '../components/HeroIllustration'
+} from 'lucide-react';
+import type { ReactElement } from 'react';
+import LinkButton from '@/components/ui/LinkButton';
+import { useAuthStore } from '@/stores/useAuthStore';
+import type { User } from '@/types/auth';
+import HeroIllustration from '../components/HeroIllustration';
 
 interface FeatureItem {
-   icon: LucideIcon
-   title: string
-   description: string
-   accentClassName: string
+   icon: LucideIcon;
+   title: string;
+   description: string;
+   accentClassName: string;
 }
 
 interface StepItem {
-   icon: LucideIcon
-   title: string
-   description: string
+   icon: LucideIcon;
+   title: string;
+   description: string;
 }
 
 const FEATURE_ITEMS: FeatureItem[] = [
@@ -54,21 +54,29 @@ const FEATURE_ITEMS: FeatureItem[] = [
       description: 'Mỗi giao dịch đều được tích điểm, thăng hạng từ STAR lên GOLD và DIAMOND.',
       accentClassName: 'from-ink-50 to-ink-100 text-ink-700',
    },
-]
+];
 
 const STEP_ITEMS: StepItem[] = [
-   { icon: Clapperboard, title: 'Chọn phim & suất chiếu', description: 'Duyệt phim đang chiếu và chọn rạp, giờ chiếu phù hợp.' },
-   { icon: Popcorn, title: 'Chọn ghế & combo', description: 'Chọn vị trí ngồi yêu thích và thêm combo bắp nước nếu muốn.' },
+   {
+      icon: Clapperboard,
+      title: 'Chọn phim & suất chiếu',
+      description: 'Duyệt phim đang chiếu và chọn rạp, giờ chiếu phù hợp.',
+   },
+   {
+      icon: Popcorn,
+      title: 'Chọn ghế & combo',
+      description: 'Chọn vị trí ngồi yêu thích và thêm combo bắp nước nếu muốn.',
+   },
    { icon: Ticket, title: 'Thanh toán & nhận vé', description: 'Thanh toán trực tuyến và nhận vé QR ngay lập tức.' },
-]
+];
 
 function getFirstName(user: User): string {
-   const words: string[] = user.fullName.trim().split(/\s+/)
-   return words[words.length - 1] ?? user.fullName
+   const words: string[] = user.fullName.trim().split(/\s+/);
+   return words[words.length - 1] ?? user.fullName;
 }
 
 export function HomePage(): ReactElement {
-   const user: User | null = useAuthStore((authState) => authState.user)
+   const user: User | null = useAuthStore((authState) => authState.user);
 
    return (
       <>
@@ -225,7 +233,7 @@ export function HomePage(): ReactElement {
             </section>
          )}
       </>
-   )
+   );
 }
 
-export default HomePage
+export default HomePage;

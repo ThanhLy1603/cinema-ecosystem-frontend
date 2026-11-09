@@ -1,42 +1,42 @@
-import type { RefObject } from 'react'
-import type { GoogleAccountsId } from '@/types/google'
+import type { RefObject } from 'react';
+import type { GoogleAccountsId } from '@/types/google';
 
-const GOOGLE_SCRIPT_URL: string = 'https://accounts.google.com/gsi/client'
-const MAX_BUTTON_WIDTH: number = 400
+const GOOGLE_SCRIPT_URL: string = 'https://accounts.google.com/gsi/client';
+const MAX_BUTTON_WIDTH: number = 400;
 
-let googleAccountsIdPromise: Promise<GoogleAccountsId> | null = null
+let googleAccountsIdPromise: Promise<GoogleAccountsId> | null = null;
 
 function loadGoogleAccountsId(): Promise<GoogleAccountsId> {
    if (googleAccountsIdPromise !== null) {
-      return googleAccountsIdPromise
+      return googleAccountsIdPromise;
    }
 
    googleAccountsIdPromise = new Promise<GoogleAccountsId>((resolve, reject): void => {
-      const scriptElement: HTMLScriptElement = document.createElement('script')
-      scriptElement.src = GOOGLE_SCRIPT_URL
-      scriptElement.async = true
+      const scriptElement: HTMLScriptElement = document.createElement('script');
+      scriptElement.src = GOOGLE_SCRIPT_URL;
+      scriptElement.async = true;
 
       function handleLoad(): void {
-         const googleAccountsId: GoogleAccountsId | undefined = window.google?.accounts.id
+         const googleAccountsId: GoogleAccountsId | undefined = window.google?.accounts.id;
          if (googleAccountsId) {
-            resolve(googleAccountsId)
-            return
+            resolve(googleAccountsId);
+            return;
          }
-         handleError()
+         handleError();
       }
 
       function handleError(): void {
-         googleAccountsIdPromise = null
-         scriptElement.remove()
-         reject(new Error('Không tải được Google Identity Services'))
+         googleAccountsIdPromise = null;
+         scriptElement.remove();
+         reject(new Error('Không tải được Google Identity Services'));
       }
 
-      scriptElement.addEventListener('load', handleLoad)
-      scriptElement.addEventListener('error', handleError)
-      document.head.appendChild(scriptElement)
-   })
+      scriptElement.addEventListener('load', handleLoad);
+      scriptElement.addEventListener('error', handleError);
+      document.head.appendChild(scriptElement);
+   });
 
-   return googleAccountsIdPromise
+   return googleAccountsIdPromise;
 }
 
 export function mountGoogleButton(
@@ -45,17 +45,17 @@ export function mountGoogleButton(
    onCredential: (idToken: string) => void,
    onLoadError: () => void,
 ): () => void {
-   let isCancelled: boolean = false
+   let isCancelled: boolean = false;
 
    function renderButton(googleAccountsId: GoogleAccountsId): void {
-      const containerElement: HTMLDivElement | null = containerRef.current
+      const containerElement: HTMLDivElement | null = containerRef.current;
       if (isCancelled || containerElement === null) {
-         return
+         return;
       }
       googleAccountsId.initialize({
          client_id: googleClientId,
          callback: (googleCredentialResponse) => onCredential(googleCredentialResponse.credential),
-      })
+      });
       googleAccountsId.renderButton(containerElement, {
          type: 'standard',
          theme: 'outline',
@@ -64,19 +64,19 @@ export function mountGoogleButton(
          shape: 'pill',
          locale: 'vi',
          width: Math.min(containerElement.offsetWidth, MAX_BUTTON_WIDTH),
-      })
+      });
    }
 
    function handleLoadError(): void {
       if (!isCancelled) {
-         onLoadError()
+         onLoadError();
       }
    }
 
-   loadGoogleAccountsId().then(renderButton, handleLoadError)
+   loadGoogleAccountsId().then(renderButton, handleLoadError);
 
    return (): void => {
-      isCancelled = true
-      containerRef.current?.replaceChildren()
-   }
+      isCancelled = true;
+      containerRef.current?.replaceChildren();
+   };
 }

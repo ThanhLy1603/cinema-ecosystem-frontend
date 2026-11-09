@@ -1,7 +1,7 @@
-import type { ReactElement } from 'react'
-import { Outlet } from 'react-router-dom'
-import Footer from './Footer'
-import Navbar from './Navbar'
+import type { ReactElement } from 'react';
+import { Outlet } from 'react-router-dom';
+import Footer from './Footer';
+import Navbar from './Navbar';
 
 export function MainLayout(): ReactElement {
    return (
@@ -12,7 +12,7 @@ export function MainLayout(): ReactElement {
          </main>
          <Footer />
       </div>
-   )
+   );
 }
 
-export default MainLayout
+export default MainLayout;

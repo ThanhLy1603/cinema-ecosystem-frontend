@@ -1,14 +1,14 @@
-import axios, { type AxiosError, type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios'
-import { useAuthStore } from '@/stores/useAuthStore'
-import type { ApiResponse } from '@/types/api'
-import type { RefreshTokenResponse } from '@/types/auth'
+import axios, { type AxiosError, type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import { useAuthStore } from '@/stores/useAuthStore';
+import type { ApiResponse } from '@/types/api';
+import type { RefreshTokenResponse } from '@/types/auth';
 
 interface FailedRequestQueueItem {
-   resolve: () => void
-   reject: (error: unknown) => void
+   resolve: () => void;
+   reject: (error: unknown) => void;
 }
 
-type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean }
+type RetriableRequestConfig = InternalAxiosRequestConfig & { _retry?: boolean };
 
 const CREDENTIAL_ENDPOINTS: string[] = [
    '/auth/login',
@@ -16,30 +16,30 @@ const CREDENTIAL_ENDPOINTS: string[] = [
    '/auth/register',
    '/auth/forgot-password',
    '/auth/reset-password',
-]
+];
 
 const CSRF_GUARD_HEADERS: Record<string, string> = {
    'X-Requested-With': 'XMLHttpRequest',
-}
+};
 
-let isRefreshing: boolean = false
-let failedQueue: FailedRequestQueueItem[] = []
+let isRefreshing: boolean = false;
+let failedQueue: FailedRequestQueueItem[] = [];
 
 function processQueue(error: unknown): void {
    for (const failedRequestQueueItem of failedQueue) {
       if (error) {
-         failedRequestQueueItem.reject(error)
+         failedRequestQueueItem.reject(error);
       } else {
-         failedRequestQueueItem.resolve()
+         failedRequestQueueItem.resolve();
       }
    }
-   failedQueue = []
+   failedQueue = [];
 }
 
 function waitForTokenRefresh(): Promise<void> {
    return new Promise<void>((resolve, reject): void => {
-      failedQueue.push({ resolve, reject })
-   })
+      failedQueue.push({ resolve, reject });
+   });
 }
 
 export const axiosInstance: AxiosInstance = axios.create({
@@ -49,59 +49,62 @@ export const axiosInstance: AxiosInstance = axios.create({
       ...CSRF_GUARD_HEADERS,
    },
    withCredentials: true,
-})
+});
 
 async function handleResponseError(axiosError: AxiosError<ApiResponse>): Promise<unknown> {
    const retriableRequestConfig: RetriableRequestConfig | undefined = axiosError.config as
-      | RetriableRequestConfig
-      | undefined
+      RetriableRequestConfig | undefined;
 
    if (!retriableRequestConfig || axiosError.response?.status !== 401) {
-      return Promise.reject(axiosError)
+      return Promise.reject(axiosError);
    }
 
-   const requestUrl: string = retriableRequestConfig.url ?? ''
+   const requestUrl: string = retriableRequestConfig.url ?? '';
    const isCredentialRequest: boolean = CREDENTIAL_ENDPOINTS.some((credentialEndpoint) =>
       requestUrl.includes(credentialEndpoint),
-   )
+   );
    if (isCredentialRequest) {
-      return Promise.reject(axiosError)
+      return Promise.reject(axiosError);
    }
 
-   const isRefreshRequest: boolean = requestUrl.includes('/auth/refresh-token')
+   const isRefreshRequest: boolean = requestUrl.includes('/auth/refresh-token');
    if (isRefreshRequest || retriableRequestConfig._retry) {
-      useAuthStore.getState().logout()
-      return Promise.reject(axiosError)
+      useAuthStore.getState().logout();
+      return Promise.reject(axiosError);
    }
 
-   retriableRequestConfig._retry = true
+   retriableRequestConfig._retry = true;
 
    if (isRefreshing) {
-      await waitForTokenRefresh()
-      return axiosInstance(retriableRequestConfig)
+      await waitForTokenRefresh();
+      return axiosInstance(retriableRequestConfig);
    }
 
-   isRefreshing = true
+   isRefreshing = true;
 
    try {
       const refreshAxiosResponse: AxiosResponse<ApiResponse<RefreshTokenResponse>> = await axios.post<
          ApiResponse<RefreshTokenResponse>
-      >(`${axiosInstance.defaults.baseURL}/auth/refresh-token`, {}, { withCredentials: true, headers: CSRF_GUARD_HEADERS })
+      >(
+         `${axiosInstance.defaults.baseURL}/auth/refresh-token`,
+         {},
+         { withCredentials: true, headers: CSRF_GUARD_HEADERS },
+      );
 
-      useAuthStore.getState().setAuth(refreshAxiosResponse.data.data.user)
+      useAuthStore.getState().setAuth(refreshAxiosResponse.data.data.user);
 
-      processQueue(null)
+      processQueue(null);
 
-      return axiosInstance(retriableRequestConfig)
+      return axiosInstance(retriableRequestConfig);
    } catch (refreshError: unknown) {
-      processQueue(refreshError)
-      useAuthStore.getState().logout()
-      return Promise.reject(refreshError)
+      processQueue(refreshError);
+      useAuthStore.getState().logout();
+      return Promise.reject(refreshError);
    } finally {
-      isRefreshing = false
+      isRefreshing = false;
    }
 }
 
-axiosInstance.interceptors.response.use((axiosResponse: AxiosResponse) => axiosResponse, handleResponseError)
+axiosInstance.interceptors.response.use((axiosResponse: AxiosResponse) => axiosResponse, handleResponseError);
 
-export default axiosInstance
+export default axiosInstance;

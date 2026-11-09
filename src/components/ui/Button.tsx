@@ -1,13 +1,13 @@
-import { LoaderCircle } from 'lucide-react'
-import type { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react'
-import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/buttonStyles'
+import { LoaderCircle } from 'lucide-react';
+import type { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
+import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/buttonStyles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-   variant?: ButtonVariant
-   size?: ButtonSize
-   isLoading?: boolean
-   fullWidth?: boolean
-   icon?: ReactNode
+   variant?: ButtonVariant;
+   size?: ButtonSize;
+   isLoading?: boolean;
+   fullWidth?: boolean;
+   icon?: ReactNode;
 }
 
 export function Button({
@@ -32,7 +32,7 @@ export function Button({
          {isLoading ? <LoaderCircle className="size-4 animate-spin" aria-hidden="true" /> : icon}
          {children}
       </button>
-   )
+   );
 }
 
-export default Button
+export default Button;

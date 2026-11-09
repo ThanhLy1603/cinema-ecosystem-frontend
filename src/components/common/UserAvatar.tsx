@@ -1,15 +1,15 @@
-import { useState, type ReactElement } from 'react'
-import { getInitials } from '@/lib/initials'
-import { cn } from '@/lib/utils'
-import type { User } from '@/types/auth'
+import { useState, type ReactElement } from 'react';
+import { getInitials } from '@/lib/initials';
+import { cn } from '@/lib/utils';
+import type { User } from '@/types/auth';
 
 interface UserAvatarProps {
-   user: User
-   className?: string
+   user: User;
+   className?: string;
 }
 
 export function UserAvatar({ user, className }: UserAvatarProps): ReactElement {
-   const [hasImageFailed, setHasImageFailed] = useState<boolean>(false)
+   const [hasImageFailed, setHasImageFailed] = useState<boolean>(false);
 
    if (user.avatarUrl && !hasImageFailed) {
       return (
@@ -19,7 +19,7 @@ export function UserAvatar({ user, className }: UserAvatarProps): ReactElement {
             onError={() => setHasImageFailed(true)}
             className={cn('size-10 rounded-full object-cover ring-2 ring-white', className)}
          />
-      )
+      );
    }
 
    return (
@@ -32,7 +32,7 @@ export function UserAvatar({ user, className }: UserAvatarProps): ReactElement {
       >
          {getInitials(user.fullName)}
       </span>
-   )
+   );
 }
 
-export default UserAvatar
+export default UserAvatar;

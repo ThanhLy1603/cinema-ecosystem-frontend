@@ -1,5 +1,5 @@
-import { Ticket } from 'lucide-react'
-import type { ReactElement } from 'react'
+import { Ticket } from 'lucide-react';
+import type { ReactElement } from 'react';
 
 export function FullPageSpinner(): ReactElement {
    return (
@@ -12,7 +12,7 @@ export function FullPageSpinner(): ReactElement {
             <p className="text-sm font-medium text-ink-500">Đang chuẩn bị rạp chiếu...</p>
          </div>
       </div>
-   )
+   );
 }
 
-export default FullPageSpinner
+export default FullPageSpinner;

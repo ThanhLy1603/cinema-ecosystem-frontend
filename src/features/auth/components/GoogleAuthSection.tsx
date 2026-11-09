@@ -1,29 +1,29 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query'
-import { useEffect, useRef, useState, type ReactElement, type RefObject } from 'react'
-import { useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom'
-import { loginWithGoogle } from '@/api/authApi'
-import Alert from '@/components/ui/Alert'
-import { getErrorMessage } from '@/lib/apiError'
-import { cn } from '@/lib/utils'
-import { useAuthStore } from '@/stores/useAuthStore'
-import type { GoogleLoginRequest, LoginResponse, User } from '@/types/auth'
-import { mountGoogleButton } from '../services/googleButtonService'
-import { getRedirectPath } from '../utils/redirect'
+import { useMutation, type UseMutationResult } from '@tanstack/react-query';
+import { useEffect, useRef, useState, type ReactElement, type RefObject } from 'react';
+import { useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
+import { loginWithGoogle } from '@/api/authApi';
+import Alert from '@/components/ui/Alert';
+import { getErrorMessage } from '@/lib/apiError';
+import { cn } from '@/lib/utils';
+import { useAuthStore } from '@/stores/useAuthStore';
+import type { GoogleLoginRequest, LoginResponse, User } from '@/types/auth';
+import { mountGoogleButton } from '../services/googleButtonService';
+import { getRedirectPath } from '../utils/redirect';
 
-const GOOGLE_CLIENT_ID: string = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? ''
-const SCRIPT_ERROR_MESSAGE: string = 'Không tải được nút đăng nhập Google. Vui lòng kiểm tra kết nối và tải lại trang.'
+const GOOGLE_CLIENT_ID: string = import.meta.env.VITE_GOOGLE_CLIENT_ID ?? '';
+const SCRIPT_ERROR_MESSAGE: string = 'Không tải được nút đăng nhập Google. Vui lòng kiểm tra kết nối và tải lại trang.';
 
 export function GoogleAuthSection(): ReactElement | null {
-   const navigate: NavigateFunction = useNavigate()
-   const location: Location = useLocation()
-   const setAuth: (user: User) => void = useAuthStore((authState) => authState.setAuth)
-   const buttonContainerRef: RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null)
-   const [hasScriptError, setHasScriptError] = useState<boolean>(false)
-   const redirectPath: string = getRedirectPath(location.state)
+   const navigate: NavigateFunction = useNavigate();
+   const location: Location = useLocation();
+   const setAuth: (user: User) => void = useAuthStore((authState) => authState.setAuth);
+   const buttonContainerRef: RefObject<HTMLDivElement | null> = useRef<HTMLDivElement>(null);
+   const [hasScriptError, setHasScriptError] = useState<boolean>(false);
+   const redirectPath: string = getRedirectPath(location.state);
 
    function handleGoogleLoginSuccess(loginResponse: LoginResponse): void {
-      setAuth(loginResponse.user)
-      navigate(redirectPath, { replace: true })
+      setAuth(loginResponse.user);
+      navigate(redirectPath, { replace: true });
    }
 
    const googleLoginMutation: UseMutationResult<LoginResponse, unknown, GoogleLoginRequest> = useMutation<
@@ -33,8 +33,8 @@ export function GoogleAuthSection(): ReactElement | null {
    >({
       mutationFn: loginWithGoogle,
       onSuccess: handleGoogleLoginSuccess,
-   })
-   const { mutate } = googleLoginMutation
+   });
+   const { mutate } = googleLoginMutation;
 
    useEffect(
       () =>
@@ -47,10 +47,10 @@ export function GoogleAuthSection(): ReactElement | null {
                  () => setHasScriptError(true),
               ),
       [mutate],
-   )
+   );
 
    if (GOOGLE_CLIENT_ID === '') {
-      return null
+      return null;
    }
 
    return (
@@ -76,7 +76,7 @@ export function GoogleAuthSection(): ReactElement | null {
             <p className="text-center text-sm text-ink-500">Đang đăng nhập bằng Google...</p>
          )}
       </div>
-   )
+   );
 }
 
-export default GoogleAuthSection
+export default GoogleAuthSection;

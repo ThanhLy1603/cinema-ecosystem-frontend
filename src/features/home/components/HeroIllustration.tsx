@@ -1,5 +1,5 @@
-import { CircleCheck, Clapperboard, Popcorn, QrCode, Star } from 'lucide-react'
-import type { ReactElement } from 'react'
+import { CircleCheck, Clapperboard, Popcorn, QrCode, Star } from 'lucide-react';
+import type { ReactElement } from 'react';
 
 export function HeroIllustration(): ReactElement {
    return (
@@ -74,7 +74,7 @@ export function HeroIllustration(): ReactElement {
             <Popcorn className="size-8" />
          </div>
       </div>
-   )
+   );
 }
 
-export default HeroIllustration
+export default HeroIllustration;

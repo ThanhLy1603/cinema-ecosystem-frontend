@@ -1,19 +1,23 @@
-import { Ticket } from 'lucide-react'
-import type { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
-import { cn } from '@/lib/utils'
+import { Ticket } from 'lucide-react';
+import type { ReactElement } from 'react';
+import { Link } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
-type LogoTone = 'default' | 'light'
+type LogoTone = 'default' | 'light';
 
 interface LogoProps {
-   tone?: LogoTone
-   className?: string
+   tone?: LogoTone;
+   className?: string;
 }
 
 export function Logo({ tone = 'default', className }: LogoProps): ReactElement {
-   const isLight: boolean = tone === 'light'
+   const isLight: boolean = tone === 'light';
    return (
-      <Link to="/" aria-label="CinemaSphere - Trang chủ" className={cn('group inline-flex items-center gap-2.5', className)}>
+      <Link
+         to="/"
+         aria-label="CinemaSphere - Trang chủ"
+         className={cn('group inline-flex items-center gap-2.5', className)}
+      >
          <span
             className={cn(
                'relative grid size-10 place-items-center rounded-xl text-white transition-transform duration-200 group-hover:-rotate-6',
@@ -29,7 +33,7 @@ export function Logo({ tone = 'default', className }: LogoProps): ReactElement {
             Cinema<span className={isLight ? 'text-gold-300' : 'text-brand-600'}>Sphere</span>
          </span>
       </Link>
-   )
+   );
 }
 
-export default Logo
+export default Logo;

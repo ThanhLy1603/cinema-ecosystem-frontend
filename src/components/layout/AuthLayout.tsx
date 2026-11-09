@@ -1,8 +1,8 @@
-import { ArrowLeft } from 'lucide-react'
-import type { ReactElement } from 'react'
-import { Link, Outlet } from 'react-router-dom'
-import Logo from '@/components/brand/Logo'
-import AuthShowcase from './AuthShowcase'
+import { ArrowLeft } from 'lucide-react';
+import type { ReactElement } from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import Logo from '@/components/brand/Logo';
+import AuthShowcase from './AuthShowcase';
 
 export function AuthLayout(): ReactElement {
    return (
@@ -32,7 +32,7 @@ export function AuthLayout(): ReactElement {
             <p className="px-6 pb-6 text-center text-xs text-ink-400">© 2026 CinemaSphere</p>
          </main>
       </div>
-   )
+   );
 }
 
-export default AuthLayout
+export default AuthLayout;

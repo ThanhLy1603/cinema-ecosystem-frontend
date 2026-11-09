@@ -1,12 +1,12 @@
-import type { ReactElement, ReactNode } from 'react'
-import { Link, type LinkProps } from 'react-router-dom'
-import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/buttonStyles'
+import type { ReactElement, ReactNode } from 'react';
+import { Link, type LinkProps } from 'react-router-dom';
+import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/buttonStyles';
 
 interface LinkButtonProps extends LinkProps {
-   variant?: ButtonVariant
-   size?: ButtonSize
-   fullWidth?: boolean
-   icon?: ReactNode
+   variant?: ButtonVariant;
+   size?: ButtonSize;
+   fullWidth?: boolean;
+   icon?: ReactNode;
 }
 
 export function LinkButton({
@@ -23,7 +23,7 @@ export function LinkButton({
          {icon}
          {children}
       </Link>
-   )
+   );
 }
 
-export default LinkButton
+export default LinkButton;

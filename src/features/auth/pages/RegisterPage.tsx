@@ -18,7 +18,7 @@ import {
    validateFullName,
    validateNewPassword,
    validatePhone,
-} from '../utils/validation';
+} from '@/lib/validation';
 
 interface RegisterFieldErrors {
    fullName?: string;

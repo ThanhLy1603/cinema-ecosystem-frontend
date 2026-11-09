@@ -13,7 +13,7 @@ import ChangePasswordForm from '../components/ChangePasswordForm';
 import EmailVerificationNotice from '../components/EmailVerificationNotice';
 import ProfileForm from '../components/ProfileForm';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
-import { getPrimaryRoleLabel } from '../utils/roleLabels';
+import { getPrimaryRoleLabel } from '@/lib/roleLabels';
 
 const TIER_LABELS: Record<MembershipTier, string> = {
    STAR: 'Star',

@@ -9,7 +9,11 @@ const ROLE_LABELS: Record<UserRole, string> = {
    ROLE_CUSTOMER: 'Thành viên',
 };
 
-export function getPrimaryRoleLabel(user: User): string {
+export function getRoleLabel(userRole: UserRole): string {
+   return ROLE_LABELS[userRole];
+}
+
+export function getPrimaryRoleLabel(user: Pick<User, 'roles'>): string {
    const primaryRole: UserRole | undefined = ROLE_PRIORITY.find((userRole) => user.roles.includes(userRole));
    return primaryRole ? ROLE_LABELS[primaryRole] : ROLE_LABELS.ROLE_CUSTOMER;
 }

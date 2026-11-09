@@ -7,12 +7,10 @@ export interface ApiResponse<T = unknown> {
 }
 export interface PageResponse<T = unknown> {
   content: T[];
-  pageNumber: number;
-  pageSize: number;
+  page: number;
+  size: number;
   totalElements: number;
   totalPages: number;
-  isFirst: boolean;
-  isLast: boolean;
 }
 
 export interface ApiError {

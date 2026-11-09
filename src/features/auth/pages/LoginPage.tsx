@@ -12,7 +12,7 @@ import type { LoginRequest, LoginResponse, User } from '@/types/auth';
 import GoogleAuthSection from '../components/GoogleAuthSection';
 import { getLoginNotice, PASSWORD_RESET_NOTICE } from '../utils/loginNotice';
 import { getRedirectPath } from '../utils/redirect';
-import { validateEmail, validateLoginPassword } from '../utils/validation';
+import { validateEmail, validateLoginPassword } from '@/lib/validation';
 
 interface LoginFieldErrors {
    email?: string;

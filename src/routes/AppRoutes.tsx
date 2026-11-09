@@ -14,6 +14,9 @@ import RegisterPage from '@/features/auth/pages/RegisterPage';
 import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage';
 import VerifyEmailPage from '@/features/auth/pages/VerifyEmailPage';
 import HomePage from '@/features/home/pages/HomePage';
+import CreateStaffPage from '@/features/user-management/pages/CreateStaffPage';
+import UserDetailPage from '@/features/user-management/pages/UserDetailPage';
+import UserManagementPage from '@/features/user-management/pages/UserManagementPage';
 
 export function AppRoutes(): ReactElement {
    return (
@@ -85,6 +88,11 @@ export function AppRoutes(): ReactElement {
                      />
                   }
                />
+            </Route>
+            <Route element={<ProtectedRoute roles={['ROLE_ADMIN', 'ROLE_MANAGER']} />}>
+               <Route path="/admin/users" element={<UserManagementPage />} />
+               <Route path="/admin/users/new" element={<CreateStaffPage />} />
+               <Route path="/admin/users/:userId" element={<UserDetailPage />} />
             </Route>
             <Route path="/forbidden" element={<ForbiddenPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils';
 import type { User } from '@/types/auth';
 
 interface UserAvatarProps {
-   user: User;
+   user: Pick<User, 'fullName' | 'avatarUrl'>;
    className?: string;
 }
 

@@ -11,7 +11,7 @@ import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
 import type { ResetPasswordRequest } from '@/types/auth';
 import PasswordStrength from '../components/PasswordStrength';
 import { PASSWORD_RESET_NOTICE } from '../utils/loginNotice';
-import { validateConfirmPassword, validateNewPassword } from '../utils/validation';
+import { validateConfirmPassword, validateNewPassword } from '@/lib/validation';
 
 interface ResetFieldErrors {
    newPassword?: string;

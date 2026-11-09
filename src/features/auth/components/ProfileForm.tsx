@@ -10,7 +10,7 @@ import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { Gender, UpdateProfileRequest, User, UserProfile } from '@/types/auth';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
-import { validateAvatarUrl, validateDateOfBirth, validateFullName, validatePhone } from '../utils/validation';
+import { validateAvatarUrl, validateDateOfBirth, validateFullName, validatePhone } from '@/lib/validation';
 
 interface ProfileFormProps {
    userProfile: UserProfile;

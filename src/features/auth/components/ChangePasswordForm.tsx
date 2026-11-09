@@ -9,7 +9,7 @@ import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { ChangePasswordRequest, LoginResponse, User } from '@/types/auth';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
-import { validateConfirmPassword, validateLoginPassword, validateNewPassword } from '../utils/validation';
+import { validateConfirmPassword, validateLoginPassword, validateNewPassword } from '@/lib/validation';
 import PasswordStrength from './PasswordStrength';
 
 interface ChangePasswordFormProps {

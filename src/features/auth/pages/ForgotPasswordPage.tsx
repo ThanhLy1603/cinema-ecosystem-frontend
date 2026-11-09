@@ -8,7 +8,7 @@ import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
 import { getErrorMessage, getFieldErrors } from '@/lib/apiError';
 import type { ForgotPasswordRequest } from '@/types/auth';
-import { validateEmail } from '../utils/validation';
+import { validateEmail } from '@/lib/validation';
 
 export function ForgotPasswordPage(): ReactElement {
    const [email, setEmail] = useState<string>('');

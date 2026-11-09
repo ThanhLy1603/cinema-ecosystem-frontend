@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
 import { cn } from '@/lib/utils';
-import { getPasswordStrength } from '../utils/validation';
+import { getPasswordStrength } from '@/lib/validation';
 
 interface PasswordStrengthProps {
    password: string;

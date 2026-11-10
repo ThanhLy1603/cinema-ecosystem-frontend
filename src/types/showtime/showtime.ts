@@ -77,3 +77,40 @@ export interface PublicMovieShowtimes {
   durationMinutes: number;
   showtimes: PublicShowtime[];
 }
+
+export type BulkItemStatus = 'READY' | 'CREATED' | 'CONFLICT' | 'INVALID';
+
+export interface BulkShowtimeItem {
+  hallId: number;
+  hallName: string | null;
+  movieId: number;
+  startTime: string;
+  endTime: string | null;
+  status: BulkItemStatus;
+  reason: string | null;
+  conflicts: ShowtimeConflict[];
+  showtimeId: number | null;
+}
+
+export interface BulkShowtimeResult {
+  dryRun: boolean;
+  totalCount: number;
+  acceptedCount: number;
+  conflictCount: number;
+  invalidCount: number;
+  items: BulkShowtimeItem[];
+}
+
+export interface ShowtimeDuplicateRequest {
+  sourceShowtimeId: number;
+  hallIds: number[];
+  dates: string[];
+  dryRun: boolean;
+}
+
+export interface ShowtimeDayCopyRequest {
+  cinemaId: number;
+  sourceDate: string;
+  targetDates: string[];
+  dryRun: boolean;
+}

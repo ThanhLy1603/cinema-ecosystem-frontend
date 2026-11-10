@@ -1,5 +1,5 @@
 import { useMutation, type UseMutationResult, type UseQueryResult } from '@tanstack/react-query';
-import { Ban, CalendarClock, Save, X } from 'lucide-react';
+import { Ban, CalendarClock, Copy, Save, X } from 'lucide-react';
 import { useEffect, useState, type FormEvent, type ReactElement } from 'react';
 import { cancelShowtime, createShowtime, updateShowtime } from '@/api/showtimeApi';
 import ShowtimePriceTable from '@/components/common/ShowtimePriceTable';
@@ -39,6 +39,7 @@ interface ShowtimeFormPanelProps {
    showtimeConflicts: ShowtimeConflict[];
    onConflict: (showtimeConflicts: ShowtimeConflict[], attemptedSlot: AttemptedSlot) => void;
    onClearConflict: () => void;
+   onDuplicate: (showtime: Showtime) => void;
    onSaved: (showtime: Showtime, message: string) => void;
    onClose: () => void;
 }
@@ -111,6 +112,7 @@ export function ShowtimeFormPanel({
    showtimeConflicts,
    onConflict,
    onClearConflict,
+   onDuplicate,
    onSaved,
    onClose,
 }: ShowtimeFormPanelProps): ReactElement {
@@ -243,14 +245,26 @@ export function ShowtimeFormPanel({
                      {editingShowtime ? 'Chi tiết suất chiếu' : 'Thêm suất chiếu'}
                   </h2>
                </div>
-               <button
-                  type="button"
-                  onClick={onClose}
-                  aria-label="Đóng"
-                  className="grid size-9 place-items-center rounded-xl text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900"
-               >
-                  <X className="size-5" aria-hidden="true" />
-               </button>
+               <div className="flex items-center gap-2">
+                  {editingShowtime && editingShowtime.status === 'ACTIVE' && (
+                     <Button
+                        variant="secondary"
+                        className="h-9 px-3"
+                        icon={<Copy className="size-4" aria-hidden="true" />}
+                        onClick={() => onDuplicate(editingShowtime)}
+                     >
+                        Nhân bản / lặp lại
+                     </Button>
+                  )}
+                  <button
+                     type="button"
+                     onClick={onClose}
+                     aria-label="Đóng"
+                     className="grid size-9 place-items-center rounded-xl text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900"
+                  >
+                     <X className="size-5" aria-hidden="true" />
+                  </button>
+               </div>
             </header>
 
             <form onSubmit={handleSubmit} noValidate className="flex min-h-0 flex-1 flex-col">

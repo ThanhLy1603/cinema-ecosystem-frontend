@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CopyPlus, Plus } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { listAdminShowtimes } from '@/api/showtimeApi';
 import { listHalls } from '@/api/hallApi';
@@ -20,6 +20,7 @@ import {
 } from '@/lib/common/vietnamTime';
 import type { CinemaOption, Hall } from '@/types/cinema/cinema';
 import type { MovieInfo, Showtime, ShowtimeConflict } from '@/types/showtime/showtime';
+import BulkShowtimePanel, { type BulkPanelState } from '../components/BulkShowtimePanel';
 import ShowtimeFormPanel, { type ShowtimePanelState } from '../components/ShowtimeFormPanel';
 import ShowtimeTimeline, { type AttemptedSlot } from '../components/ShowtimeTimeline';
 import { useSchedulableMovies } from '../hooks/useSchedulableMovies';
@@ -38,6 +39,7 @@ export function ShowtimeManagementPage(): ReactElement {
    const [selectedCinemaId, setSelectedCinemaId] = useState<string | null>(null);
    const [selectedDate, setSelectedDate] = useState<string>(todayInVietnam);
    const [panelState, setPanelState] = useState<ShowtimePanelState | null>(null);
+   const [bulkPanelState, setBulkPanelState] = useState<BulkPanelState | null>(null);
    const [conflictState, setConflictState] = useState<ConflictState | null>(null);
    const [successMessage, setSuccessMessage] = useState<string | null>(null);
    const refreshShowtimes: () => void = useShowtimeRefresh();
@@ -127,6 +129,30 @@ export function ShowtimeManagementPage(): ReactElement {
       setConflictState(null);
    }
 
+   function handleDuplicate(showtime: Showtime): void {
+      setPanelState(null);
+      setConflictState(null);
+      setSuccessMessage(null);
+      setBulkPanelState({ mode: 'duplicate', showtime });
+   }
+
+   function handleCopyDay(): void {
+      if (cinemaId === null) {
+         return;
+      }
+      setSuccessMessage(null);
+      setBulkPanelState({
+         mode: 'copyDay',
+         cinemaId,
+         sourceDate: selectedDate,
+         sourceShowtimeCount: showtimes.length,
+      });
+   }
+
+   function handleCloseBulkPanel(): void {
+      setBulkPanelState(null);
+   }
+
    return (
       <div className="w-full max-w-7xl space-y-6">
          <header className="flex flex-wrap items-center justify-between gap-4">
@@ -137,13 +163,23 @@ export function ShowtimeManagementPage(): ReactElement {
                   phòng.
                </p>
             </div>
-            <Button
-               onClick={handleCreateFromToolbar}
-               disabled={cinemaId === null || !hasBookableHall}
-               icon={<Plus className="size-4" aria-hidden="true" />}
-            >
-               Thêm suất chiếu
-            </Button>
+            <div className="flex flex-wrap gap-3">
+               <Button
+                  variant="secondary"
+                  onClick={handleCopyDay}
+                  disabled={cinemaId === null || showtimes.length === 0 || !isValidDate(selectedDate)}
+                  icon={<CopyPlus className="size-4" aria-hidden="true" />}
+               >
+                  Sao chép cả ngày
+               </Button>
+               <Button
+                  onClick={handleCreateFromToolbar}
+                  disabled={cinemaId === null || !hasBookableHall}
+                  icon={<Plus className="size-4" aria-hidden="true" />}
+               >
+                  Thêm suất chiếu
+               </Button>
+            </div>
          </header>
 
          <div className="grid gap-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
@@ -236,6 +272,16 @@ export function ShowtimeManagementPage(): ReactElement {
             <p className="text-sm text-ink-500">Đang tải lịch chiếu...</p>
          )}
 
+         {bulkPanelState && (
+            <BulkShowtimePanel
+               key={bulkPanelState.mode === 'duplicate' ? `duplicate-${bulkPanelState.showtime.id}` : 'copy-day'}
+               panelState={bulkPanelState}
+               halls={halls}
+               onChanged={refreshShowtimes}
+               onClose={handleCloseBulkPanel}
+            />
+         )}
+
          {panelState && (
             <ShowtimeFormPanel
                key={panelState.mode === 'edit' ? `edit-${panelState.showtime.id}` : 'create'}
@@ -245,6 +291,7 @@ export function ShowtimeManagementPage(): ReactElement {
                showtimeConflicts={conflictState?.showtimeConflicts ?? []}
                onConflict={handleConflict}
                onClearConflict={handleClearConflict}
+               onDuplicate={handleDuplicate}
                onSaved={handleSaved}
                onClose={handleClosePanel}
             />

@@ -3,9 +3,12 @@ import axiosInstance from '@/api/axiosClient';
 import type { ApiResponse } from '@/types/common/api';
 import type {
    AdminShowtimeSearchParams,
+   BulkShowtimeResult,
    MovieInfo,
    PublicMovieShowtimes,
    Showtime,
+   ShowtimeDayCopyRequest,
+   ShowtimeDuplicateRequest,
    ShowtimeRequest,
 } from '@/types/showtime/showtime';
 
@@ -55,5 +58,21 @@ export async function cancelShowtime(showtimeId: number): Promise<Showtime> {
    const axiosResponse: AxiosResponse<ApiResponse<Showtime>> = await axiosInstance.post<ApiResponse<Showtime>>(
       `/admin/showtimes/${showtimeId}/cancel`,
    );
+   return axiosResponse.data.data;
+}
+
+export async function duplicateShowtime(
+   showtimeDuplicateRequest: ShowtimeDuplicateRequest,
+): Promise<BulkShowtimeResult> {
+   const axiosResponse: AxiosResponse<ApiResponse<BulkShowtimeResult>> = await axiosInstance.post<
+      ApiResponse<BulkShowtimeResult>
+   >('/admin/showtimes/duplicate', showtimeDuplicateRequest);
+   return axiosResponse.data.data;
+}
+
+export async function copyShowtimeDay(showtimeDayCopyRequest: ShowtimeDayCopyRequest): Promise<BulkShowtimeResult> {
+   const axiosResponse: AxiosResponse<ApiResponse<BulkShowtimeResult>> = await axiosInstance.post<
+      ApiResponse<BulkShowtimeResult>
+   >('/admin/showtimes/copy-day', showtimeDayCopyRequest);
    return axiosResponse.data.data;
 }

@@ -62,8 +62,12 @@ export function formatDayMonth(date: string): string {
    return `${day}/${month}`;
 }
 
+export function getWeekdayIndex(date: string): number {
+   return new Date(`${date}T00:00:00Z`).getUTCDay();
+}
+
 export function getWeekdayLabel(date: string): string {
-   return WEEKDAY_LABELS[new Date(`${date}T00:00:00Z`).getUTCDay()];
+   return WEEKDAY_LABELS[getWeekdayIndex(date)];
 }
 
 export function formatClockRange(startIsoInstant: string, endIsoInstant: string): string {

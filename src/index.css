@@ -3,42 +3,53 @@
 @theme {
   --font-sans: "Be Vietnam Pro", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
-  --color-brand-50: #fff1f2;
-  --color-brand-100: #ffe0e3;
-  --color-brand-200: #ffc7cd;
-  --color-brand-300: #ff9ba6;
-  --color-brand-400: #f9677a;
-  --color-brand-500: #e83e54;
-  --color-brand-600: #d6293e;
-  --color-brand-700: #b21f32;
-  --color-brand-800: #911c2e;
-  --color-brand-900: #7a1b2b;
+  --color-brand-50: #eef5ff;
+  --color-brand-100: #dbe9ff;
+  --color-brand-200: #bfd7ff;
+  --color-brand-300: #93bcff;
+  --color-brand-400: #5f98fb;
+  --color-brand-500: #3b79f0;
+  --color-brand-600: #2562d9;
+  --color-brand-700: #1e4fb3;
+  --color-brand-800: #1c428f;
+  --color-brand-900: #1b3a73;
 
-  --color-gold-50: #fffaeb;
-  --color-gold-100: #fff1c7;
-  --color-gold-200: #ffe38f;
-  --color-gold-300: #ffd14d;
-  --color-gold-400: #f9bc1f;
-  --color-gold-500: #f4a700;
-  --color-gold-600: #d68100;
+  --color-accent-50: #effbff;
+  --color-accent-100: #d6f3fd;
+  --color-accent-200: #aee7fa;
+  --color-accent-300: #74d5f5;
+  --color-accent-400: #36bdea;
+  --color-accent-500: #14a1d0;
+  --color-accent-600: #0d80ac;
 
-  --color-ink-50: #f7f5fa;
-  --color-ink-100: #ece8f2;
-  --color-ink-200: #d9d3e3;
-  --color-ink-300: #b8afc8;
-  --color-ink-400: #8f85a3;
-  --color-ink-500: #6f6585;
-  --color-ink-600: #564d6b;
-  --color-ink-700: #3f3752;
-  --color-ink-800: #2a2439;
-  --color-ink-900: #1b1728;
+  --color-danger-50: #fff1f2;
+  --color-danger-100: #ffe0e3;
+  --color-danger-200: #ffc7cd;
+  --color-danger-300: #ff9ba6;
+  --color-danger-400: #f9677a;
+  --color-danger-500: #e83e54;
+  --color-danger-600: #d6293e;
+  --color-danger-700: #b21f32;
+  --color-danger-800: #911c2e;
+  --color-danger-900: #7a1b2b;
 
-  --color-cream: #fffaf4;
-  --color-sand: #f6ece0;
+  --color-ink-50: #f4f7fb;
+  --color-ink-100: #e6ecf4;
+  --color-ink-200: #d0dae8;
+  --color-ink-300: #a9b9cf;
+  --color-ink-400: #7e92ad;
+  --color-ink-500: #5a6f8c;
+  --color-ink-600: #435874;
+  --color-ink-700: #324560;
+  --color-ink-800: #1e2d45;
+  --color-ink-900: #0e1a30;
 
-  --shadow-soft: 0 12px 32px -14px rgb(122 27 43 / 0.28);
-  --shadow-card: 0 1px 2px rgb(27 23 40 / 0.04), 0 8px 24px -10px rgb(27 23 40 / 0.12);
-  --shadow-glow: 0 14px 34px -12px rgb(214 41 62 / 0.55);
+  --color-cream: #f5f9ff;
+  --color-sand: #e9f1fc;
+
+  --shadow-soft: 0 12px 32px -14px rgb(30 79 179 / 0.3);
+  --shadow-card: 0 1px 2px rgb(14 26 48 / 0.04), 0 8px 24px -10px rgb(14 26 48 / 0.12);
+  --shadow-glow: 0 14px 34px -12px rgb(37 98 217 / 0.55);
 
   --animate-fade-up: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-float: float 6s ease-in-out infinite;

@@ -6,7 +6,7 @@ import { getErrorMessage } from '@/lib/apiError';
 import type { Hall } from '@/types/cinema';
 import { useCinemaRefresh } from '../hooks/useCinemaRefresh';
 import { adminDeletedHallsKey } from '../utils/queryKeys';
-import RestoreButton from './RestoreButton';
+import RestoreButton from '@/components/common/RestoreButton';
 
 interface DeletedHallListProps {
    cinemaId: number;

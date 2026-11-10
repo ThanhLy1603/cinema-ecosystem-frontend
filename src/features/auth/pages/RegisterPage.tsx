@@ -96,7 +96,7 @@ export function RegisterPage(): ReactElement {
    return (
       <div className="rounded-3xl bg-white p-8 shadow-card ring-1 ring-ink-100 sm:p-10">
          <div className="mb-8 space-y-2">
-            <div className="grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-gold-100 text-brand-600">
+            <div className="grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-brand-50 to-accent-100 text-brand-600">
                <UserPlus className="size-6" aria-hidden="true" />
             </div>
             <h1 className="pt-2 text-3xl font-extrabold tracking-tight text-ink-900">Tạo tài khoản</h1>

@@ -70,7 +70,7 @@ export function VerifyEmailPage(): ReactElement {
 
          {(verifyEmailMutation.isError || token === '') && (
             <>
-               <CircleAlert className="mx-auto size-14 text-brand-500" aria-hidden="true" />
+               <CircleAlert className="mx-auto size-14 text-danger-500" aria-hidden="true" />
                <h1 className="text-2xl font-extrabold tracking-tight text-ink-900">Không thể xác thực email</h1>
                <p className="text-[15px] text-ink-500">
                   {token === '' ? MISSING_TOKEN_MESSAGE : getErrorMessage(verifyEmailMutation.error)}

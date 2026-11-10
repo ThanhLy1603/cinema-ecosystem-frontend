@@ -10,9 +10,9 @@ interface AlertProps {
 }
 
 const VARIANT_CLASSES: Record<AlertVariant, string> = {
-   error: 'border-brand-200 bg-brand-50 text-brand-800',
+   error: 'border-danger-200 bg-danger-50 text-danger-800',
    success: 'border-emerald-200 bg-emerald-50 text-emerald-800',
-   info: 'border-gold-200 bg-gold-50 text-ink-800',
+   info: 'border-accent-200 bg-accent-50 text-ink-800',
 };
 
 const VARIANT_ICONS: Record<AlertVariant, LucideIcon> = {

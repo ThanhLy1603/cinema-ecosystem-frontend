@@ -12,9 +12,9 @@ export function EmailVerificationNotice(): ReactElement {
    });
 
    return (
-      <div className="space-y-3 rounded-2xl border border-gold-200 bg-gold-50 p-5">
+      <div className="space-y-3 rounded-2xl border border-amber-200 bg-amber-50 p-5">
          <div className="flex items-start gap-3">
-            <MailWarning className="mt-0.5 size-5 shrink-0 text-gold-600" aria-hidden="true" />
+            <MailWarning className="mt-0.5 size-5 shrink-0 text-amber-600" aria-hidden="true" />
             <div className="space-y-1">
                <p className="font-semibold text-ink-900">Email của bạn chưa được xác thực</p>
                <p className="text-sm text-ink-600">

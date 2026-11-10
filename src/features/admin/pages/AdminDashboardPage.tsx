@@ -38,7 +38,7 @@ interface AdminModuleCardItem {
 
 const STATUS_BADGE_MAP: Record<ModuleStatus, { label: string; className: string }> = {
    ready: { label: 'Đang hoạt động', className: 'bg-emerald-50 text-emerald-700 ring-emerald-200' },
-   next: { label: 'Tiếp theo', className: 'bg-gold-50 text-gold-600 ring-gold-200' },
+   next: { label: 'Tiếp theo', className: 'bg-accent-50 text-accent-600 ring-accent-200' },
    soon: { label: 'Sắp ra mắt', className: 'bg-ink-50 text-ink-600 ring-ink-200' },
 };
 
@@ -183,7 +183,7 @@ export function AdminDashboardPage(): ReactElement {
             >
                <div className="flex items-center justify-between">
                   <span className="text-sm font-semibold text-ink-500">Cụm rạp trong phạm vi</span>
-                  <span className="grid size-10 place-items-center rounded-2xl bg-gold-50 text-gold-600">
+                  <span className="grid size-10 place-items-center rounded-2xl bg-accent-50 text-accent-600">
                      <Building2 className="size-5" aria-hidden="true" />
                   </span>
                </div>
@@ -237,7 +237,7 @@ export function AdminDashboardPage(): ReactElement {
                                     adminModuleCardItem.status === 'ready'
                                        ? 'bg-brand-50 text-brand-600'
                                        : adminModuleCardItem.status === 'next'
-                                         ? 'bg-gold-50 text-gold-600'
+                                         ? 'bg-accent-50 text-accent-600'
                                          : 'bg-ink-50 text-ink-600',
                                  )}
                               >

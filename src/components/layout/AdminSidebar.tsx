@@ -37,8 +37,8 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
    { label: 'Tổng quan', to: '/admin', icon: LayoutDashboard, end: true, status: 'ready' },
    { label: 'Người dùng & nhân sự', to: '/admin/users', icon: Users, status: 'ready' },
    { label: 'Cụm rạp', to: '/admin/cinemas', icon: Building2, status: 'ready' },
-   { label: 'Phim', to: '/admin/movies', icon: Clapperboard, status: 'next' },
-   { label: 'Suất chiếu', to: '/admin/showtimes', icon: CalendarClock, status: 'soon' },
+   { label: 'Phim', to: '/admin/movies', icon: Clapperboard, status: 'ready' },
+   { label: 'Suất chiếu', to: '/admin/showtimes', icon: CalendarClock, status: 'next' },
    { label: 'Khuyến mãi & F&B', to: '/admin/promotions', icon: Tag, status: 'soon' },
    { label: 'Cộng đồng & blog', to: '/admin/community', icon: MessagesSquare, status: 'soon' },
 ];
@@ -63,7 +63,7 @@ function renderStatusBadge(adminNavStatus: AdminNavStatus, isActive: boolean): R
                'ml-auto shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide',
                isActive
                   ? 'bg-white text-brand-700 ring-1 ring-brand-100'
-                  : 'bg-gold-50 text-gold-600 ring-1 ring-gold-200',
+                  : 'bg-accent-50 text-accent-600 ring-1 ring-accent-200',
             )}
          >
             Tiếp theo
@@ -133,7 +133,7 @@ export function AdminSidebar({ user, onNavigate, onClose }: AdminSidebarProps): 
          </div>
 
          <div className="space-y-3 border-t border-ink-100 p-4">
-            <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-gold-50 px-3.5 py-3 ring-1 ring-brand-100">
+            <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-accent-50 px-3.5 py-3 ring-1 ring-brand-100">
                <p className="text-xs font-bold text-ink-900">{primaryRoleLabel}</p>
                <p className="mt-0.5 text-xs text-ink-600">
                   {isAdmin ? 'Phạm vi: Toàn hệ thống' : 'Phạm vi: Theo chi nhánh phụ trách'}

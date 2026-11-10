@@ -9,8 +9,8 @@ interface StatusBadgeProps {
 
 const STATUS_CLASSES: Record<UserStatus, string> = {
    ACTIVE: 'bg-emerald-50 text-emerald-700 ring-emerald-200',
-   LOCKED: 'bg-gold-50 text-ink-800 ring-gold-200',
-   SUSPENDED: 'bg-brand-50 text-brand-700 ring-brand-200',
+   LOCKED: 'bg-amber-50 text-ink-800 ring-amber-200',
+   SUSPENDED: 'bg-danger-50 text-danger-700 ring-danger-200',
    DELETED: 'bg-ink-100 text-ink-500 ring-ink-200',
 };
 

@@ -55,7 +55,7 @@ export function TextField({
                <Icon
                   className={cn(
                      'pointer-events-none absolute left-3.5 top-1/2 size-[18px] -translate-y-1/2 transition-colors',
-                     hasError ? 'text-brand-500' : 'text-ink-400',
+                     hasError ? 'text-danger-500' : 'text-ink-400',
                   )}
                   aria-hidden="true"
                />
@@ -79,7 +79,7 @@ export function TextField({
                   Icon ? 'pl-11' : 'pl-4',
                   isPasswordField ? 'pr-12' : 'pr-4',
                   hasError
-                     ? 'border-brand-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-100'
+                     ? 'border-danger-400 focus:border-danger-500 focus:ring-4 focus:ring-danger-100'
                      : 'border-ink-200 hover:border-ink-300 focus:border-brand-500 focus:ring-4 focus:ring-brand-100',
                )}
             />
@@ -96,7 +96,11 @@ export function TextField({
          </div>
 
          {error ? (
-            <p id={messageId} role="alert" className="flex items-center gap-1.5 text-[13px] font-medium text-brand-700">
+            <p
+               id={messageId}
+               role="alert"
+               className="flex items-center gap-1.5 text-[13px] font-medium text-danger-700"
+            >
                <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
                {error}
             </p>

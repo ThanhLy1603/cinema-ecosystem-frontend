@@ -78,7 +78,7 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
                role="menu"
                className="absolute right-0 z-50 mt-3 w-72 origin-top-right animate-fade-up overflow-hidden rounded-2xl border border-ink-100 bg-white shadow-soft"
             >
-               <div className="flex items-center gap-3 bg-gradient-to-br from-brand-50 to-gold-50 px-4 py-4">
+               <div className="flex items-center gap-3 bg-gradient-to-br from-brand-50 to-accent-50 px-4 py-4">
                   <UserAvatar user={user} className="size-12" />
                   <div className="min-w-0">
                      <p className="truncate text-sm font-bold text-ink-900">{user.fullName}</p>
@@ -145,7 +145,7 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
                      {logoutMutation.isPending ? 'Đang đăng xuất...' : 'Đăng xuất'}
                   </button>
                   {signOutErrorMessage && (
-                     <p role="alert" className="px-3 pb-1 pt-2 text-[13px] font-medium text-brand-700">
+                     <p role="alert" className="px-3 pb-1 pt-2 text-[13px] font-medium text-danger-700">
                         {signOutErrorMessage}
                      </p>
                   )}

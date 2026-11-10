@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'gold';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'light';
 export type ButtonSize = 'md' | 'lg';
 
 const BASE_CLASSES: string =
@@ -12,7 +12,7 @@ const VARIANT_CLASSES: Record<ButtonVariant, string> = {
    secondary:
       'border border-ink-200 bg-white text-ink-800 shadow-sm hover:border-brand-300 hover:text-brand-700 focus-visible:ring-brand-100',
    ghost: 'text-ink-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:ring-brand-100',
-   gold: 'bg-gradient-to-b from-gold-300 to-gold-400 text-ink-900 shadow-[0_12px_28px_-12px_rgb(244_167_0/0.7)] hover:from-gold-300 hover:to-gold-500 focus-visible:ring-gold-200',
+   light: 'bg-white text-brand-700 shadow-sm hover:bg-brand-50 focus-visible:ring-white/50',
 };
 
 const SIZE_CLASSES: Record<ButtonSize, string> = {

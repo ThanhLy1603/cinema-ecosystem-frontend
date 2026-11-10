@@ -33,7 +33,7 @@ function ToolButton({ isActive, title, description, visual, onClick }: ToolButto
                : 'border-ink-200 bg-white hover:border-brand-300',
          )}
       >
-         <span className="grid w-12 shrink-0 place-items-center">{visual}</span>
+         <span className="grid w-[4.5rem] shrink-0 place-items-center">{visual}</span>
          <span className="min-w-0">
             <span className="block text-sm font-semibold text-ink-900">{title}</span>
             <span className="block truncate text-xs text-ink-500">{description}</span>
@@ -58,7 +58,7 @@ export function SeatToolPalette({ seatTypes, editorTool, onSelect }: SeatToolPal
          <ToolButton
             isActive={editorTool.kind === 'erase'}
             title="Xóa ghế / tạo lối đi"
-            description="Bấm hoặc kéo qua ghế để xóa"
+            description="Bấm hoặc kéo qua ghế để bỏ khỏi sơ đồ"
             visual={<Eraser className="size-5 text-ink-600" aria-hidden="true" />}
             onClick={() => onSelect({ kind: 'erase' })}
          />

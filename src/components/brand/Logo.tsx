@@ -28,10 +28,10 @@ export function Logo({ tone = 'default', to = '/', className }: LogoProps): Reac
             )}
          >
             <Ticket className="size-5" aria-hidden="true" />
-            <span className="absolute -right-1 -top-1 size-3 rounded-full bg-gold-400 ring-2 ring-white" />
+            <span className="absolute -right-1 -top-1 size-3 rounded-full bg-accent-400 ring-2 ring-white" />
          </span>
          <span className={cn('text-xl font-extrabold tracking-tight', isLight ? 'text-white' : 'text-ink-900')}>
-            Cinema<span className={isLight ? 'text-gold-300' : 'text-brand-600'}>Sphere</span>
+            Cinema<span className={isLight ? 'text-accent-300' : 'text-brand-600'}>Sphere</span>
          </span>
       </Link>
    );

@@ -74,7 +74,7 @@ export function BranchPicker({
             );
          })}
          {error && (
-            <p role="alert" className="flex items-center gap-1.5 text-[13px] font-medium text-brand-700">
+            <p role="alert" className="flex items-center gap-1.5 text-[13px] font-medium text-danger-700">
                <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
                {error}
             </p>

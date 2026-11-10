@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
-import { Calendar, Image as ImageIcon, Mail, Phone, Save, User as UserIcon } from 'lucide-react';
+import { Calendar, Mail, Phone, Save, User as UserIcon } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { updateMyProfile } from '@/api/userApi';
 import Alert from '@/components/ui/Alert';
@@ -10,6 +10,10 @@ import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { Gender, UpdateProfileRequest, User, UserProfile } from '@/types/auth';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
+import MediaUploadField from '@/components/common/MediaUploadField';
+import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/mediaField';
+import { useDeferredUpload, type DeferredUpload } from '@/lib/useDeferredUpload';
+import type { MediaFieldState } from '@/types/media';
 import { validateAvatarUrl, validateDateOfBirth, validateFullName, validatePhone } from '@/lib/validation';
 
 interface ProfileFormProps {
@@ -46,7 +50,8 @@ export function ProfileForm({ userProfile }: ProfileFormProps): ReactElement {
    const [phone, setPhone] = useState<string>(userProfile.phone ?? '');
    const [dateOfBirth, setDateOfBirth] = useState<string>(userProfile.dateOfBirth ?? '');
    const [gender, setGender] = useState<string>(userProfile.gender ?? '');
-   const [avatarUrl, setAvatarUrl] = useState<string>(userProfile.avatarUrl ?? '');
+   const [avatarMedia, setAvatarMedia] = useState<MediaFieldState>(createMediaFieldState(userProfile.avatarUrl));
+   const deferredUpload: DeferredUpload = useDeferredUpload();
    const [fieldErrors, setFieldErrors] = useState<ProfileFieldErrors>({});
 
    function handleUpdateSuccess(updatedUserProfile: UserProfile): void {
@@ -70,17 +75,30 @@ export function ProfileForm({ userProfile }: ProfileFormProps): ReactElement {
    }
    const hasServerFieldErrors: boolean = Object.keys(serverFieldErrors).length > 0;
 
-   function handleSubmit(formEvent: FormEvent<HTMLFormElement>): void {
+   const isBusy: boolean = updateMutation.isPending || deferredUpload.isUploading;
+
+   async function handleSubmit(formEvent: FormEvent<HTMLFormElement>): Promise<void> {
       formEvent.preventDefault();
       updateMutation.reset();
       const nextFieldErrors: ProfileFieldErrors = {
          fullName: validateFullName(fullName),
          phone: validatePhone(phone),
          dateOfBirth: validateDateOfBirth(dateOfBirth),
-         avatarUrl: validateAvatarUrl(avatarUrl),
+         avatarUrl: validateAvatarUrl(getMediaUrlToValidate(avatarMedia)),
       };
       setFieldErrors(nextFieldErrors);
       if (Object.values(nextFieldErrors).some((fieldError) => fieldError !== undefined)) {
+         return;
+      }
+      const resolvedUrls: string[] | null = await deferredUpload.uploadPendingFiles([
+         {
+            label: 'ảnh đại diện',
+            mediaFieldState: avatarMedia,
+            mediaPurpose: 'USER_AVATAR',
+            onUploaded: (uploadedUrl) => setAvatarMedia(createMediaFieldState(uploadedUrl)),
+         },
+      ]);
+      if (resolvedUrls === null) {
          return;
       }
       updateMutation.mutate({
@@ -88,12 +106,13 @@ export function ProfileForm({ userProfile }: ProfileFormProps): ReactElement {
          phone: emptyToNull(phone),
          dateOfBirth: emptyToNull(dateOfBirth),
          gender: gender === '' ? null : (gender as Gender),
-         avatarUrl: emptyToNull(avatarUrl),
+         avatarUrl: emptyToNull(resolvedUrls[0]),
       });
    }
 
    return (
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
+         {deferredUpload.uploadError && <Alert variant="error">{deferredUpload.uploadError}</Alert>}
          {updateMutation.isSuccess && <Alert variant="success">Đã cập nhật thông tin cá nhân.</Alert>}
          {updateMutation.isError && !hasServerFieldErrors && (
             <Alert variant="error">{getErrorMessage(updateMutation.error)}</Alert>
@@ -156,25 +175,21 @@ export function ProfileForm({ userProfile }: ProfileFormProps): ReactElement {
                disabled={updateMutation.isPending}
             />
          </div>
-         <TextField
+         <MediaUploadField
             id="profile-avatarUrl"
-            label="Ảnh đại diện (đường dẫn)"
-            icon={ImageIcon}
-            value={avatarUrl}
-            onChange={setAvatarUrl}
-            placeholder="https://..."
+            label="Ảnh đại diện"
+            value={avatarMedia}
+            onChange={setAvatarMedia}
+            mediaPurpose="USER_AVATAR"
+            accept="image/jpeg,image/png,image/webp"
+            placeholder="https://... hoặc tải ảnh lên"
             optional
             error={fieldErrors.avatarUrl ?? serverFieldErrors.avatarUrl}
-            disabled={updateMutation.isPending}
+            disabled={isBusy}
          />
 
-         <Button
-            type="submit"
-            size="lg"
-            icon={<Save className="size-4" aria-hidden="true" />}
-            isLoading={updateMutation.isPending}
-         >
-            {updateMutation.isPending ? 'Đang lưu...' : 'Lưu thay đổi'}
+         <Button type="submit" size="lg" icon={<Save className="size-4" aria-hidden="true" />} isLoading={isBusy}>
+            {deferredUpload.uploadMessage ?? (updateMutation.isPending ? 'Đang lưu...' : 'Lưu thay đổi')}
          </Button>
       </form>
    );

@@ -1,4 +1,4 @@
-import { CalendarClock, Clapperboard, MessagesSquare, Tag, Ticket } from 'lucide-react';
+import { CalendarClock, MessagesSquare, Popcorn, Tag, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
@@ -23,6 +23,13 @@ import SeatMapEditorPage from '@/features/cinema-management/pages/SeatMapEditorP
 import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
 import CinemaPublicPage from '@/features/cinemas/pages/CinemaPublicPage';
 import HomePage from '@/features/home/pages/HomePage';
+import GenreManagementPage from '@/features/movie-management/pages/GenreManagementPage';
+import MovieCreatePage from '@/features/movie-management/pages/MovieCreatePage';
+import MovieEditPage from '@/features/movie-management/pages/MovieEditPage';
+import MovieManagementPage from '@/features/movie-management/pages/MovieManagementPage';
+import PersonManagementPage from '@/features/movie-management/pages/PersonManagementPage';
+import MovieDetailPage from '@/features/movies/pages/MovieDetailPage';
+import MovieListPage from '@/features/movies/pages/MovieListPage';
 import CreateStaffPage from '@/features/user-management/pages/CreateStaffPage';
 import UserDetailPage from '@/features/user-management/pages/UserDetailPage';
 import UserManagementPage from '@/features/user-management/pages/UserManagementPage';
@@ -45,13 +52,15 @@ export function AppRoutes(): ReactElement {
 
          <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
+            <Route path="/movies" element={<MovieListPage />} />
+            <Route path="/movies/:movieId" element={<MovieDetailPage />} />
             <Route
-               path="/movies"
+               path="/fnb"
                element={
                   <ComingSoonPage
-                     title="Phim đang chiếu"
-                     description="Danh sách phim, lịch chiếu và đặt vé sẽ sớm có mặt tại đây."
-                     icon={Clapperboard}
+                     title="Thức ăn & nước"
+                     description="Combo bắp nước và đồ ăn nhẹ đặt kèm vé sẽ sớm có mặt tại đây."
+                     icon={Popcorn}
                   />
                }
             />
@@ -105,18 +114,11 @@ export function AppRoutes(): ReactElement {
                <Route path="cinemas/facilities" element={<FacilityManagementPage />} />
                <Route path="cinemas/:cinemaId" element={<CinemaDetailPage />} />
                <Route path="halls/:hallId/seat-map" element={<SeatMapEditorPage />} />
-               <Route
-                  path="movies"
-                  element={
-                     <ComingSoonPage
-                        title="Quản lý phim"
-                        description="Danh mục phim, thể loại, diễn viên và trailer sẽ được quản lý tại đây."
-                        icon={Clapperboard}
-                        backTo="/admin"
-                        backLabel="Về trang quản trị"
-                     />
-                  }
-               />
+               <Route path="movies" element={<MovieManagementPage />} />
+               <Route path="movies/genres" element={<GenreManagementPage />} />
+               <Route path="movies/persons" element={<PersonManagementPage />} />
+               <Route path="movies/new" element={<MovieCreatePage />} />
+               <Route path="movies/:movieId" element={<MovieEditPage />} />
                <Route
                   path="showtimes"
                   element={

@@ -19,6 +19,9 @@ interface SelectFieldProps {
    disabled?: boolean;
    optional?: boolean;
    placeholder?: string;
+   hideLabel?: boolean;
+   triggerClassName?: string;
+   menuClassName?: string;
 }
 
 const DEFAULT_PLACEHOLDER: string = 'Chọn...';
@@ -34,6 +37,9 @@ export function SelectField({
    disabled = false,
    optional = false,
    placeholder = DEFAULT_PLACEHOLDER,
+   hideLabel = false,
+   triggerClassName,
+   menuClassName,
 }: SelectFieldProps): ReactElement {
    const [isOpen, setIsOpen] = useState<boolean>(false);
    const [searchText, setSearchText] = useState<string>('');
@@ -137,7 +143,13 @@ export function SelectField({
 
    return (
       <div ref={containerRef} className="space-y-1.5">
-         <label htmlFor={id} className="flex items-baseline justify-between text-sm font-semibold text-ink-800">
+         <label
+            htmlFor={id}
+            className={cn(
+               'flex items-baseline justify-between text-sm font-semibold text-ink-800',
+               hideLabel && 'sr-only',
+            )}
+         >
             <span>{label}</span>
             {optional && <span className="text-xs font-normal text-ink-400">Không bắt buộc</span>}
          </label>
@@ -160,9 +172,10 @@ export function SelectField({
                   'h-12 w-full rounded-xl border bg-white pl-4 text-left text-[15px] shadow-sm outline-none transition-all disabled:bg-ink-50 disabled:text-ink-400',
                   canClear ? 'pr-20' : 'pr-11',
                   hasError
-                     ? 'border-brand-400 focus:border-brand-500 focus:ring-4 focus:ring-brand-100'
+                     ? 'border-danger-400 focus:border-danger-500 focus:ring-4 focus:ring-danger-100'
                      : 'border-ink-200 hover:border-ink-300 focus:border-brand-500 focus:ring-4 focus:ring-brand-100',
                   selectedOption && value !== '' ? 'text-ink-900' : 'text-ink-400',
+                  triggerClassName,
                )}
             >
                <span className="block truncate">{selectedOption ? selectedOption.label : placeholder}</span>
@@ -186,7 +199,12 @@ export function SelectField({
             />
 
             {isOpen && (
-               <div className="absolute z-40 mt-2 w-full overflow-hidden rounded-xl border border-ink-100 bg-white shadow-soft">
+               <div
+                  className={cn(
+                     'absolute z-40 mt-2 w-full overflow-hidden rounded-xl border border-ink-100 bg-white shadow-soft',
+                     menuClassName,
+                  )}
+               >
                   <div className="relative border-b border-ink-100 p-2">
                      <Search
                         className="pointer-events-none absolute left-5 top-1/2 size-4 -translate-y-1/2 text-ink-400"
@@ -238,7 +256,11 @@ export function SelectField({
          </div>
 
          {error && (
-            <p id={messageId} role="alert" className="flex items-center gap-1.5 text-[13px] font-medium text-brand-700">
+            <p
+               id={messageId}
+               role="alert"
+               className="flex items-center gap-1.5 text-[13px] font-medium text-danger-700"
+            >
                <CircleAlert className="size-3.5 shrink-0" aria-hidden="true" />
                {error}
             </p>

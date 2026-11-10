@@ -41,6 +41,7 @@ interface SeatMapEditorProps {
 const DEFAULT_GENERATE_ROWS: number = 10;
 const DEFAULT_GENERATE_COLUMNS: number = 10;
 const SEAT_MAP_CONFLICT_CODE: string = 'SEAT_MAP_CONFLICT';
+const SEAT_IN_USE_CODE: string = 'SEAT_IN_USE';
 
 function indexSeatTypes(seatTypes: SeatType[]): SeatTypesByCode {
    const seatTypesByCode: SeatTypesByCode = {};
@@ -111,6 +112,7 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
    });
 
    const isConflict: boolean = saveMutation.isError && getErrorCode(saveMutation.error) === SEAT_MAP_CONFLICT_CODE;
+   const isSeatInUse: boolean = saveMutation.isError && getErrorCode(saveMutation.error) === SEAT_IN_USE_CODE;
 
    function handleCellPointerDown(gridCell: GridCell): void {
       saveMutation.reset();
@@ -203,7 +205,9 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
             <SectionCard title="Công cụ" description="Chọn công cụ rồi bấm hoặc kéo trên sơ đồ để vẽ.">
                <SeatToolPalette seatTypes={seatTypes} editorTool={editorTool} onSelect={setEditorTool} />
                <p className="mt-4 text-xs text-ink-500">
-                  Bấm chữ cái hàng hoặc số cột để áp dụng công cụ cho cả hàng/cột. Ghế đôi chiếm 2 ô liền nhau.
+                  Bấm chữ cái hàng hoặc số cột để áp dụng công cụ cho cả hàng/cột. Ghế đôi chiếm 2 ô liền nhau. Ghế bị
+                  xóa khỏi sơ đồ vẫn được lưu lịch sử cho vé cũ; ghế còn vé hoặc lượt giữ chỗ của suất chưa chiếu thì
+                  không xóa được.
                </p>
             </SectionCard>
 
@@ -314,6 +318,12 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
             {saveMutation.isError && (
                <Alert variant="error">
                   <span>{getErrorMessage(saveMutation.error)}</span>
+                  {isSeatInUse && (
+                     <span className="mt-1 block text-xs font-normal">
+                        Dùng công cụ «Đánh dấu bảo trì» để ngừng bán những ghế này, rồi bỏ chúng khỏi sơ đồ sau khi các
+                        suất chiếu liên quan đã diễn ra.
+                     </span>
+                  )}
                   {isConflict && (
                      <Button
                         variant="secondary"

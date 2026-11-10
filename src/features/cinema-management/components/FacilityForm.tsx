@@ -4,6 +4,10 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import { createFacility, updateFacility } from '@/api/cinemaApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
+import MediaUploadField from '@/components/common/MediaUploadField';
+import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/mediaField';
+import { useDeferredUpload, type DeferredUpload } from '@/lib/useDeferredUpload';
+import type { MediaFieldState } from '@/types/media';
 import TextField from '@/components/ui/TextField';
 import { getErrorCode, getErrorMessage } from '@/lib/apiError';
 import { PUBLIC_CINEMAS_KEY } from '@/lib/cinemaQueryKeys';
@@ -25,7 +29,8 @@ interface FacilityFieldErrors {
 
 export function FacilityForm({ facility, onDone, onCancel }: FacilityFormProps): ReactElement {
    const [name, setName] = useState<string>(facility?.name ?? '');
-   const [iconUrl, setIconUrl] = useState<string>(facility?.iconUrl ?? '');
+   const [iconMedia, setIconMedia] = useState<MediaFieldState>(createMediaFieldState(facility?.iconUrl));
+   const deferredUpload: DeferredUpload = useDeferredUpload();
    const [description, setDescription] = useState<string>(facility?.description ?? '');
    const [fieldErrors, setFieldErrors] = useState<FacilityFieldErrors>({});
    const queryClient: QueryClient = useQueryClient();
@@ -50,21 +55,34 @@ export function FacilityForm({ facility, onDone, onCancel }: FacilityFormProps):
    const isNameTaken: boolean =
       facilityMutation.isError && getErrorCode(facilityMutation.error) === 'FACILITY_NAME_EXISTS';
 
-   function handleSubmit(formEvent: FormEvent<HTMLFormElement>): void {
+   const isBusy: boolean = facilityMutation.isPending || deferredUpload.isUploading;
+
+   async function handleSubmit(formEvent: FormEvent<HTMLFormElement>): Promise<void> {
       formEvent.preventDefault();
       facilityMutation.reset();
       const nextFieldErrors: FacilityFieldErrors = {
          name: validateRequiredText(name, 'Vui lòng nhập tên tiện ích', 100),
-         iconUrl: validateOptionalHttpsUrl(iconUrl, 500),
+         iconUrl: validateOptionalHttpsUrl(getMediaUrlToValidate(iconMedia), 500),
          description: validateOptionalText(description, 500),
       };
       setFieldErrors(nextFieldErrors);
       if (nextFieldErrors.name || nextFieldErrors.iconUrl || nextFieldErrors.description) {
          return;
       }
+      const resolvedUrls: string[] | null = await deferredUpload.uploadPendingFiles([
+         {
+            label: 'biểu tượng',
+            mediaFieldState: iconMedia,
+            mediaPurpose: 'FACILITY_ICON',
+            onUploaded: (uploadedUrl) => setIconMedia(createMediaFieldState(uploadedUrl)),
+         },
+      ]);
+      if (resolvedUrls === null) {
+         return;
+      }
       facilityMutation.mutate({
          name: name.trim(),
-         iconUrl: emptyToNull(iconUrl),
+         iconUrl: emptyToNull(resolvedUrls[0]),
          description: emptyToNull(description),
       });
    }
@@ -75,6 +93,7 @@ export function FacilityForm({ facility, onDone, onCancel }: FacilityFormProps):
          className="space-y-4 rounded-2xl border border-brand-100 bg-brand-50/40 p-5"
          noValidate
       >
+         {deferredUpload.uploadError && <Alert variant="error">{deferredUpload.uploadError}</Alert>}
          {facilityMutation.isError && !isNameTaken && (
             <Alert variant="error">{getErrorMessage(facilityMutation.error)}</Alert>
          )}
@@ -88,13 +107,16 @@ export function FacilityForm({ facility, onDone, onCancel }: FacilityFormProps):
                autoFocus
                error={fieldErrors.name ?? (isNameTaken ? getErrorMessage(facilityMutation.error) : undefined)}
             />
-            <TextField
+            <MediaUploadField
                id={`facility-icon-${facility?.id ?? 'new'}`}
-               label="Đường dẫn biểu tượng"
-               value={iconUrl}
-               onChange={setIconUrl}
+               label="Biểu tượng"
+               value={iconMedia}
+               onChange={setIconMedia}
+               disabled={isBusy}
+               mediaPurpose="FACILITY_ICON"
+               accept="image/jpeg,image/png,image/webp,image/svg+xml"
+               placeholder="https://... hoặc tải ảnh lên"
                optional
-               placeholder="https://..."
                error={fieldErrors.iconUrl}
             />
             <div className="sm:col-span-2">
@@ -110,16 +132,17 @@ export function FacilityForm({ facility, onDone, onCancel }: FacilityFormProps):
             </div>
          </div>
          <div className="flex flex-wrap gap-3">
-            <Button
-               type="submit"
-               isLoading={facilityMutation.isPending}
-               icon={<Save className="size-4" aria-hidden="true" />}
-            >
+            <Button type="submit" isLoading={isBusy} icon={<Save className="size-4" aria-hidden="true" />}>
                {facility ? 'Lưu tiện ích' : 'Thêm tiện ích'}
             </Button>
             <Button variant="ghost" onClick={onCancel}>
                Hủy
             </Button>
+            {deferredUpload.uploadMessage && (
+               <p role="status" className="self-center text-sm font-medium text-ink-600">
+                  {deferredUpload.uploadMessage}
+               </p>
+            )}
          </div>
       </form>
    );

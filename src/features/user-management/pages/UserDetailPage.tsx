@@ -83,7 +83,7 @@ export function UserDetailPage(): ReactElement {
                   </span>
                   <StatusBadge userStatus={adminUser.status} />
                   {!adminUser.emailVerified && (
-                     <span className="rounded-full bg-gold-50 px-2.5 py-0.5 text-xs font-semibold text-ink-800 ring-1 ring-gold-200">
+                     <span className="rounded-full bg-accent-50 px-2.5 py-0.5 text-xs font-semibold text-ink-800 ring-1 ring-accent-200">
                         Email chưa xác thực
                      </span>
                   )}

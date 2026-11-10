@@ -142,11 +142,11 @@ export function SelectField({
    useEffect(scrollActiveOptionIntoView, [activeOptionId]);
 
    return (
-      <div ref={containerRef} className="space-y-1.5">
+      <div ref={containerRef} className="space-y-1">
          <label
             htmlFor={id}
             className={cn(
-               'flex items-baseline justify-between text-sm font-semibold text-ink-800',
+               'flex items-baseline justify-between text-[13px] font-semibold text-ink-700',
                hideLabel && 'sr-only',
             )}
          >
@@ -169,11 +169,11 @@ export function SelectField({
                onClick={toggleDropdown}
                onKeyDown={handleTriggerKeyDown}
                className={cn(
-                  'h-12 w-full rounded-xl border bg-white pl-4 text-left text-[15px] shadow-sm outline-none transition-all disabled:bg-ink-50 disabled:text-ink-400',
-                  canClear ? 'pr-20' : 'pr-11',
+                  'h-10 w-full rounded-lg border bg-white pl-3 text-left text-sm shadow-sm outline-none transition-colors disabled:bg-ink-50 disabled:text-ink-400',
+                  canClear ? 'pr-16' : 'pr-9',
                   hasError
-                     ? 'border-danger-400 focus:border-danger-500 focus:ring-4 focus:ring-danger-100'
-                     : 'border-ink-200 hover:border-ink-300 focus:border-brand-500 focus:ring-4 focus:ring-brand-100',
+                     ? 'border-danger-400 focus:border-danger-500 focus:ring-2 focus:ring-danger-100'
+                     : 'border-ink-200 hover:border-ink-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-100',
                   selectedOption && value !== '' ? 'text-ink-900' : 'text-ink-400',
                   triggerClassName,
                )}
@@ -185,14 +185,14 @@ export function SelectField({
                   type="button"
                   aria-label="Xóa lựa chọn"
                   onClick={clearSelection}
-                  className="absolute right-10 top-1/2 grid size-7 -translate-y-1/2 place-items-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200"
+                  className="absolute right-8 top-1/2 grid size-6 -translate-y-1/2 place-items-center rounded-full text-ink-400 transition-colors hover:bg-ink-100 hover:text-ink-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200"
                >
                   <X className="size-4" aria-hidden="true" />
                </button>
             )}
             <ChevronDown
                className={cn(
-                  'pointer-events-none absolute right-3.5 top-1/2 size-[18px] -translate-y-1/2 text-ink-400 transition-transform duration-200',
+                  'pointer-events-none absolute right-2.5 top-1/2 size-4 -translate-y-1/2 text-ink-400 transition-transform duration-200',
                   isOpen && 'rotate-180',
                )}
                aria-hidden="true"

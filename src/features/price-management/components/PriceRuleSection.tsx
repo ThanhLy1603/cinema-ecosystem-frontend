@@ -99,10 +99,10 @@ export function PriceRuleSection({
    onChanged,
 }: PriceRuleSectionProps): ReactElement {
    return (
-      <section className="space-y-4 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100">
+      <section className="space-y-4 rounded-lg bg-white p-5 shadow-card ring-1 ring-ink-200/80">
          <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-               <h2 className="text-lg font-extrabold text-ink-900">
+               <h2 className="text-[15px] font-semibold text-ink-900">
                   Phụ thu theo {PRICE_RULE_TYPE_LABELS[ruleType].toLowerCase()}
                </h2>
                <p className="mt-1 text-sm text-ink-500">{PRICE_RULE_TYPE_DESCRIPTIONS[ruleType]}</p>

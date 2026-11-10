@@ -62,24 +62,23 @@ function HeroSlide({ movie, isActive, slideLabel, onOpenTrailer }: HeroSlideProp
                alt=""
                className={cn(
                   'absolute inset-0 -z-10 size-full object-cover',
-                  movie.bannerUrl ? 'opacity-60' : 'scale-110 opacity-40 blur-md',
+                  movie.bannerUrl ? 'opacity-70' : 'scale-110 opacity-40 blur-md',
                )}
             />
          ) : (
-            <div className="absolute inset-0 -z-10 bg-gradient-to-br from-brand-700 to-accent-500" />
+            <div className="absolute inset-0 -z-10 bg-brand-800" />
          )}
-         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-900 via-brand-900/75 to-brand-900/10" />
-         <div className="absolute inset-x-0 bottom-0 -z-10 h-32 bg-gradient-to-t from-brand-900/80 to-transparent" />
+         <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink-900/95 via-ink-900/65 to-ink-900/10" />
 
-         <div className="mx-auto grid h-full max-w-7xl items-center gap-10 px-4 pb-16 sm:px-6 lg:grid-cols-[1fr_260px] lg:px-8">
+         <div className="mx-auto grid h-full max-w-7xl items-center gap-10 px-4 pb-10 sm:px-6 lg:grid-cols-[1fr_230px] lg:px-8">
             <div className="max-w-2xl space-y-5 text-white">
                <div className="flex flex-wrap items-center gap-3">
                   <AgeRatingBadge ageRating={movie.rated} className="text-sm" />
-                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold backdrop-blur">
+                  <span className="rounded bg-white/15 px-2.5 py-1 text-xs font-semibold">
                      {MOVIE_STATUS_LABELS[movie.status]}
                   </span>
                </div>
-               <h2 className="text-balance text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl">
+               <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl lg:text-5xl">
                   {movie.title}
                </h2>
                <p className="flex flex-wrap items-center gap-x-5 gap-y-1 text-sm text-white/85">
@@ -112,7 +111,7 @@ function HeroSlide({ movie, isActive, slideLabel, onOpenTrailer }: HeroSlideProp
                to={getMovieDetailPath(movie.slug)}
                tabIndex={-1}
                aria-hidden="true"
-               className="hidden aspect-[2/3] overflow-hidden rounded-3xl bg-brand-800 shadow-soft ring-4 ring-white/20 lg:block"
+               className="hidden aspect-[2/3] overflow-hidden rounded-lg bg-brand-800 shadow-soft ring-1 ring-white/25 lg:block"
             >
                {movie.posterUrl ? (
                   <img src={movie.posterUrl} alt="" className="size-full object-cover" />
@@ -158,13 +157,13 @@ export function HeroCarousel({ movies }: HeroCarouselProps): ReactElement {
       <section
          aria-roledescription="carousel"
          aria-label="Phim nổi bật"
-         className="relative isolate overflow-hidden bg-brand-900"
+         className="relative isolate overflow-hidden bg-ink-900"
          onMouseEnter={() => setIsPaused(true)}
          onMouseLeave={() => setIsPaused(false)}
          onFocus={() => setIsPaused(true)}
          onBlur={() => setIsPaused(false)}
       >
-         <div className="relative h-[460px] sm:h-[500px] lg:h-[560px]">
+         <div className="relative h-[400px] sm:h-[440px] lg:h-[480px]">
             {movies.map((movie, movieIndex) => (
                <HeroSlide
                   key={movie.id}
@@ -182,7 +181,7 @@ export function HeroCarousel({ movies }: HeroCarouselProps): ReactElement {
                   type="button"
                   onClick={showPrevious}
                   aria-label="Phim trước"
-                  className="absolute left-3 top-1/2 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/30 sm:grid"
+                  className="absolute left-4 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-md bg-ink-900/40 text-white transition-colors hover:bg-ink-900/70 sm:grid"
                >
                   <ChevronLeft className="size-6" aria-hidden="true" />
                </button>
@@ -190,11 +189,11 @@ export function HeroCarousel({ movies }: HeroCarouselProps): ReactElement {
                   type="button"
                   onClick={showNext}
                   aria-label="Phim tiếp theo"
-                  className="absolute right-3 top-1/2 hidden size-11 -translate-y-1/2 place-items-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/30 sm:grid"
+                  className="absolute right-4 top-1/2 hidden size-10 -translate-y-1/2 place-items-center rounded-md bg-ink-900/40 text-white transition-colors hover:bg-ink-900/70 sm:grid"
                >
                   <ChevronRight className="size-6" aria-hidden="true" />
                </button>
-               <div className="absolute inset-x-0 bottom-16 flex justify-center gap-2">
+               <div className="absolute inset-x-0 bottom-4 flex justify-center gap-1.5">
                   {movies.map((movie, movieIndex) => (
                      <button
                         key={movie.id}
@@ -203,8 +202,8 @@ export function HeroCarousel({ movies }: HeroCarouselProps): ReactElement {
                         aria-label={`Chuyển tới phim ${movie.title}`}
                         aria-current={movieIndex === activeIndex}
                         className={cn(
-                           'h-2 rounded-full transition-all',
-                           movieIndex === activeIndex ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/80',
+                           'h-1.5 rounded-full transition-all',
+                           movieIndex === activeIndex ? 'w-8 bg-white' : 'w-4 bg-white/40 hover:bg-white/70',
                         )}
                      />
                   ))}

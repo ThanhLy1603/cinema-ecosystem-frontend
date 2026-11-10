@@ -1,8 +1,8 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import {
-   ArrowRight,
    Building2,
    CalendarClock,
+   ChevronRight,
    Clapperboard,
    MessagesSquare,
    ShieldCheck,
@@ -15,81 +15,78 @@ import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { searchUsers } from '@/api/adminUserApi';
 import { getCinemaOptions } from '@/api/cinemaApi';
+import { searchAdminMovies } from '@/api/movieApi';
+import PageHeader from '@/components/common/PageHeader';
 import LinkButton from '@/components/ui/LinkButton';
 import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';
 import { cn } from '@/lib/common/utils';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { AdminUser } from '@/types/auth/admin';
-import type { PageResponse } from '@/types/common/api';
 import type { User } from '@/types/auth/auth';
+import type { PageResponse } from '@/types/common/api';
 import type { CinemaOption } from '@/types/cinema/cinema';
-import { ADMIN_CINEMA_OPTIONS_KEY, ADMIN_USER_SUMMARY_KEY } from '../utils/queryKeys';
+import type { Movie } from '@/types/movie/movie';
+import { ADMIN_CINEMA_OPTIONS_KEY, ADMIN_MOVIE_SUMMARY_KEY, ADMIN_USER_SUMMARY_KEY } from '../utils/queryKeys';
 
-type ModuleStatus = 'ready' | 'next' | 'soon';
+type ModuleStatus = 'ready' | 'soon';
 
-interface AdminModuleCardItem {
+interface AdminModuleItem {
    title: string;
    description: string;
    to: string;
    icon: LucideIcon;
    status: ModuleStatus;
-   actionLabel: string;
 }
 
-const STATUS_BADGE_MAP: Record<ModuleStatus, { label: string; className: string }> = {
-   ready: { label: 'Đang hoạt động', className: 'bg-emerald-50 text-emerald-700 ring-emerald-200' },
-   next: { label: 'Tiếp theo', className: 'bg-accent-50 text-accent-600 ring-accent-200' },
-   soon: { label: 'Sắp ra mắt', className: 'bg-ink-50 text-ink-600 ring-ink-200' },
-};
+interface StatCardItem {
+   label: string;
+   value: string;
+   to: string;
+   icon: LucideIcon;
+}
 
-const ADMIN_MODULE_ITEMS: AdminModuleCardItem[] = [
+const ADMIN_MODULE_ITEMS: AdminModuleItem[] = [
    {
-      title: 'Quản lý người dùng & nhân sự',
-      description: 'Tìm kiếm tài khoản, thêm nhân viên, khóa/mở khóa, phân quyền và gán chi nhánh làm việc.',
+      title: 'Người dùng & nhân sự',
+      description: 'Tìm kiếm tài khoản, thêm nhân viên, khóa/mở khóa, phân quyền và gán chi nhánh.',
       to: '/admin/users',
       icon: Users,
       status: 'ready',
-      actionLabel: 'Mở quản lý người dùng',
    },
    {
       title: 'Cụm rạp, phòng chiếu & sơ đồ ghế',
-      description: 'Quản lý chi nhánh rạp, tiện ích đi kèm, phòng chiếu 2D/3D/IMAX/4DX và ma trận ghế.',
+      description: 'Chi nhánh, tiện ích, phòng chiếu 2D/3D/IMAX/4DX và ma trận ghế.',
       to: '/admin/cinemas',
       icon: Building2,
-      status: 'next',
-      actionLabel: 'Xem lộ trình phân hệ',
+      status: 'ready',
    },
    {
-      title: 'Quản lý phim',
-      description: 'Cập nhật phim đang chiếu/sắp chiếu, thể loại, thời lượng, giới hạn tuổi và trailer.',
+      title: 'Phim',
+      description: 'Danh mục phim, thể loại, nghệ sĩ, nhãn độ tuổi và trailer.',
       to: '/admin/movies',
       icon: Clapperboard,
-      status: 'soon',
-      actionLabel: 'Xem chi tiết',
+      status: 'ready',
    },
    {
-      title: 'Suất chiếu & giá vé động',
-      description: 'Xếp lịch chiếu theo phòng, kiểm tra trùng giờ và thiết lập phụ thu theo khung giờ/loại ghế.',
+      title: 'Suất chiếu & giá vé',
+      description: 'Xếp lịch theo phòng, chặn trùng giờ, nhân bản lịch và quy tắc phụ thu.',
       to: '/admin/showtimes',
       icon: CalendarClock,
-      status: 'soon',
-      actionLabel: 'Xem chi tiết',
+      status: 'ready',
    },
    {
-      title: 'Khuyến mãi & combo F&B',
-      description: 'Tạo mã giảm giá, quy tắc theo hạng thành viên và danh mục bắp nước tại quầy.',
+      title: 'Khuyến mãi & F&B',
+      description: 'Mã giảm giá, quy tắc theo hạng thành viên và danh mục bắp nước.',
       to: '/admin/promotions',
       icon: Tag,
       status: 'soon',
-      actionLabel: 'Xem chi tiết',
    },
    {
-      title: 'Cộng đồng & blog điện ảnh',
-      description: 'Soạn bài viết với trình soạn thảo phong phú và kiểm duyệt đánh giá, bình luận của khán giả.',
+      title: 'Cộng đồng & blog',
+      description: 'Bài viết điện ảnh và kiểm duyệt đánh giá, bình luận.',
       to: '/admin/community',
       icon: MessagesSquare,
       status: 'soon',
-      actionLabel: 'Xem chi tiết',
    },
 ];
 
@@ -114,41 +111,46 @@ export function AdminDashboardPage(): ReactElement {
       queryKey: ADMIN_CINEMA_OPTIONS_KEY,
       queryFn: getCinemaOptions,
    });
+   const movieSummaryQuery: UseQueryResult<PageResponse<Movie>> = useQuery<PageResponse<Movie>>({
+      queryKey: ADMIN_MOVIE_SUMMARY_KEY,
+      queryFn: () => searchAdminMovies({ deleted: false, page: 0, size: 1 }),
+   });
 
-   const userCountLabel: string = formatCount(
-      userSummaryQuery.isPending,
-      userSummaryQuery.isError,
-      userSummaryQuery.data?.totalElements,
-   );
-   const cinemaCountLabel: string = formatCount(
-      cinemaOptionsQuery.isPending,
-      cinemaOptionsQuery.isError,
-      cinemaOptionsQuery.data?.length,
-   );
    const roleLabel: string = user ? getPrimaryRoleLabel(user) : 'Quản trị';
+   const statCardItems: StatCardItem[] = [
+      {
+         label: 'Người dùng',
+         value: formatCount(userSummaryQuery.isPending, userSummaryQuery.isError, userSummaryQuery.data?.totalElements),
+         to: '/admin/users',
+         icon: Users,
+      },
+      {
+         label: 'Cụm rạp',
+         value: formatCount(cinemaOptionsQuery.isPending, cinemaOptionsQuery.isError, cinemaOptionsQuery.data?.length),
+         to: '/admin/cinemas',
+         icon: Building2,
+      },
+      {
+         label: 'Phim',
+         value: formatCount(
+            movieSummaryQuery.isPending,
+            movieSummaryQuery.isError,
+            movieSummaryQuery.data?.totalElements,
+         ),
+         to: '/admin/movies',
+         icon: Clapperboard,
+      },
+   ];
 
    return (
-      <div className="w-full max-w-6xl space-y-8">
-         <section className="relative overflow-hidden rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 sm:p-8">
-            <div className="flex flex-wrap items-center justify-between gap-6">
-               <div className="max-w-2xl space-y-2">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-brand-700 ring-1 ring-brand-100">
-                     <ShieldCheck className="size-3.5" aria-hidden="true" />
-                     {roleLabel}
-                  </span>
-                  <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">
-                     Chào {user?.fullName ?? 'bạn'}, quản trị CinemaSphere
-                  </h1>
-                  <p className="text-sm leading-relaxed text-ink-500">
-                     {isAdmin
-                        ? 'Bạn có toàn quyền quản trị tài khoản, phân công nhân sự, cấu hình cụm rạp và vận hành toàn hệ thống.'
-                        : 'Bạn đang truy cập cổng quản trị theo phạm vi các chi nhánh được phân công.'}
-                  </p>
-               </div>
-               <div className="flex flex-wrap items-center gap-3">
-                  <LinkButton to="/admin/users" icon={<Users className="size-4" aria-hidden="true" />}>
-                     Quản lý người dùng
-                  </LinkButton>
+      <div className="w-full max-w-7xl space-y-5">
+         <PageHeader
+            title="Tổng quan"
+            description={`Xin chào ${user?.fullName ?? 'bạn'} · ${roleLabel} · ${
+               isAdmin ? 'phạm vi toàn hệ thống' : 'phạm vi theo chi nhánh phụ trách'
+            }`}
+            actions={
+               <>
                   <LinkButton
                      to="/admin/users/new"
                      variant="secondary"
@@ -156,121 +158,83 @@ export function AdminDashboardPage(): ReactElement {
                   >
                      Thêm nhân viên
                   </LinkButton>
-               </div>
-            </div>
-         </section>
+                  <LinkButton to="/admin/showtimes" icon={<CalendarClock className="size-4" aria-hidden="true" />}>
+                     Xếp lịch chiếu
+                  </LinkButton>
+               </>
+            }
+         />
 
-         <section className="grid gap-5 sm:grid-cols-3">
-            <Link
-               to="/admin/users"
-               className="group rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 transition-all hover:-translate-y-0.5 hover:shadow-soft"
-            >
-               <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-ink-500">Người dùng trong phạm vi</span>
-                  <span className="grid size-10 place-items-center rounded-2xl bg-brand-50 text-brand-600">
-                     <Users className="size-5" aria-hidden="true" />
+         <section aria-label="Số liệu chính" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {statCardItems.map((statCardItem) => (
+               <Link
+                  key={statCardItem.to}
+                  to={statCardItem.to}
+                  className="group flex items-center gap-4 rounded-lg bg-white p-4 shadow-card ring-1 ring-ink-200/80 transition-colors hover:ring-brand-300"
+               >
+                  <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-brand-50 text-brand-600">
+                     <statCardItem.icon className="size-5" aria-hidden="true" />
                   </span>
-               </div>
-               <p className="mt-4 text-3xl font-extrabold tracking-tight text-ink-900">{userCountLabel}</p>
-               <p className="mt-1 text-xs font-semibold text-brand-700 group-hover:underline">
-                  Xem danh sách người dùng
-               </p>
-            </Link>
-
-            <Link
-               to="/admin/cinemas"
-               className="group rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 transition-all hover:-translate-y-0.5 hover:shadow-soft"
-            >
-               <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-ink-500">Cụm rạp trong phạm vi</span>
-                  <span className="grid size-10 place-items-center rounded-2xl bg-accent-50 text-accent-600">
-                     <Building2 className="size-5" aria-hidden="true" />
-                  </span>
-               </div>
-               <p className="mt-4 text-3xl font-extrabold tracking-tight text-ink-900">{cinemaCountLabel}</p>
-               <p className="mt-1 text-xs font-semibold text-ink-600 group-hover:text-brand-700">
-                  Phân hệ quản lý rạp sắp triển khai
-               </p>
-            </Link>
-
+                  <div className="min-w-0">
+                     <p className="text-[13px] font-medium text-ink-500">{statCardItem.label}</p>
+                     <p className="text-2xl font-semibold tracking-tight text-ink-900">{statCardItem.value}</p>
+                  </div>
+               </Link>
+            ))}
             <Link
                to="/profile"
-               className="group rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 transition-all hover:-translate-y-0.5 hover:shadow-soft"
+               className="group flex items-center gap-4 rounded-lg bg-white p-4 shadow-card ring-1 ring-ink-200/80 transition-colors hover:ring-brand-300"
             >
-               <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-ink-500">Phạm vi quyền hạn</span>
-                  <span className="grid size-10 place-items-center rounded-2xl bg-ink-50 text-ink-700">
-                     <ShieldCheck className="size-5" aria-hidden="true" />
-                  </span>
+               <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-ink-100 text-ink-700">
+                  <ShieldCheck className="size-5" aria-hidden="true" />
+               </span>
+               <div className="min-w-0">
+                  <p className="text-[13px] font-medium text-ink-500">Quyền hạn</p>
+                  <p className="truncate text-base font-semibold text-ink-900">{roleLabel}</p>
                </div>
-               <p className="mt-4 text-xl font-extrabold tracking-tight text-ink-900">{roleLabel}</p>
-               <p className="mt-2 text-xs font-semibold text-ink-600 group-hover:text-brand-700">
-                  {isAdmin ? 'Toàn hệ thống CinemaSphere' : 'Giới hạn theo chi nhánh phụ trách'}
-               </p>
             </Link>
          </section>
 
-         <section className="space-y-4">
-            <div className="flex flex-wrap items-end justify-between gap-2">
-               <div>
-                  <h2 className="text-xl font-extrabold tracking-tight text-ink-900">Các phân hệ quản trị</h2>
-                  <p className="mt-1 text-sm text-ink-500">
-                     Truy cập nhanh các công cụ đang hoạt động và các phân hệ đang hoàn thiện tiếp theo.
-                  </p>
-               </div>
+         <section aria-label="Phân hệ quản trị" className="rounded-lg bg-white shadow-card ring-1 ring-ink-200/80">
+            <div className="border-b border-ink-100 px-5 py-3.5">
+               <h2 className="text-[15px] font-semibold text-ink-900">Phân hệ quản trị</h2>
             </div>
-
-            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-               {ADMIN_MODULE_ITEMS.map((adminModuleCardItem) => {
-                  const statusBadge: { label: string; className: string } =
-                     STATUS_BADGE_MAP[adminModuleCardItem.status];
-                  return (
-                     <article
-                        key={adminModuleCardItem.to}
-                        className="flex flex-col justify-between rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 transition-all hover:-translate-y-0.5 hover:shadow-soft"
+            <ul className="divide-y divide-ink-100">
+               {ADMIN_MODULE_ITEMS.map((adminModuleItem) => (
+                  <li key={adminModuleItem.to}>
+                     <Link
+                        to={adminModuleItem.to}
+                        className="flex items-center gap-4 px-5 py-3.5 transition-colors hover:bg-ink-50"
                      >
-                        <div>
-                           <div className="flex items-start justify-between gap-3">
-                              <span
-                                 className={cn(
-                                    'grid size-12 place-items-center rounded-2xl',
-                                    adminModuleCardItem.status === 'ready'
-                                       ? 'bg-brand-50 text-brand-600'
-                                       : adminModuleCardItem.status === 'next'
-                                         ? 'bg-accent-50 text-accent-600'
-                                         : 'bg-ink-50 text-ink-600',
-                                 )}
-                              >
-                                 <adminModuleCardItem.icon className="size-6" aria-hidden="true" />
-                              </span>
-                              <span
-                                 className={cn(
-                                    'inline-flex rounded-full px-2.5 py-1 text-[11px] font-bold ring-1',
-                                    statusBadge.className,
-                                 )}
-                              >
-                                 {statusBadge.label}
-                              </span>
-                           </div>
-                           <h3 className="mt-5 text-lg font-bold text-ink-900">{adminModuleCardItem.title}</h3>
-                           <p className="mt-2 text-sm leading-relaxed text-ink-500">
-                              {adminModuleCardItem.description}
-                           </p>
+                        <span
+                           className={cn(
+                              'grid size-9 shrink-0 place-items-center rounded-lg',
+                              adminModuleItem.status === 'ready'
+                                 ? 'bg-brand-50 text-brand-600'
+                                 : 'bg-ink-100 text-ink-500',
+                           )}
+                        >
+                           <adminModuleItem.icon className="size-[18px]" aria-hidden="true" />
+                        </span>
+                        <div className="min-w-0 flex-1">
+                           <p className="text-sm font-semibold text-ink-900">{adminModuleItem.title}</p>
+                           <p className="truncate text-[13px] text-ink-500">{adminModuleItem.description}</p>
                         </div>
-
-                        <div className="mt-6 border-t border-ink-100 pt-4">
-                           <Link
-                              to={adminModuleCardItem.to}
-                              className="inline-flex items-center gap-1.5 text-sm font-bold text-brand-700 hover:underline"
-                           >
-                              {adminModuleCardItem.actionLabel}
-                              <ArrowRight className="size-4" aria-hidden="true" />
-                           </Link>
-                        </div>
-                     </article>
-                  );
-               })}
-            </div>
+                        <span
+                           className={cn(
+                              'shrink-0 rounded px-2 py-0.5 text-[11px] font-semibold',
+                              adminModuleItem.status === 'ready'
+                                 ? 'bg-emerald-50 text-emerald-700'
+                                 : 'bg-ink-100 text-ink-600',
+                           )}
+                        >
+                           {adminModuleItem.status === 'ready' ? 'Đang hoạt động' : 'Sắp ra mắt'}
+                        </span>
+                        <ChevronRight className="size-4 shrink-0 text-ink-300" aria-hidden="true" />
+                     </Link>
+                  </li>
+               ))}
+            </ul>
          </section>
       </div>
    );

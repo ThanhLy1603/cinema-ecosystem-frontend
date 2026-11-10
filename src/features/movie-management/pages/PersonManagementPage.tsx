@@ -58,7 +58,7 @@ export function PersonManagementPage(): ReactElement {
             <ArrowLeft className="size-4" aria-hidden="true" />
             Về danh sách phim
          </Link>
-         <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Đạo diễn & diễn viên</h1>
+         <h1 className="text-xl font-semibold tracking-tight text-ink-900">Đạo diễn & diễn viên</h1>
          <SectionCard
             title="Nghệ sĩ"
             description="Tạo nghệ sĩ tại đây rồi gán vai trò cho từng phim ở trang chỉnh sửa phim. Chỉ quản trị viên mới được xóa nghệ sĩ."

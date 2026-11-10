@@ -17,24 +17,24 @@ interface MovieTableProps {
 export function MovieTable({ movies, canRestore, onRestored }: MovieTableProps): ReactElement {
    if (movies.length === 0) {
       return (
-         <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-100">
+         <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-200/80">
             Không có phim nào phù hợp với bộ lọc.
          </p>
       );
    }
 
    return (
-      <div className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-100">
+      <div className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-200/80">
          <table className="w-full min-w-[860px] text-left text-sm">
-            <thead className="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-500">
+            <thead className="border-b border-ink-100 bg-ink-50/80 text-[11px] uppercase tracking-wider text-ink-500">
                <tr>
-                  <th className="px-4 py-4 font-semibold">Phim</th>
-                  <th className="px-4 py-4 font-semibold">Độ tuổi</th>
-                  <th className="px-4 py-4 font-semibold">Thời lượng</th>
-                  <th className="px-4 py-4 font-semibold">Khởi chiếu</th>
-                  <th className="px-4 py-4 font-semibold">Thể loại</th>
-                  <th className="px-4 py-4 font-semibold">Trạng thái</th>
-                  <th className="px-4 py-4" />
+                  <th className="px-4 py-2.5 font-semibold">Phim</th>
+                  <th className="px-4 py-2.5 font-semibold">Độ tuổi</th>
+                  <th className="px-4 py-2.5 font-semibold">Thời lượng</th>
+                  <th className="px-4 py-2.5 font-semibold">Khởi chiếu</th>
+                  <th className="px-4 py-2.5 font-semibold">Thể loại</th>
+                  <th className="px-4 py-2.5 font-semibold">Trạng thái</th>
+                  <th className="px-4 py-2.5" />
                </tr>
             </thead>
             <tbody className="divide-y divide-ink-100">

@@ -267,7 +267,7 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
          </aside>
 
          <section className="min-w-0 space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-white p-4 shadow-card ring-1 ring-ink-100">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-3xl bg-white p-4 shadow-card ring-1 ring-ink-200/80">
                <div className="flex flex-wrap gap-2">
                   <Button
                      variant="secondary"
@@ -338,7 +338,7 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
             )}
             {reloadMutation.isError && <Alert variant="error">{getErrorMessage(reloadMutation.error)}</Alert>}
 
-            <div className="space-y-5 rounded-3xl bg-white p-4 shadow-card ring-1 ring-ink-100 sm:p-6">
+            <div className="space-y-5 rounded-3xl bg-white p-4 shadow-card ring-1 ring-ink-200/80 sm:p-6">
                <SeatGrid
                   rows={rowLetters}
                   columns={seatMapDraft.columns}

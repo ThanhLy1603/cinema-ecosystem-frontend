@@ -1,4 +1,4 @@
-import { Menu, Store } from 'lucide-react';
+import { ChevronRight, Menu, Store } from 'lucide-react';
 import { useEffect, useState, type ReactElement } from 'react';
 import { Link, Outlet, useLocation, type Location } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
@@ -76,27 +76,28 @@ export function AdminLayout(): ReactElement {
          )}
 
          <div className="flex min-w-0 flex-1 flex-col">
-            <header className="sticky top-0 z-30 flex h-[72px] items-center justify-between gap-4 border-b border-ink-100/80 bg-white/85 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
+            <header className="sticky top-0 z-30 flex h-14 items-center justify-between gap-4 border-b border-ink-200 bg-white px-4 sm:px-6 lg:px-8">
                <div className="flex min-w-0 items-center gap-3">
                   <button
                      type="button"
                      onClick={() => setIsSidebarOpen(true)}
                      aria-label="Mở menu quản trị"
                      aria-expanded={isSidebarOpen}
-                     className="grid size-10 shrink-0 place-items-center rounded-xl text-ink-700 transition-colors hover:bg-brand-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100 lg:hidden"
+                     className="grid size-9 shrink-0 place-items-center rounded-lg text-ink-700 transition-colors hover:bg-ink-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200 lg:hidden"
                   >
                      <Menu className="size-5" aria-hidden="true" />
                   </button>
-                  <div className="min-w-0">
-                     <p className="text-[11px] font-bold uppercase tracking-widest text-brand-600">Trang quản trị</p>
-                     <p className="truncate text-base font-extrabold text-ink-900">{pageTitle}</p>
-                  </div>
+                  <nav aria-label="Vị trí hiện tại" className="flex min-w-0 items-center gap-1.5 text-sm">
+                     <span className="text-ink-500">Quản trị</span>
+                     <ChevronRight className="size-3.5 shrink-0 text-ink-300" aria-hidden="true" />
+                     <span className="truncate font-semibold text-ink-900">{pageTitle}</span>
+                  </nav>
                </div>
 
                <div className="flex items-center gap-3">
                   <Link
                      to="/"
-                     className="hidden items-center gap-2 rounded-xl border border-ink-200 bg-white px-3.5 py-2 text-xs font-semibold text-ink-700 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700 sm:inline-flex"
+                     className="hidden items-center gap-2 rounded-lg px-3 py-1.5 text-[13px] font-semibold text-ink-600 transition-colors hover:bg-ink-100 hover:text-ink-900 sm:inline-flex"
                   >
                      <Store className="size-4" aria-hidden="true" />
                      Trang khách hàng
@@ -105,7 +106,7 @@ export function AdminLayout(): ReactElement {
                </div>
             </header>
 
-            <main className="flex-1 px-4 py-8 sm:px-6 lg:px-8">
+            <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8">
                <Outlet />
             </main>
          </div>

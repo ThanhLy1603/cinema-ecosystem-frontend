@@ -47,10 +47,8 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
 
 function getNavLinkClassName(isActive: boolean): string {
    return cn(
-      'flex items-center gap-3 rounded-2xl px-3.5 py-2.5 text-sm font-semibold transition-all',
-      isActive
-         ? 'bg-brand-50 text-brand-700 shadow-sm ring-1 ring-brand-100'
-         : 'text-ink-600 hover:bg-ink-50 hover:text-brand-700',
+      'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+      isActive ? 'bg-brand-50 font-semibold text-brand-700' : 'text-ink-600 hover:bg-ink-50 hover:text-ink-900',
    );
 }
 
@@ -62,7 +60,7 @@ function renderStatusBadge(adminNavStatus: AdminNavStatus, isActive: boolean): R
       return (
          <span
             className={cn(
-               'ml-auto shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide',
+               'ml-auto shrink-0 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-medium',
                isActive
                   ? 'bg-white text-brand-700 ring-1 ring-brand-100'
                   : 'bg-accent-50 text-accent-600 ring-1 ring-accent-200',
@@ -75,7 +73,7 @@ function renderStatusBadge(adminNavStatus: AdminNavStatus, isActive: boolean): R
    return (
       <span
          className={cn(
-            'ml-auto shrink-0 whitespace-nowrap rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide',
+            'ml-auto shrink-0 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-medium',
             isActive ? 'bg-white text-brand-700 ring-1 ring-brand-100' : 'bg-ink-100 text-ink-500',
          )}
       >
@@ -89,31 +87,25 @@ export function AdminSidebar({ user, onNavigate, onClose }: AdminSidebarProps): 
    const primaryRoleLabel: string = user ? getPrimaryRoleLabel(user) : 'Quản trị';
 
    return (
-      <div className="flex h-full w-72 flex-col border-r border-ink-100 bg-white text-ink-900">
-         <div className="flex h-[72px] items-center justify-between border-b border-ink-100 px-5">
+      <div className="flex h-full w-[17rem] flex-col border-r border-ink-200 bg-white text-ink-900">
+         <div className="flex h-14 items-center justify-between border-b border-ink-200 px-4">
             <div className="flex items-center gap-2">
                <Logo to="/admin" />
-               <span className="rounded-full bg-brand-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-700 ring-1 ring-brand-100">
-                  Admin
-               </span>
             </div>
             {onClose && (
                <button
                   type="button"
                   onClick={onClose}
                   aria-label="Đóng thanh điều hướng"
-                  className="grid size-9 place-items-center rounded-xl text-ink-500 transition-colors hover:bg-ink-50 hover:text-ink-900 lg:hidden"
+                  className="grid size-8 place-items-center rounded-lg text-ink-500 transition-colors hover:bg-ink-100 hover:text-ink-900 lg:hidden"
                >
                   <X className="size-5" aria-hidden="true" />
                </button>
             )}
          </div>
 
-         <div className="flex-1 overflow-y-auto px-4 py-5">
-            <p className="px-3 pb-2 text-[11px] font-bold uppercase tracking-widest text-ink-400">
-               Không gian quản trị
-            </p>
-            <nav className="space-y-1.5" aria-label="Điều hướng quản trị">
+         <div className="flex-1 overflow-y-auto px-3 py-4">
+            <nav className="space-y-0.5" aria-label="Điều hướng quản trị">
                {ADMIN_NAV_ITEMS.map((adminNavItem) => (
                   <NavLink
                      key={adminNavItem.to}
@@ -134,17 +126,17 @@ export function AdminSidebar({ user, onNavigate, onClose }: AdminSidebarProps): 
             </nav>
          </div>
 
-         <div className="space-y-3 border-t border-ink-100 p-4">
-            <div className="rounded-2xl bg-gradient-to-br from-brand-50 to-accent-50 px-3.5 py-3 ring-1 ring-brand-100">
-               <p className="text-xs font-bold text-ink-900">{primaryRoleLabel}</p>
-               <p className="mt-0.5 text-xs text-ink-600">
+         <div className="space-y-2 border-t border-ink-200 p-3">
+            <div className="px-3 py-1">
+               <p className="text-[13px] font-semibold text-ink-900">{primaryRoleLabel}</p>
+               <p className="text-xs text-ink-500">
                   {isAdmin ? 'Phạm vi: Toàn hệ thống' : 'Phạm vi: Theo chi nhánh phụ trách'}
                </p>
             </div>
             <Link
                to="/"
                onClick={onNavigate}
-               className="flex items-center justify-center gap-2 rounded-2xl border border-ink-200 bg-white px-3.5 py-2.5 text-sm font-semibold text-ink-700 transition-colors hover:border-brand-200 hover:bg-brand-50 hover:text-brand-700"
+               className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-ink-600 transition-colors hover:bg-ink-50 hover:text-ink-900"
             >
                <ArrowLeft className="size-4" aria-hidden="true" />
                Về trang khách hàng

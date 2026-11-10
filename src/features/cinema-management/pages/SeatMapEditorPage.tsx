@@ -61,7 +61,7 @@ export function SeatMapEditorPage(): ReactElement {
             Về cụm rạp
          </Link>
          <header className="flex flex-wrap items-center gap-3">
-            <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Sơ đồ ghế · {seatLayout.hallName}</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-ink-900">Sơ đồ ghế · {seatLayout.hallName}</h1>
             <span className="rounded-full bg-ink-100 px-2.5 py-0.5 text-xs font-bold text-ink-700">
                {seatLayout.screenType}
             </span>

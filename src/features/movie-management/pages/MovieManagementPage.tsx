@@ -49,10 +49,10 @@ export function MovieManagementPage(): ReactElement {
    }
 
    return (
-      <div className="w-full max-w-6xl space-y-6">
+      <div className="w-full max-w-7xl space-y-5">
          <header className="flex flex-wrap items-center justify-between gap-4">
             <div>
-               <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Quản lý phim</h1>
+               <h1 className="text-xl font-semibold tracking-tight text-ink-900">Quản lý phim</h1>
                <p className="mt-1 text-sm text-ink-500">
                   Danh mục phim, nhãn độ tuổi, thể loại và đội ngũ làm phim của cả hệ thống.
                </p>

@@ -3,7 +3,6 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { cn } from '@/lib/common/utils';
 import type { CinemaOption } from '@/types/cinema/cinema';
 import { ROLE_FILTER_OPTIONS, STATUS_FILTER_OPTIONS } from '../utils/labels';
 
@@ -34,24 +33,22 @@ export function UserFilterBar({ userFilters, isAdmin, cinemaOptions, onChange }:
    }
 
    return (
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100">
-         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-            <div className="flex-1">
-               <TextField
-                  id="user-search"
-                  label="Tìm kiếm"
-                  value={searchText}
-                  onChange={setSearchText}
-                  icon={Search}
-                  placeholder="Tên, email hoặc số điện thoại"
-               />
-            </div>
-            <Button type="submit" className="sm:w-40" icon={<Search className="size-4" aria-hidden="true" />}>
-               Tìm
-            </Button>
+      <form
+         onSubmit={handleSubmit}
+         className="flex flex-wrap items-end gap-3 rounded-lg bg-white p-4 shadow-card ring-1 ring-ink-200/80"
+      >
+         <div className="min-w-[240px] flex-1">
+            <TextField
+               id="user-search"
+               label="Tìm kiếm"
+               value={searchText}
+               onChange={setSearchText}
+               icon={Search}
+               placeholder="Tên, email hoặc số điện thoại"
+            />
          </div>
-         <div className={cn('grid gap-4 sm:grid-cols-2', isAdmin ? 'lg:grid-cols-3' : 'lg:grid-cols-2')}>
-            {isAdmin && (
+         {isAdmin && (
+            <div className="w-44">
                <SelectField
                   id="user-role-filter"
                   label="Role"
@@ -59,7 +56,9 @@ export function UserFilterBar({ userFilters, isAdmin, cinemaOptions, onChange }:
                   onChange={(role) => onChange({ ...userFilters, role })}
                   options={ROLE_FILTER_OPTIONS}
                />
-            )}
+            </div>
+         )}
+         <div className="w-44">
             <SelectField
                id="user-status-filter"
                label="Trạng thái"
@@ -67,6 +66,8 @@ export function UserFilterBar({ userFilters, isAdmin, cinemaOptions, onChange }:
                onChange={(status) => onChange({ ...userFilters, status })}
                options={STATUS_FILTER_OPTIONS}
             />
+         </div>
+         <div className="w-44">
             <SelectField
                id="user-cinema-filter"
                label="Chi nhánh"
@@ -75,6 +76,10 @@ export function UserFilterBar({ userFilters, isAdmin, cinemaOptions, onChange }:
                options={cinemaFilterOptions}
             />
          </div>
+
+         <Button type="submit" icon={<Search className="size-4" aria-hidden="true" />}>
+            Tìm
+         </Button>
       </form>
    );
 }

@@ -21,6 +21,7 @@ export function Pagination({ page, totalPages, totalElements, onPageChange }: Pa
          <div className="flex gap-2">
             <Button
                variant="secondary"
+               size="sm"
                icon={<ChevronLeft className="size-4" aria-hidden="true" />}
                disabled={page <= 0}
                onClick={() => onPageChange(page - 1)}
@@ -29,6 +30,7 @@ export function Pagination({ page, totalPages, totalElements, onPageChange }: Pa
             </Button>
             <Button
                variant="secondary"
+               size="sm"
                disabled={page >= lastPage}
                onClick={() => onPageChange(page + 1)}
                icon={<ChevronRight className="size-4" aria-hidden="true" />}

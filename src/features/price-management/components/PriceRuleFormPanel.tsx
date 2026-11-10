@@ -99,7 +99,7 @@ export function PriceRuleFormPanel({ panelState, onSaved, onClose }: PriceRuleFo
             className="relative z-10 flex h-full w-full max-w-md flex-col bg-white shadow-soft"
          >
             <header className="flex items-start justify-between gap-4 border-b border-ink-100 px-6 py-5">
-               <h2 id="price-rule-form-title" className="text-lg font-extrabold text-ink-900">
+               <h2 id="price-rule-form-title" className="text-[15px] font-semibold text-ink-900">
                   {editingPriceRule ? 'Sửa quy tắc giá' : 'Thêm quy tắc giá'}
                </h2>
                <button

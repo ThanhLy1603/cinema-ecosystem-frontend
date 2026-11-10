@@ -38,7 +38,7 @@ export function CinemaCreatePage(): ReactElement {
             <ArrowLeft className="size-4" aria-hidden="true" />
             Về danh sách cụm rạp
          </Link>
-         <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Thêm cụm rạp</h1>
+         <h1 className="text-xl font-semibold tracking-tight text-ink-900">Thêm cụm rạp</h1>
          <SectionCard title="Thông tin cụm rạp" description="Sau khi tạo, bạn có thể thêm phòng chiếu và sơ đồ ghế.">
             <CinemaForm
                facilities={facilitiesQuery.data ?? []}

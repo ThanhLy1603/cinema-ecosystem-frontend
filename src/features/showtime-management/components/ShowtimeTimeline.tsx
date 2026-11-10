@@ -220,7 +220,7 @@ export function ShowtimeTimeline({
    return (
       <div
          ref={scrollContainerRef}
-         className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-100"
+         className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-200/80"
          role="region"
          aria-label="Lịch chiếu theo phòng chiếu"
          tabIndex={0}

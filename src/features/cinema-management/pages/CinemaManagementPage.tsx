@@ -47,10 +47,10 @@ export function CinemaManagementPage(): ReactElement {
    }
 
    return (
-      <div className="w-full max-w-6xl space-y-6">
+      <div className="w-full max-w-7xl space-y-5">
          <header className="flex flex-wrap items-center justify-between gap-4">
             <div>
-               <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Quản lý cụm rạp</h1>
+               <h1 className="text-xl font-semibold tracking-tight text-ink-900">Quản lý cụm rạp</h1>
                <p className="mt-1 text-sm text-ink-500">
                   {isAdmin ? 'Toàn bộ cụm rạp trong hệ thống.' : 'Các cụm rạp bạn phụ trách.'}
                </p>

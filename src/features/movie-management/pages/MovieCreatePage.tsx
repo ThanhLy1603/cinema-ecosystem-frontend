@@ -43,7 +43,7 @@ export function MovieCreatePage(): ReactElement {
             <ArrowLeft className="size-4" aria-hidden="true" />
             Về danh sách phim
          </Link>
-         <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Thêm phim</h1>
+         <h1 className="text-xl font-semibold tracking-tight text-ink-900">Thêm phim</h1>
          <SectionCard
             title="Thông tin phim"
             description="Nhãn độ tuổi là bắt buộc và hiển thị cho khách khi chọn phim."

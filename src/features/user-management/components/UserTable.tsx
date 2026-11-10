@@ -23,23 +23,23 @@ function formatBranches(branchAssignments: BranchAssignment[]): string {
 export function UserTable({ adminUsers }: UserTableProps): ReactElement {
    if (adminUsers.length === 0) {
       return (
-         <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-100">
+         <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-200/80">
             Không có người dùng nào phù hợp với bộ lọc.
          </p>
       );
    }
 
    return (
-      <div className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-100">
+      <div className="overflow-x-auto rounded-3xl bg-white shadow-card ring-1 ring-ink-200/80">
          <table className="w-full min-w-[860px] text-left text-sm">
-            <thead className="border-b border-ink-100 text-xs uppercase tracking-wide text-ink-500">
+            <thead className="border-b border-ink-100 bg-ink-50/80 text-[11px] uppercase tracking-wider text-ink-500">
                <tr>
-                  <th className="px-4 py-4 font-semibold">Người dùng</th>
-                  <th className="px-4 py-4 font-semibold">Role</th>
-                  <th className="px-4 py-4 font-semibold">Trạng thái</th>
-                  <th className="px-4 py-4 font-semibold">Chi nhánh</th>
+                  <th className="px-4 py-2.5 font-semibold">Người dùng</th>
+                  <th className="px-4 py-2.5 font-semibold">Role</th>
+                  <th className="px-4 py-2.5 font-semibold">Trạng thái</th>
+                  <th className="px-4 py-2.5 font-semibold">Chi nhánh</th>
                   <th className="whitespace-nowrap px-4 py-4 font-semibold">Đăng nhập gần nhất</th>
-                  <th className="px-4 py-4" />
+                  <th className="px-4 py-2.5" />
                </tr>
             </thead>
             <tbody className="divide-y divide-ink-100">

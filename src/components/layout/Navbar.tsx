@@ -30,8 +30,8 @@ const NAV_ITEMS: NavItem[] = [
 
 function getNavLinkClassName(isActive: boolean): string {
    return cn(
-      'relative whitespace-nowrap px-3 py-2 text-[13px] font-extrabold uppercase tracking-wide transition-colors',
-      isActive ? 'text-brand-800' : 'text-brand-600 hover:text-brand-800',
+      'relative whitespace-nowrap px-3 py-2 text-[13px] font-semibold uppercase tracking-wide transition-colors',
+      isActive ? 'text-brand-700' : 'text-ink-700 hover:text-brand-700',
    );
 }
 
@@ -45,8 +45,8 @@ export function Navbar(): ReactElement {
    }
 
    return (
-      <header className="sticky top-0 z-40 border-b border-ink-100 bg-white/95 backdrop-blur">
-         <div className="mx-auto flex h-[76px] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-40 border-b border-ink-200 bg-white">
+         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
             <Logo />
 
             <nav className="ml-4 hidden items-center lg:flex" aria-label="Điều hướng chính">
@@ -56,9 +56,7 @@ export function Navbar(): ReactElement {
                      {({ isActive }) => (
                         <>
                            {navItem.label}
-                           {isActive && (
-                              <span className="absolute inset-x-3 -bottom-[17px] h-[3px] rounded-full bg-brand-600" />
-                           )}
+                           {isActive && <span className="absolute inset-x-3 -bottom-[15px] h-0.5 bg-brand-600" />}
                         </>
                      )}
                   </NavLink>
@@ -70,17 +68,18 @@ export function Navbar(): ReactElement {
                   <CitySelector />
                </div>
                {isLoading ? (
-                  <span className="h-11 w-40 animate-pulse rounded-lg bg-ink-100" aria-hidden="true" />
+                  <span className="h-9 w-40 animate-pulse rounded-lg bg-ink-100" aria-hidden="true" />
                ) : user ? (
                   <UserMenu user={user} />
                ) : (
-                  <LinkButton
-                     to="/login"
-                     variant="secondary"
-                     className="hidden h-11 border-2 border-brand-300 bg-brand-50 font-extrabold text-brand-800 hover:bg-brand-100 sm:inline-flex"
-                  >
-                     Đăng nhập/Đăng ký
-                  </LinkButton>
+                  <div className="hidden items-center gap-2 sm:flex">
+                     <LinkButton to="/login" variant="ghost" size="sm">
+                        Đăng nhập
+                     </LinkButton>
+                     <LinkButton to="/register" size="sm">
+                        Đăng ký
+                     </LinkButton>
+                  </div>
                )}
 
                <button
@@ -88,7 +87,7 @@ export function Navbar(): ReactElement {
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   aria-label={isMobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
                   aria-expanded={isMobileMenuOpen}
-                  className="grid size-11 place-items-center rounded-xl text-ink-700 transition-colors hover:bg-brand-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100 lg:hidden"
+                  className="grid size-10 place-items-center rounded-lg text-ink-700 transition-colors hover:bg-ink-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200 lg:hidden"
                >
                   {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
                </button>
@@ -106,16 +105,21 @@ export function Navbar(): ReactElement {
                         key={navItem.to}
                         to={navItem.to}
                         onClick={closeMobileMenu}
-                        className="rounded-xl px-4 py-3 text-sm font-extrabold uppercase tracking-wide text-brand-700 transition-colors hover:bg-brand-50"
+                        className="rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-wide text-ink-800 transition-colors hover:bg-ink-50 hover:text-brand-700"
                      >
                         {navItem.label}
                      </NavLink>
                   ))}
                </nav>
                {!user && !isLoading && (
-                  <LinkButton to="/login" fullWidth onClick={closeMobileMenu}>
-                     Đăng nhập/Đăng ký
-                  </LinkButton>
+                  <div className="grid grid-cols-2 gap-2">
+                     <LinkButton to="/login" variant="secondary" onClick={closeMobileMenu}>
+                        Đăng nhập
+                     </LinkButton>
+                     <LinkButton to="/register" onClick={closeMobileMenu}>
+                        Đăng ký
+                     </LinkButton>
+                  </div>
                )}
             </div>
          )}

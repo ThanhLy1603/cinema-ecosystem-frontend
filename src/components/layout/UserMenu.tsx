@@ -61,9 +61,9 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
             onClick={() => setIsOpen(!isOpen)}
             aria-haspopup="menu"
             aria-expanded={isOpen}
-            className="flex items-center gap-2.5 rounded-full border border-ink-100 bg-white py-1 pl-1 pr-3 shadow-sm transition-all hover:border-brand-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100"
+            className="flex items-center gap-2.5 rounded-lg border border-ink-200 bg-white py-1 pl-1 pr-2.5 transition-colors hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200"
          >
-            <UserAvatar user={user} className="size-9" />
+            <UserAvatar user={user} className="size-7" />
             <span className="hidden max-w-[140px] truncate text-sm font-semibold text-ink-800 sm:block">
                {user.fullName}
             </span>
@@ -76,9 +76,9 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
          {isOpen && (
             <div
                role="menu"
-               className="absolute right-0 z-50 mt-3 w-72 origin-top-right animate-fade-up overflow-hidden rounded-2xl border border-ink-100 bg-white shadow-soft"
+               className="absolute right-0 z-50 mt-2 w-72 origin-top-right animate-fade-up overflow-hidden rounded-lg border border-ink-200 bg-white shadow-soft"
             >
-               <div className="flex items-center gap-3 bg-gradient-to-br from-brand-50 to-accent-50 px-4 py-4">
+               <div className="flex items-center gap-3 border-b border-ink-100 bg-ink-50 px-4 py-3.5">
                   <UserAvatar user={user} className="size-12" />
                   <div className="min-w-0">
                      <p className="truncate text-sm font-bold text-ink-900">{user.fullName}</p>

@@ -66,9 +66,9 @@ export function PriceSimulator(): ReactElement {
    const hasInvalidInput: boolean = buildRequest(simulatorInputs) === null;
 
    return (
-      <section className="space-y-5 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100">
+      <section className="space-y-5 rounded-lg bg-white p-5 shadow-card ring-1 ring-ink-200/80">
          <div>
-            <h2 className="text-lg font-extrabold text-ink-900">Tính thử giá vé</h2>
+            <h2 className="text-[15px] font-semibold text-ink-900">Tính thử giá vé</h2>
             <p className="mt-1 text-sm text-ink-500">
                Chọn giá gốc, loại phòng và giờ chiếu để xem giá từng loại ghế theo các quy tắc đang áp dụng.
             </p>

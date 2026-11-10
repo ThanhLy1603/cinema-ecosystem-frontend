@@ -39,7 +39,7 @@ export function GenreManagementPage(): ReactElement {
             <ArrowLeft className="size-4" aria-hidden="true" />
             Về danh sách phim
          </Link>
-         <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Danh mục thể loại</h1>
+         <h1 className="text-xl font-semibold tracking-tight text-ink-900">Danh mục thể loại</h1>
          <SectionCard
             title="Thể loại phim"
             description="Hành động, kinh dị, hoạt hình... Gán thể loại cho từng phim ở trang chỉnh sửa phim. Chỉ quản trị viên mới được xóa thể loại."

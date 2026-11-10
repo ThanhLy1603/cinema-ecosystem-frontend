@@ -33,8 +33,8 @@ export function TextAreaField({
    const hasError: boolean = Boolean(error);
 
    return (
-      <div className="space-y-1.5">
-         <label htmlFor={id} className="flex items-baseline justify-between text-sm font-semibold text-ink-800">
+      <div className="space-y-1">
+         <label htmlFor={id} className="flex items-baseline justify-between text-[13px] font-semibold text-ink-700">
             <span>{label}</span>
             {optional && <span className="text-xs font-normal text-ink-400">Không bắt buộc</span>}
          </label>
@@ -50,10 +50,10 @@ export function TextAreaField({
             aria-invalid={hasError}
             aria-describedby={error || hint ? messageId : undefined}
             className={cn(
-               'w-full resize-y rounded-xl border bg-white px-4 py-3 text-[15px] text-ink-900 shadow-sm outline-none transition-all placeholder:text-ink-300 disabled:bg-ink-50 disabled:text-ink-400',
+               'w-full resize-y rounded-lg border bg-white px-3 py-2 text-sm text-ink-900 shadow-sm outline-none transition-colors placeholder:text-ink-300 disabled:bg-ink-50 disabled:text-ink-400',
                hasError
-                  ? 'border-danger-400 focus:border-danger-500 focus:ring-4 focus:ring-danger-100'
-                  : 'border-ink-200 hover:border-ink-300 focus:border-brand-500 focus:ring-4 focus:ring-brand-100',
+                  ? 'border-danger-400 focus:border-danger-500 focus:ring-2 focus:ring-danger-100'
+                  : 'border-ink-200 hover:border-ink-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-100',
             )}
          />
          {error ? (

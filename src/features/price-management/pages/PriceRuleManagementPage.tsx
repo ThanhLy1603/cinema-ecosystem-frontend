@@ -63,7 +63,7 @@ export function PriceRuleManagementPage(): ReactElement {
       <div className="w-full max-w-5xl space-y-6">
          <header className="flex flex-wrap items-center justify-between gap-4">
             <div>
-               <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Cấu hình giá vé</h1>
+               <h1 className="text-xl font-semibold tracking-tight text-ink-900">Cấu hình giá vé</h1>
                <p className="mt-1 text-sm text-ink-500">
                   Giá vé = giá gốc của suất chiếu + phụ thu loại ghế + phụ thu khung giờ + phụ thu cuối tuần/ngày lễ +
                   phụ thu loại phòng.

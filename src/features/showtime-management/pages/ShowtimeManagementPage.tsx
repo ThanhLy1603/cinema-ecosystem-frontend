@@ -157,7 +157,7 @@ export function ShowtimeManagementPage(): ReactElement {
       <div className="w-full max-w-7xl space-y-6">
          <header className="flex flex-wrap items-center justify-between gap-4">
             <div>
-               <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Quản lý suất chiếu</h1>
+               <h1 className="text-xl font-semibold tracking-tight text-ink-900">Quản lý suất chiếu</h1>
                <p className="mt-1 text-sm text-ink-500">
                   Xếp lịch chiếu theo phòng. Hai suất liên tiếp trong cùng phòng phải cách nhau tối thiểu 15 phút dọn
                   phòng.
@@ -182,7 +182,7 @@ export function ShowtimeManagementPage(): ReactElement {
             </div>
          </header>
 
-         <div className="grid gap-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+         <div className="grid gap-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-200/80 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
             <SelectField
                id="showtime-cinema-filter"
                label="Cụm rạp"
@@ -242,7 +242,7 @@ export function ShowtimeManagementPage(): ReactElement {
          {!isValidDate(selectedDate) && <Alert variant="info">Vui lòng chọn ngày chiếu hợp lệ.</Alert>}
 
          {cinemaId !== null && hallsQuery.data && hallsQuery.data.length === 0 && (
-            <div className="space-y-3 rounded-3xl bg-white p-8 text-center shadow-card ring-1 ring-ink-100">
+            <div className="space-y-3 rounded-3xl bg-white p-8 text-center shadow-card ring-1 ring-ink-200/80">
                <p className="text-sm text-ink-600">Cụm rạp này chưa có phòng chiếu để xếp lịch.</p>
                <LinkButton to={`/admin/cinemas/${cinemaId}`} variant="secondary">
                   Mở trang cụm rạp để thêm phòng

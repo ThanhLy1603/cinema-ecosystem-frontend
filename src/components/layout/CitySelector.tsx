@@ -20,7 +20,7 @@ export function CitySelector(): ReactElement {
    ];
 
    return (
-      <div className="w-44">
+      <div className="w-40">
          <SelectField
             id="header-city"
             label="Chọn tỉnh/thành phố"
@@ -29,7 +29,7 @@ export function CitySelector(): ReactElement {
             onChange={setCity}
             options={cityOptions}
             placeholder={ALL_CITIES_LABEL}
-            triggerClassName="h-11 rounded-lg border-2 border-brand-700 pl-3 text-sm font-extrabold uppercase text-ink-900"
+            triggerClassName="h-9 text-[13px] font-semibold"
             menuClassName="right-0 w-60"
          />
       </div>

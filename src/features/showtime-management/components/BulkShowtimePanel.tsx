@@ -161,7 +161,7 @@ export function BulkShowtimePanel({ panelState, halls, onChanged, onClose }: Bul
                   <span className="grid size-10 place-items-center rounded-xl bg-brand-50 text-brand-700">
                      <CopyPlus className="size-5" aria-hidden="true" />
                   </span>
-                  <h2 id="bulk-showtime-title" className="text-lg font-extrabold text-ink-900">
+                  <h2 id="bulk-showtime-title" className="text-[15px] font-semibold text-ink-900">
                      {panelState.mode === 'duplicate' ? 'Nhân bản / lặp lại suất chiếu' : 'Sao chép lịch cả ngày'}
                   </h2>
                </div>

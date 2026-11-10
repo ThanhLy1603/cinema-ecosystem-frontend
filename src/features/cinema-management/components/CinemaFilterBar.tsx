@@ -3,7 +3,6 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { cn } from '@/lib/common/utils';
 import { CINEMA_STATUS_FILTER_OPTIONS, DELETED_FILTER_OPTIONS } from '../utils/labels';
 import { buildCityFilterOptions } from '../utils/provinces';
 
@@ -29,23 +28,21 @@ export function CinemaFilterBar({ cinemaFilters, isAdmin, onChange }: CinemaFilt
    }
 
    return (
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100">
-         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-            <div className="flex-1">
-               <TextField
-                  id="cinema-search"
-                  label="Tìm kiếm"
-                  value={searchText}
-                  onChange={setSearchText}
-                  icon={Search}
-                  placeholder="Tên rạp hoặc địa chỉ"
-               />
-            </div>
-            <Button type="submit" className="sm:w-40" icon={<Search className="size-4" aria-hidden="true" />}>
-               Tìm
-            </Button>
+      <form
+         onSubmit={handleSubmit}
+         className="flex flex-wrap items-end gap-3 rounded-lg bg-white p-4 shadow-card ring-1 ring-ink-200/80"
+      >
+         <div className="min-w-[240px] flex-1">
+            <TextField
+               id="cinema-search"
+               label="Tìm kiếm"
+               value={searchText}
+               onChange={setSearchText}
+               icon={Search}
+               placeholder="Tên rạp hoặc địa chỉ"
+            />
          </div>
-         <div className={cn('grid gap-4 sm:grid-cols-2', isAdmin && 'lg:grid-cols-3')}>
+         <div className="w-44">
             <SelectField
                id="cinema-city-filter"
                label="Tỉnh/Thành phố"
@@ -53,6 +50,8 @@ export function CinemaFilterBar({ cinemaFilters, isAdmin, onChange }: CinemaFilt
                onChange={(city) => onChange({ ...cinemaFilters, city })}
                options={buildCityFilterOptions()}
             />
+         </div>
+         <div className="w-44">
             <SelectField
                id="cinema-status-filter"
                label="Trạng thái"
@@ -60,7 +59,9 @@ export function CinemaFilterBar({ cinemaFilters, isAdmin, onChange }: CinemaFilt
                onChange={(status) => onChange({ ...cinemaFilters, status })}
                options={CINEMA_STATUS_FILTER_OPTIONS}
             />
-            {isAdmin && (
+         </div>
+         {isAdmin && (
+            <div className="w-44">
                <SelectField
                   id="cinema-deleted-filter"
                   label="Hiển thị"
@@ -69,8 +70,12 @@ export function CinemaFilterBar({ cinemaFilters, isAdmin, onChange }: CinemaFilt
                   options={DELETED_FILTER_OPTIONS}
                   placeholder="Đang sử dụng"
                />
-            )}
-         </div>
+            </div>
+         )}
+
+         <Button type="submit" icon={<Search className="size-4" aria-hidden="true" />}>
+            Tìm
+         </Button>
       </form>
    );
 }

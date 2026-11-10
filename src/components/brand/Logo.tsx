@@ -21,16 +21,13 @@ export function Logo({ tone = 'default', to = '/', className }: LogoProps): Reac
       >
          <span
             className={cn(
-               'relative grid size-10 place-items-center rounded-xl text-white transition-transform duration-200 group-hover:-rotate-6',
-               isLight
-                  ? 'bg-white/20 ring-1 ring-white/40 backdrop-blur'
-                  : 'bg-gradient-to-br from-brand-400 to-brand-700 shadow-glow',
+               'relative grid size-9 place-items-center rounded-lg text-white',
+               isLight ? 'bg-white/20 ring-1 ring-white/40 backdrop-blur' : 'bg-brand-600',
             )}
          >
-            <Ticket className="size-5" aria-hidden="true" />
-            <span className="absolute -right-1 -top-1 size-3 rounded-full bg-accent-400 ring-2 ring-white" />
+            <Ticket className="size-[18px]" aria-hidden="true" />
          </span>
-         <span className={cn('text-xl font-extrabold tracking-tight', isLight ? 'text-white' : 'text-ink-900')}>
+         <span className={cn('text-lg font-bold tracking-tight', isLight ? 'text-white' : 'text-ink-900')}>
             Cinema<span className={isLight ? 'text-accent-300' : 'text-brand-600'}>Sphere</span>
          </span>
       </Link>

@@ -84,7 +84,7 @@ export function MovieEditPage(): ReactElement {
       <div className="w-full max-w-4xl space-y-6">
          {backLink}
          <header className="flex flex-wrap items-center gap-3">
-            <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">{movieDetail.title}</h1>
+            <h1 className="text-xl font-semibold tracking-tight text-ink-900">{movieDetail.title}</h1>
             <MovieStatusBadge movieStatus={movieDetail.status} />
             <Link
                to={getMovieDetailPath(movieDetail.slug)}

@@ -42,7 +42,7 @@ export function FacilityManagementPage(): ReactElement {
             <ArrowLeft className="size-4" aria-hidden="true" />
             Về danh sách cụm rạp
          </Link>
-         <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">Danh mục tiện ích</h1>
+         <h1 className="text-xl font-semibold tracking-tight text-ink-900">Danh mục tiện ích</h1>
          <SectionCard
             title="Tiện ích của rạp"
             description={

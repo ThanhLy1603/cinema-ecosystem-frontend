@@ -241,7 +241,7 @@ export function ShowtimeFormPanel({
                   <span className="grid size-10 place-items-center rounded-xl bg-brand-50 text-brand-700">
                      <CalendarClock className="size-5" aria-hidden="true" />
                   </span>
-                  <h2 id="showtime-form-title" className="text-lg font-extrabold text-ink-900">
+                  <h2 id="showtime-form-title" className="text-[15px] font-semibold text-ink-900">
                      {editingShowtime ? 'Chi tiết suất chiếu' : 'Thêm suất chiếu'}
                   </h2>
                </div>

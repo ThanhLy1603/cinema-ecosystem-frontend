@@ -72,10 +72,10 @@ export function UserDetailPage(): ReactElement {
       <div className="w-full max-w-6xl space-y-8">
          {backLink}
 
-         <header className="flex flex-wrap items-center gap-5 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100">
+         <header className="flex flex-wrap items-center gap-5 rounded-lg bg-white p-5 shadow-card ring-1 ring-ink-200/80">
             <UserAvatar user={adminUser} className="size-20 text-xl" />
             <div className="min-w-0 flex-1">
-               <h1 className="truncate text-2xl font-extrabold tracking-tight text-ink-900">{adminUser.fullName}</h1>
+               <h1 className="truncate text-xl font-semibold tracking-tight text-ink-900">{adminUser.fullName}</h1>
                <p className="truncate text-sm text-ink-500">{adminUser.email}</p>
                <div className="mt-2 flex flex-wrap items-center gap-2">
                   <span className="text-xs font-semibold uppercase tracking-wide text-brand-700">

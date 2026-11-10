@@ -1,24 +1,24 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { getPublicCinemas } from '@/api/cinemaApi';
-import { getPublicGenres, searchPublicMovies } from '@/api/movieApi';
+import { searchPublicMovies } from '@/api/movieApi';
 import LinkButton from '@/components/ui/LinkButton';
 import { publicCinemaListKey } from '@/lib/cinema/cinemaQueryKeys';
-import { PUBLIC_GENRES_KEY, publicMovieListKey } from '@/lib/movie/movieQueryKeys';
+import { publicMovieListKey } from '@/lib/movie/movieQueryKeys';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { useCityStore } from '@/stores/useCityStore';
 import type { PageResponse } from '@/types/common/api';
 import type { Cinema } from '@/types/cinema/cinema';
-import type { Genre, Movie, MovieSearchParams } from '@/types/movie/movie';
+import type { Movie, MovieSearchParams } from '@/types/movie/movie';
 import type { User } from '@/types/auth/auth';
 import BenefitStrip from '../components/BenefitStrip';
 import CinemaHighlights from '../components/CinemaHighlights';
 import HeroCarousel from '../components/HeroCarousel';
 import HeroFallback from '../components/HeroFallback';
-import MovieSection from '../components/MovieSection';
-import QuickSearchBar from '../components/QuickSearchBar';
+import MovieShowcase from '../components/MovieShowcase';
+import QuickBookingBar from '../components/QuickBookingBar';
 
-const NOW_SHOWING_PAGE_SIZE: number = 15;
+const NOW_SHOWING_PAGE_SIZE: number = 10;
 const COMING_SOON_PAGE_SIZE: number = 10;
 const HERO_SLIDE_COUNT: number = 5;
 
@@ -36,10 +36,6 @@ export function HomePage(): ReactElement {
       queryKey: publicMovieListKey(COMING_SOON_PARAMS),
       queryFn: () => searchPublicMovies(COMING_SOON_PARAMS),
    });
-   const genresQuery: UseQueryResult<Genre[]> = useQuery<Genre[]>({
-      queryKey: PUBLIC_GENRES_KEY,
-      queryFn: getPublicGenres,
-   });
    const cinemasQuery: UseQueryResult<Cinema[]> = useQuery<Cinema[]>({
       queryKey: publicCinemaListKey(city),
       queryFn: () => getPublicCinemas(city || undefined),
@@ -55,51 +51,36 @@ export function HomePage(): ReactElement {
    return (
       <>
          {heroMovies.length > 0 ? <HeroCarousel movies={heroMovies} /> : <HeroFallback />}
-         <QuickSearchBar genres={genresQuery.data ?? []} />
-         <MovieSection
-            title="Phim đang chiếu"
-            emptyMessage="Chưa có phim đang chiếu. Vui lòng quay lại sau."
-            viewAllTo="/movies"
-            movies={nowShowingMovies}
-            isLoading={nowShowingQuery.isPending}
-            layout="carousel"
-         />
-         <MovieSection
-            title="Phim sắp chiếu"
-            emptyMessage="Chưa có phim sắp chiếu. Vui lòng quay lại sau."
-            viewAllTo="/movies?status=COMING_SOON"
-            movies={comingSoonMovies}
-            isLoading={comingSoonQuery.isPending}
-            layout="grid"
+         <QuickBookingBar movies={nowShowingMovies} cinemas={cinemasQuery.data ?? []} />
+         <MovieShowcase
+            nowShowingMovies={nowShowingMovies}
+            comingSoonMovies={comingSoonMovies}
+            isLoading={nowShowingQuery.isPending || comingSoonQuery.isPending}
          />
          <CinemaHighlights cinemas={cinemasQuery.data ?? []} />
          <BenefitStrip />
 
          {!user && (
-            <section className="mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-8">
-               <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-brand-700 via-brand-600 to-brand-400 px-8 py-14 text-center shadow-soft sm:px-16">
-                  <div className="pointer-events-none absolute -left-10 -top-10 size-56 rounded-full bg-accent-300/30 blur-3xl" />
-                  <div className="pointer-events-none absolute -bottom-16 -right-10 size-64 rounded-full bg-white/20 blur-3xl" />
-                  <div className="relative space-y-6">
-                     <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                        Sẵn sàng cho suất chiếu tiếp theo?
-                     </h2>
-                     <p className="mx-auto max-w-xl text-white/90">
-                        Tạo tài khoản miễn phí để đặt vé nhanh hơn, tích điểm và nhận ưu đãi dành riêng cho thành viên.
+            <section aria-label="Đăng ký thành viên" className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+               <div className="flex flex-wrap items-center justify-between gap-6 rounded-lg bg-brand-900 px-8 py-8">
+                  <div className="space-y-1">
+                     <h2 className="text-xl font-bold text-white">Trở thành thành viên CinemaSphere</h2>
+                     <p className="text-sm text-white/75">
+                        Đặt vé nhanh hơn, tích điểm mỗi giao dịch và nhận ưu đãi dành riêng cho thành viên.
                      </p>
-                     <div className="flex flex-wrap justify-center gap-3">
-                        <LinkButton to="/register" size="lg" variant="light">
-                           Đăng ký ngay
-                        </LinkButton>
-                        <LinkButton
-                           to="/login"
-                           size="lg"
-                           variant="ghost"
-                           className="text-white hover:bg-white/15 hover:text-white"
-                        >
-                           Tôi đã có tài khoản
-                        </LinkButton>
-                     </div>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                     <LinkButton to="/register" size="lg" variant="light">
+                        Đăng ký ngay
+                     </LinkButton>
+                     <LinkButton
+                        to="/login"
+                        size="lg"
+                        variant="ghost"
+                        className="text-white hover:bg-white/10 hover:text-white"
+                     >
+                        Tôi đã có tài khoản
+                     </LinkButton>
                   </div>
                </div>
             </section>

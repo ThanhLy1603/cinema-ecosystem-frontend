@@ -62,6 +62,7 @@ export function MovieForm({
    onSubmit,
 }: MovieFormProps): ReactElement {
    const [title, setTitle] = useState<string>(initialMovie?.title ?? '');
+   const [slug, setSlug] = useState<string>(initialMovie?.slug ?? '');
    const [originalTitle, setOriginalTitle] = useState<string>(initialMovie?.originalTitle ?? '');
    const [durationText, setDurationText] = useState<string>(
       initialMovie === undefined ? '' : String(initialMovie.durationMinutes),
@@ -84,6 +85,7 @@ export function MovieForm({
       formEvent.preventDefault();
       const movieFormValues: MovieFormValues = {
          title,
+         slug,
          originalTitle,
          durationText,
          releaseDate,
@@ -128,6 +130,7 @@ export function MovieForm({
       const [resolvedPosterUrl, resolvedBannerUrl, resolvedTrailerUrl]: string[] = resolvedUrls;
       onSubmit({
          title: title.trim(),
+         slug: emptyToNull(slug),
          originalTitle: emptyToNull(originalTitle),
          durationMinutes: Number(durationText.trim()),
          releaseDate,
@@ -162,6 +165,23 @@ export function MovieForm({
                   onChange={setTitle}
                   maxLength={255}
                   error={fieldErrors.title ?? serverFieldErrors.title}
+               />
+            </div>
+            <div className="sm:col-span-2">
+               <TextField
+                  id="movie-slug"
+                  label="Đường dẫn (slug)"
+                  value={slug}
+                  onChange={setSlug}
+                  maxLength={200}
+                  optional
+                  placeholder="dao-pho-va-piano"
+                  hint={
+                     initialMovie === undefined
+                        ? 'Để trống để tự tạo từ tên phim. Trang phim sẽ có dạng /movies/<đường dẫn>.'
+                        : 'Đổi đường dẫn sẽ làm các liên kết cũ tới trang phim không còn truy cập được.'
+                  }
+                  error={fieldErrors.slug ?? serverFieldErrors.slug}
                />
             </div>
             <div className="sm:col-span-2">

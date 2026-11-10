@@ -7,6 +7,6 @@ export function publicMovieListKey(movieSearchParams: MovieSearchParams): readon
    return ['public-movies', 'list', movieSearchParams];
 }
 
-export function publicMovieDetailKey(movieId: number): readonly (string | number)[] {
-   return ['public-movies', 'detail', movieId];
+export function publicMovieDetailKey(movieSlug: string): readonly string[] {
+   return ['public-movies', 'detail', movieSlug];
 }

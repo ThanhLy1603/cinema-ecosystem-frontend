@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
 import { formatVnd } from '@/lib/common/currencyFormat';
 import { formatDuration } from '@/lib/movie/movieFormat';
+import { getMovieDetailPath } from '@/lib/movie/moviePath';
 import { cn } from '@/lib/common/utils';
 import { formatClockRange, toVietnamTimeOfDay } from '@/lib/common/vietnamTime';
 import type { PublicMovieShowtimes, PublicShowtime } from '@/types/showtime/showtime';
@@ -26,7 +27,7 @@ export function MovieShowtimeCard({ publicMovieShowtimes }: MovieShowtimeCardPro
    return (
       <article className="flex gap-4 rounded-2xl border border-ink-100 bg-white p-4 shadow-sm sm:gap-5">
          <Link
-            to={`/movies/${publicMovieShowtimes.movieId}`}
+            to={getMovieDetailPath(publicMovieShowtimes.movieSlug)}
             className="relative aspect-[2/3] w-20 shrink-0 overflow-hidden rounded-xl bg-ink-100 sm:w-24"
             aria-label={`Xem phim ${publicMovieShowtimes.title}`}
          >
@@ -52,7 +53,7 @@ export function MovieShowtimeCard({ publicMovieShowtimes }: MovieShowtimeCardPro
                   </span>
                </div>
                <h3 className="text-base font-extrabold uppercase text-brand-700">
-                  <Link to={`/movies/${publicMovieShowtimes.movieId}`} className="hover:text-brand-800">
+                  <Link to={getMovieDetailPath(publicMovieShowtimes.movieSlug)} className="hover:text-brand-800">
                      {publicMovieShowtimes.title}
                   </Link>
                </h3>

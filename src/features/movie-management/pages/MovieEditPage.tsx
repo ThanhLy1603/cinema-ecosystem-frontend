@@ -6,7 +6,8 @@ import { getAdminMovie, updateMovie } from '@/api/movieApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import SectionCard from '@/components/common/SectionCard';
 import Alert from '@/components/ui/Alert';
-import { getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { getMovieDetailPath } from '@/lib/movie/moviePath';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { Genre, MovieDetail, MovieRequest, PersonOption } from '@/types/movie/movie';
 import DeleteMovieCard from '../components/DeleteMovieCard';
@@ -16,6 +17,7 @@ import { useGenres } from '../hooks/useGenres';
 import { useMovieRefresh } from '../hooks/useMovieRefresh';
 import { usePersonOptions } from '../hooks/usePersonOptions';
 import { adminMovieDetailKey } from '../utils/queryKeys';
+import { getMovieServerFieldErrors } from '../utils/serverErrors';
 
 export function MovieEditPage(): ReactElement {
    const { movieId: movieIdParam } = useParams<{ movieId: string }>();
@@ -73,7 +75,9 @@ export function MovieEditPage(): ReactElement {
    }
 
    const movieDetail: MovieDetail = movieQuery.data;
-   const serverFieldErrors: Record<string, string> = updateMutation.isError ? getFieldErrors(updateMutation.error) : {};
+   const serverFieldErrors: Record<string, string> = updateMutation.isError
+      ? getMovieServerFieldErrors(updateMutation.error)
+      : {};
    const hasFieldErrors: boolean = Object.keys(serverFieldErrors).length > 0;
 
    return (
@@ -83,7 +87,7 @@ export function MovieEditPage(): ReactElement {
             <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">{movieDetail.title}</h1>
             <MovieStatusBadge movieStatus={movieDetail.status} />
             <Link
-               to={`/movies/${movieDetail.id}`}
+               to={getMovieDetailPath(movieDetail.slug)}
                className="ml-auto inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:underline"
             >
                <ExternalLink className="size-4" aria-hidden="true" />

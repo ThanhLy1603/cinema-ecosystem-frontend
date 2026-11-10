@@ -45,6 +45,7 @@ export interface ShowtimeConflict {
 export interface MovieInfo {
   id: number;
   title: string;
+  slug: string;
   durationMinutes: number;
   rated: AgeRating;
   posterUrl: string | null;
@@ -71,6 +72,7 @@ export interface PublicShowtime {
 
 export interface PublicMovieShowtimes {
   movieId: number;
+  movieSlug: string;
   title: string;
   posterUrl: string | null;
   rated: AgeRating;

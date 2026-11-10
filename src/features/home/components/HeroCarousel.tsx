@@ -7,6 +7,7 @@ import LinkButton from '@/components/ui/LinkButton';
 import Button from '@/components/ui/Button';
 import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';
 import { MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
+import { getMovieDetailPath } from '@/lib/movie/moviePath';
 import { toTrailerSource, type TrailerSource } from '@/lib/movie/trailer';
 import { cn } from '@/lib/common/utils';
 import type { Movie } from '@/types/movie/movie';
@@ -90,7 +91,7 @@ function HeroSlide({ movie, isActive, slideLabel, onOpenTrailer }: HeroSlideProp
                   {movie.genres.length > 0 && <span>{movie.genres.map((genre) => genre.name).join(' · ')}</span>}
                </p>
                <div className="flex flex-wrap gap-3 pt-2">
-                  <LinkButton to={`/movies/${movie.id}`} size="lg" tabIndex={isActive ? 0 : -1}>
+                  <LinkButton to={getMovieDetailPath(movie.slug)} size="lg" tabIndex={isActive ? 0 : -1}>
                      Xem chi tiết
                   </LinkButton>
                   {hasTrailer && (
@@ -108,7 +109,7 @@ function HeroSlide({ movie, isActive, slideLabel, onOpenTrailer }: HeroSlideProp
             </div>
 
             <Link
-               to={`/movies/${movie.id}`}
+               to={getMovieDetailPath(movie.slug)}
                tabIndex={-1}
                aria-hidden="true"
                className="hidden aspect-[2/3] overflow-hidden rounded-3xl bg-brand-800 shadow-soft ring-4 ring-white/20 lg:block"

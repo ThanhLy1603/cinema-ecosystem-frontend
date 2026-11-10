@@ -1,3 +1,4 @@
+import { MOVIE_SLUG_MAX_LENGTH, MOVIE_SLUG_PATTERN } from '@/lib/movie/moviePath';
 import {
    validateOptionalHttpsUrl,
    validateOptionalText,
@@ -13,6 +14,7 @@ const URL_MAX_LENGTH: number = 500;
 
 export interface MovieFieldErrors {
    title?: string;
+   slug?: string;
    originalTitle?: string;
    durationMinutes?: string;
    releaseDate?: string;
@@ -50,6 +52,19 @@ export function validateDuration(durationText: string): string | undefined {
       : undefined;
 }
 
+export function validateSlug(slugText: string): string | undefined {
+   const trimmedText: string = slugText.trim();
+   if (trimmedText.length === 0) {
+      return undefined;
+   }
+   if (trimmedText.length > MOVIE_SLUG_MAX_LENGTH) {
+      return `Đường dẫn tối đa ${MOVIE_SLUG_MAX_LENGTH} ký tự`;
+   }
+   return MOVIE_SLUG_PATTERN.test(trimmedText)
+      ? undefined
+      : 'Đường dẫn chỉ gồm chữ thường không dấu, số và dấu gạch ngang (vd: dao-pho-va-piano)';
+}
+
 export function validateEndDate(releaseDate: string, endDate: string): string | undefined {
    if (endDate.length === 0 || releaseDate.length === 0) {
       return undefined;
@@ -74,6 +89,7 @@ export function validateCasts(castDraftValues: CastDraftValue[]): string | undef
 
 export interface MovieFormValues {
    title: string;
+   slug: string;
    originalTitle: string;
    durationText: string;
    releaseDate: string;
@@ -91,6 +107,7 @@ export interface MovieFormValues {
 export function validateMovieForm(movieFormValues: MovieFormValues): MovieFieldErrors {
    return {
       title: validateRequiredText(movieFormValues.title, 'Vui lòng nhập tên phim', 255),
+      slug: validateSlug(movieFormValues.slug),
       originalTitle: validateOptionalText(movieFormValues.originalTitle, 255),
       durationMinutes: validateDuration(movieFormValues.durationText),
       releaseDate: validateRequiredSelection(movieFormValues.releaseDate, 'Vui lòng chọn ngày khởi chiếu'),

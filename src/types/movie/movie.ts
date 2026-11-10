@@ -33,6 +33,7 @@ export interface MovieCast {
 export interface Movie {
   id: number;
   title: string;
+  slug: string;
   originalTitle: string | null;
   durationMinutes: number;
   releaseDate: string;
@@ -49,6 +50,7 @@ export interface Movie {
 export interface MovieDetail {
   id: number;
   title: string;
+  slug: string;
   originalTitle: string | null;
   durationMinutes: number;
   releaseDate: string;
@@ -85,6 +87,7 @@ export interface MovieCastRequest {
 
 export interface MovieRequest {
   title: string;
+  slug: string | null;
   originalTitle: string | null;
   durationMinutes: number;
   releaseDate: string;

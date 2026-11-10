@@ -3,6 +3,7 @@ import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
 import { formatDuration } from '@/lib/movie/movieFormat';
+import { getMovieDetailPath } from '@/lib/movie/moviePath';
 import type { Movie } from '@/types/movie/movie';
 
 interface MovieCardProps {
@@ -11,7 +12,7 @@ interface MovieCardProps {
 
 export function MovieCard({ movie }: MovieCardProps): ReactElement {
    return (
-      <Link to={`/movies/${movie.id}`} className="group flex h-full flex-col gap-3">
+      <Link to={getMovieDetailPath(movie.slug)} className="group flex h-full flex-col gap-3">
          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl border border-ink-200 bg-ink-100 shadow-card transition-all duration-300 group-hover:border-brand-300 group-hover:shadow-soft">
             {movie.posterUrl ? (
                <img

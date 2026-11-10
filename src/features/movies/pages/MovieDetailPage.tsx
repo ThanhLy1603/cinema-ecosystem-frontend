@@ -11,6 +11,7 @@ import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';
 import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';
 import { MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
+import { isValidMovieSlug } from '@/lib/movie/moviePath';
 import { toTrailerSource, type TrailerSource } from '@/lib/movie/trailer';
 import { publicMovieDetailKey } from '@/lib/movie/movieQueryKeys';
 import type { MovieDetail } from '@/types/movie/movie';
@@ -18,14 +19,14 @@ import AgeWarningNotice from '../components/AgeWarningNotice';
 import CastList from '../components/CastList';
 
 export function MovieDetailPage(): ReactElement {
-   const { movieId: movieIdParam } = useParams<{ movieId: string }>();
-   const movieId: number = Number(movieIdParam);
-   const isValidMovieId: boolean = Number.isInteger(movieId) && movieId > 0;
+   const { movieSlug: movieSlugParam } = useParams<{ movieSlug: string }>();
+   const movieSlug: string = movieSlugParam ?? '';
+   const isValidSlug: boolean = isValidMovieSlug(movieSlug);
    const [isTrailerOpen, setIsTrailerOpen] = useState<boolean>(false);
    const movieQuery: UseQueryResult<MovieDetail> = useQuery<MovieDetail>({
-      queryKey: publicMovieDetailKey(movieId),
-      queryFn: () => getPublicMovie(movieId),
-      enabled: isValidMovieId,
+      queryKey: publicMovieDetailKey(movieSlug),
+      queryFn: () => getPublicMovie(movieSlug),
+      enabled: isValidSlug,
    });
 
    const backLink: ReactElement = (
@@ -35,10 +36,10 @@ export function MovieDetailPage(): ReactElement {
       </Link>
    );
 
-   if (!isValidMovieId) {
+   if (!isValidSlug) {
       return (
          <section className="mx-auto w-full max-w-4xl space-y-4 px-4 py-12 sm:px-6">
-            <Alert variant="error">Mã phim không hợp lệ.</Alert>
+            <Alert variant="error">Đường dẫn phim không hợp lệ.</Alert>
             {backLink}
          </section>
       );

@@ -4,12 +4,13 @@ import type { ReactElement } from 'react';
 import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
 import { createMovie } from '@/api/movieApi';
 import SectionCard from '@/components/common/SectionCard';
-import { getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
 import type { Genre, MovieDetail, MovieRequest, PersonOption } from '@/types/movie/movie';
 import MovieForm from '../components/MovieForm';
 import { useGenres } from '../hooks/useGenres';
 import { useMovieRefresh } from '../hooks/useMovieRefresh';
 import { usePersonOptions } from '../hooks/usePersonOptions';
+import { getMovieServerFieldErrors } from '../utils/serverErrors';
 
 export function MovieCreatePage(): ReactElement {
    const navigate: NavigateFunction = useNavigate();
@@ -31,7 +32,9 @@ export function MovieCreatePage(): ReactElement {
       onSuccess: handleCreated,
    });
 
-   const serverFieldErrors: Record<string, string> = createMutation.isError ? getFieldErrors(createMutation.error) : {};
+   const serverFieldErrors: Record<string, string> = createMutation.isError
+      ? getMovieServerFieldErrors(createMutation.error)
+      : {};
    const hasFieldErrors: boolean = Object.keys(serverFieldErrors).length > 0;
 
    return (

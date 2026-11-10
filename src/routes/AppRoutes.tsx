@@ -55,7 +55,7 @@ export function AppRoutes(): ReactElement {
          <Route element={<MainLayout />}>
             <Route path="/" element={<HomePage />} />
             <Route path="/movies" element={<MovieListPage />} />
-            <Route path="/movies/:movieId" element={<MovieDetailPage />} />
+            <Route path="/movies/:movieSlug" element={<MovieDetailPage />} />
             <Route
                path="/fnb"
                element={

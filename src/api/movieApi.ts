@@ -21,9 +21,9 @@ export async function searchPublicMovies(movieSearchParams: MovieSearchParams): 
    return axiosResponse.data.data;
 }
 
-export async function getPublicMovie(movieId: number): Promise<MovieDetail> {
+export async function getPublicMovie(movieSlug: string): Promise<MovieDetail> {
    const axiosResponse: AxiosResponse<ApiResponse<MovieDetail>> = await axiosInstance.get<ApiResponse<MovieDetail>>(
-      `/movies/public/${movieId}`,
+      `/movies/public/slug/${encodeURIComponent(movieSlug)}`,
    );
    return axiosResponse.data.data;
 }

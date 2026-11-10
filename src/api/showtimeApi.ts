@@ -4,7 +4,9 @@ import type { ApiResponse } from '@/types/common/api';
 import type {
    AdminShowtimeSearchParams,
    BulkShowtimeResult,
+   CinemaShowtimes,
    MovieInfo,
+   MovieShowtimeDates,
    PublicMovieShowtimes,
    Showtime,
    ShowtimeDayCopyRequest,
@@ -74,5 +76,27 @@ export async function copyShowtimeDay(showtimeDayCopyRequest: ShowtimeDayCopyReq
    const axiosResponse: AxiosResponse<ApiResponse<BulkShowtimeResult>> = await axiosInstance.post<
       ApiResponse<BulkShowtimeResult>
    >('/admin/showtimes/copy-day', showtimeDayCopyRequest);
+   return axiosResponse.data.data;
+}
+
+export async function getMovieShowtimeDates(
+   movieId: number,
+   month: string,
+   cinemaId: number | null,
+): Promise<MovieShowtimeDates> {
+   const axiosResponse: AxiosResponse<ApiResponse<MovieShowtimeDates>> = await axiosInstance.get<
+      ApiResponse<MovieShowtimeDates>
+   >(`/showtimes/public/movies/${movieId}/dates`, { params: { month, cinemaId: cinemaId ?? undefined } });
+   return axiosResponse.data.data;
+}
+
+export async function getMovieShowtimesByDate(
+   movieId: number,
+   date: string,
+   cinemaId: number | null,
+): Promise<CinemaShowtimes[]> {
+   const axiosResponse: AxiosResponse<ApiResponse<CinemaShowtimes[]>> = await axiosInstance.get<
+      ApiResponse<CinemaShowtimes[]>
+   >(`/showtimes/public/movies/${movieId}/showtimes`, { params: { date, cinemaId: cinemaId ?? undefined } });
    return axiosResponse.data.data;
 }

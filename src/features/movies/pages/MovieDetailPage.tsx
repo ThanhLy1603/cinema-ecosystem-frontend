@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { ArrowLeft, CalendarDays, Clapperboard, Clock, ExternalLink, Play } from 'lucide-react';
+import { ArrowLeft, CalendarDays, Clapperboard, Clock, ExternalLink, Play, Ticket } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getPublicMovie } from '@/api/movieApi';
@@ -8,10 +8,11 @@ import FullPageSpinner from '@/components/common/FullPageSpinner';
 import TrailerModal from '@/components/common/TrailerModal';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
+import LinkButton from '@/components/ui/LinkButton';
 import { getErrorMessage } from '@/lib/common/apiError';
 import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';
 import { MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
-import { isValidMovieSlug } from '@/lib/movie/moviePath';
+import { getMovieBookingPath, isValidMovieSlug } from '@/lib/movie/moviePath';
 import { toTrailerSource, type TrailerSource } from '@/lib/movie/trailer';
 import { publicMovieDetailKey } from '@/lib/movie/movieQueryKeys';
 import type { MovieDetail } from '@/types/movie/movie';
@@ -126,28 +127,41 @@ export function MovieDetailPage(): ReactElement {
                      </ul>
                   )}
 
-                  {movieDetail.trailerUrl && (
-                     <div>
-                        {trailerSource ? (
-                           <Button
-                              icon={<Play className="size-4" aria-hidden="true" />}
-                              onClick={() => setIsTrailerOpen(true)}
-                           >
-                              Xem trailer
-                           </Button>
-                        ) : (
-                           <a
-                              href={movieDetail.trailerUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink-900"
-                           >
-                              <ExternalLink className="size-4" aria-hidden="true" />
-                              Xem trailer
-                           </a>
-                        )}
-                     </div>
-                  )}
+                  <div className="flex flex-wrap items-center gap-3">
+                     {movieDetail.status !== 'ENDED' && (
+                        <LinkButton
+                           to={getMovieBookingPath(movieDetail.slug)}
+                           size="lg"
+                           icon={<Ticket className="size-5" aria-hidden="true" />}
+                        >
+                           Đặt vé
+                        </LinkButton>
+                     )}
+                     {movieDetail.trailerUrl && (
+                        <div>
+                           {trailerSource ? (
+                              <Button
+                                 variant="light"
+                                 size="lg"
+                                 icon={<Play className="size-4" aria-hidden="true" />}
+                                 onClick={() => setIsTrailerOpen(true)}
+                              >
+                                 Xem trailer
+                              </Button>
+                           ) : (
+                              <a
+                                 href={movieDetail.trailerUrl}
+                                 target="_blank"
+                                 rel="noopener noreferrer"
+                                 className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink-900"
+                              >
+                                 <ExternalLink className="size-4" aria-hidden="true" />
+                                 Xem trailer
+                              </a>
+                           )}
+                        </div>
+                     )}
+                  </div>
                </div>
             </div>
          </div>

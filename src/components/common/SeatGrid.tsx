@@ -1,4 +1,4 @@
-import { useRef, type PointerEvent, type ReactElement } from 'react';
+import { useRef, type KeyboardEvent, type PointerEvent, type ReactElement } from 'react';
 import {
    EMPTY_CELL_CLASS_NAME,
    SEAT_CELL_HEIGHT,
@@ -33,6 +33,7 @@ interface SeatGridProps {
    onPointerEnd?: () => void;
    onRowLabelClick?: (row: string) => void;
    onColumnLabelClick?: (column: number) => void;
+   onSeatPick?: (gridSeat: GridSeat) => void;
 }
 
 function buildCells(rows: string[], columns: number): GridCell[] {
@@ -66,6 +67,7 @@ function buildColumnNumbers(columns: number): number[] {
 interface SeatShapeProps {
    gridSeat: GridSeat;
    isSelected: boolean;
+   onPick?: (gridSeat: GridSeat) => void;
 }
 
 function resolveVisualState(gridSeat: GridSeat, isSelected: boolean): SeatVisualState {
@@ -78,18 +80,42 @@ function resolveVisualState(gridSeat: GridSeat, isSelected: boolean): SeatVisual
    return isSelected ? 'selected' : 'available';
 }
 
-function SeatShape({ gridSeat, isSelected }: SeatShapeProps): ReactElement {
+function SeatShape({ gridSeat, isSelected, onPick }: SeatShapeProps): ReactElement {
    const seatLabel: string =
       gridSeat.span > 1 ? `${gridSeat.number}-${gridSeat.number + gridSeat.span - 1}` : String(gridSeat.number);
+   const visualState: SeatVisualState = resolveVisualState(gridSeat, isSelected);
+   const isInteractive: boolean = onPick !== undefined;
+   const isPickable: boolean = isInteractive && (visualState === 'available' || visualState === 'selected');
+
+   function handleKeyDown(keyboardEvent: KeyboardEvent<SVGGElement>): void {
+      if (keyboardEvent.key === 'Enter' || keyboardEvent.key === ' ') {
+         keyboardEvent.preventDefault();
+         onPick?.(gridSeat);
+      }
+   }
 
    return (
-      <g aria-label={`Ghế ${getSeatLabel(gridSeat.row, gridSeat.number)}`}>
+      <g
+         aria-label={`Ghế ${getSeatLabel(gridSeat.row, gridSeat.number)}`}
+         role={isInteractive ? 'button' : undefined}
+         tabIndex={isInteractive ? 0 : undefined}
+         aria-pressed={isPickable ? isSelected : undefined}
+         aria-disabled={isInteractive && !isPickable ? true : undefined}
+         className={cn(
+            isInteractive && 'outline-none focus-visible:outline-2 focus-visible:outline-brand-500',
+            isPickable && 'cursor-pointer',
+            isInteractive && !isPickable && 'cursor-not-allowed',
+         )}
+         onClick={isInteractive ? () => onPick?.(gridSeat) : undefined}
+         onKeyDown={isInteractive ? handleKeyDown : undefined}
+      >
+         {gridSeat.tooltip && <title>{gridSeat.tooltip}</title>}
          <SeatIcon
             x={getCellX(gridSeat.number)}
             y={getCellY(getRowIndex(gridSeat.row))}
             width={getSeatWidth(gridSeat.span)}
             seatTypeCode={gridSeat.type}
-            visualState={resolveVisualState(gridSeat, isSelected)}
+            visualState={visualState}
             label={seatLabel}
          />
       </g>
@@ -108,6 +134,7 @@ export function SeatGrid({
    onPointerEnd,
    onRowLabelClick,
    onColumnLabelClick,
+   onSeatPick,
 }: SeatGridProps): ReactElement {
    const svgRef = useRef<SVGSVGElement>(null);
    const lastCellKeyRef = useRef<string | null>(null);
@@ -261,6 +288,7 @@ export function SeatGrid({
                   key={getSeatLabel(gridSeat.row, gridSeat.number)}
                   gridSeat={gridSeat}
                   isSelected={selectedSeatLabels?.has(getSeatLabel(gridSeat.row, gridSeat.number)) ?? false}
+                  onPick={onSeatPick}
                />
             ))}
          </svg>

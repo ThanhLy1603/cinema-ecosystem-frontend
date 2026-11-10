@@ -8,3 +8,7 @@ export function isValidMovieSlug(movieSlug: string): boolean {
 export function getMovieDetailPath(movieSlug: string): string {
    return `/movies/${movieSlug}`;
 }
+
+export function getMovieBookingPath(movieSlug: string): string {
+   return `/movies/${movieSlug}/booking`;
+}

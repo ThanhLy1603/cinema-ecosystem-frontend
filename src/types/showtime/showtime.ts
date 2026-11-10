@@ -80,6 +80,30 @@ export interface PublicMovieShowtimes {
   showtimes: PublicShowtime[];
 }
 
+export interface MovieShowtimeDates {
+  movieId: number;
+  dates: string[];
+}
+
+export interface BookableShowtime {
+  id: number;
+  hallId: number;
+  hallName: string;
+  screenType: ScreenType;
+  startTime: string;
+  endTime: string;
+  basePrice: number;
+  totalSeats: number;
+  availableSeats: number;
+  soldOut: boolean;
+}
+
+export interface CinemaShowtimes {
+  cinemaId: number;
+  cinemaName: string;
+  showtimes: BookableShowtime[];
+}
+
 export type BulkItemStatus = 'READY' | 'CREATED' | 'CONFLICT' | 'INVALID';
 
 export interface BulkShowtimeItem {

@@ -73,3 +73,44 @@ export function getWeekdayLabel(date: string): string {
 export function formatClockRange(startIsoInstant: string, endIsoInstant: string): string {
    return `${toVietnamTimeOfDay(startIsoInstant)} – ${toVietnamTimeOfDay(endIsoInstant)}`;
 }
+
+const MONTH_PATTERN: RegExp = /^\d{4}-(0[1-9]|1[0-2])$/;
+const DAYS_PER_WEEK: number = 7;
+
+export function isValidMonth(month: string): boolean {
+   return MONTH_PATTERN.test(month);
+}
+
+export function currentMonthInVietnam(): string {
+   return todayInVietnam().slice(0, 7);
+}
+
+export function toMonth(date: string): string {
+   return date.slice(0, 7);
+}
+
+export function addMonthsToMonth(month: string, monthCount: number): string {
+   const [year, monthNumber]: number[] = month.split('-').map(Number);
+   const monthIndex: number = year * 12 + (monthNumber - 1) + monthCount;
+   const nextYear: number = Math.floor(monthIndex / 12);
+   const nextMonthNumber: number = (monthIndex % 12) + 1;
+   return `${nextYear}-${String(nextMonthNumber).padStart(2, '0')}`;
+}
+
+export function getDatesInMonth(month: string): string[] {
+   const nextMonth: string = addMonthsToMonth(month, 1);
+   const firstDate: string = `${month}-01`;
+   const dayCount: number = Math.round(
+      (Date.parse(`${nextMonth}-01T00:00:00Z`) - Date.parse(`${firstDate}T00:00:00Z`)) / MILLISECONDS_PER_DAY,
+   );
+   return Array.from({ length: dayCount }, (_, dayOffset) => addDaysToDate(firstDate, dayOffset));
+}
+
+export function getMondayFirstWeekdayIndex(date: string): number {
+   return (getWeekdayIndex(date) + DAYS_PER_WEEK - 1) % DAYS_PER_WEEK;
+}
+
+export function formatMonthLabel(month: string): string {
+   const [year, monthNumber]: string[] = month.split('-');
+   return `Tháng ${Number(monthNumber)}/${year}`;
+}

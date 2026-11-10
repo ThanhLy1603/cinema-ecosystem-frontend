@@ -21,6 +21,7 @@ export interface GridSeat {
    span: number;
    status: SeatStatus;
    visualState?: SeatVisualState;
+   tooltip?: string;
 }
 
 export interface GridCell {

@@ -11,3 +11,19 @@ export function publicShowtimeListKey(
 export function publicShowtimePriceKey(showtimeId: number): readonly (string | number)[] {
    return ['public-showtimes', 'price', showtimeId];
 }
+
+export function movieShowtimeDatesKey(
+   movieId: number,
+   month: string,
+   cinemaId: number | null,
+): readonly (string | number | null)[] {
+   return ['public-showtimes', 'movie-dates', movieId, month, cinemaId];
+}
+
+export function movieShowtimesByDateKey(
+   movieId: number,
+   date: string,
+   cinemaId: number | null,
+): readonly (string | number | null)[] {
+   return ['public-showtimes', 'movie-day', movieId, date, cinemaId];
+}

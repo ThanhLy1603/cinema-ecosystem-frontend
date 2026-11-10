@@ -20,6 +20,8 @@ import CinemaDetailPage from '@/features/cinema-management/pages/CinemaDetailPag
 import CinemaManagementPage from '@/features/cinema-management/pages/CinemaManagementPage';
 import FacilityManagementPage from '@/features/cinema-management/pages/FacilityManagementPage';
 import SeatMapEditorPage from '@/features/cinema-management/pages/SeatMapEditorPage';
+import SeatSelectionPage from '@/features/booking/pages/SeatSelectionPage';
+import MovieShowtimeSelectionPage from '@/features/booking/pages/MovieShowtimeSelectionPage';
 import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
 import CinemaPublicPage from '@/features/cinemas/pages/CinemaPublicPage';
 import HomePage from '@/features/home/pages/HomePage';
@@ -58,6 +60,7 @@ export function AppRoutes(): ReactElement {
             <Route path="/" element={<HomePage />} />
             <Route path="/movies" element={<MovieListPage />} />
             <Route path="/movies/:movieSlug" element={<MovieDetailPage />} />
+            <Route path="/movies/:movieSlug/booking" element={<MovieShowtimeSelectionPage />} />
             <Route path="/fnb" element={<FnbMenuPage />} />
             <Route path="/cinemas" element={<CinemaListPage />} />
             <Route path="/cinemas/:slug" element={<CinemaPublicPage />} />
@@ -82,6 +85,7 @@ export function AppRoutes(): ReactElement {
                }
             />
             <Route element={<ProtectedRoute />}>
+               <Route path="/booking/showtimes/:showtimeId/seats" element={<SeatSelectionPage />} />
                <Route path="/profile" element={<ProfilePage />} />
                <Route
                   path="/tickets"

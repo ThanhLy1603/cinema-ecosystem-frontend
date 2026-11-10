@@ -18,6 +18,7 @@ interface TextFieldProps {
    maxLength?: number;
    max?: string;
    autoFocus?: boolean;
+   hideLabel?: boolean;
 }
 
 export function TextField({
@@ -36,6 +37,7 @@ export function TextField({
    maxLength,
    max,
    autoFocus = false,
+   hideLabel = false,
 }: TextFieldProps): ReactElement {
    const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
    const isPasswordField: boolean = type === 'password';
@@ -45,7 +47,13 @@ export function TextField({
 
    return (
       <div className="space-y-1">
-         <label htmlFor={id} className="flex items-baseline justify-between text-[13px] font-semibold text-ink-700">
+         <label
+            htmlFor={id}
+            className={cn(
+               'flex items-baseline justify-between text-[13px] font-semibold text-ink-700',
+               hideLabel && 'sr-only',
+            )}
+         >
             <span>{label}</span>
             {optional && <span className="text-xs font-normal text-ink-400">Không bắt buộc</span>}
          </label>

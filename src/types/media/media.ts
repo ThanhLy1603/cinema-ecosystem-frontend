@@ -1,5 +1,5 @@
 export type MediaPurpose =
-  'MOVIE_POSTER' | 'MOVIE_BANNER' | 'MOVIE_TRAILER' | 'PERSON_AVATAR' | 'FACILITY_ICON' | 'USER_AVATAR';
+  'MOVIE_POSTER' | 'MOVIE_BANNER' | 'MOVIE_TRAILER' | 'PERSON_AVATAR' | 'FNB_IMAGE' | 'FACILITY_ICON' | 'USER_AVATAR';
 
 export type MediaResourceType = 'image' | 'video';
 

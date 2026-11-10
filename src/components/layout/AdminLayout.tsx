@@ -19,7 +19,8 @@ const ADMIN_TITLE_RULES: RouteTitleRule[] = [
    { prefix: '/admin/movies', title: 'Quản lý phim' },
    { prefix: '/admin/showtimes', title: 'Suất chiếu' },
    { prefix: '/admin/price-rules', title: 'Cấu hình giá vé' },
-   { prefix: '/admin/promotions', title: 'Khuyến mãi & F&B' },
+   { prefix: '/admin/fnb', title: 'Đồ ăn & nước' },
+   { prefix: '/admin/promotions', title: 'Khuyến mãi' },
    { prefix: '/admin/community', title: 'Cộng đồng & blog' },
 ];
 

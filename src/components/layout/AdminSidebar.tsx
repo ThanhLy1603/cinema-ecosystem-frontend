@@ -6,6 +6,7 @@ import {
    Clapperboard,
    LayoutDashboard,
    MessagesSquare,
+   Popcorn,
    Tag,
    Users,
    X,
@@ -41,7 +42,8 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
    { label: 'Phim', to: '/admin/movies', icon: Clapperboard, status: 'ready' },
    { label: 'Suất chiếu', to: '/admin/showtimes', icon: CalendarClock, status: 'ready' },
    { label: 'Giá vé', to: '/admin/price-rules', icon: BadgeDollarSign, status: 'ready' },
-   { label: 'Khuyến mãi & F&B', to: '/admin/promotions', icon: Tag, status: 'soon' },
+   { label: 'Đồ ăn & nước', to: '/admin/fnb', icon: Popcorn, status: 'ready' },
+   { label: 'Khuyến mãi', to: '/admin/promotions', icon: Tag, status: 'soon' },
    { label: 'Cộng đồng & blog', to: '/admin/community', icon: MessagesSquare, status: 'soon' },
 ];
 

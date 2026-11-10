@@ -1,4 +1,4 @@
-import { MessagesSquare, Popcorn, Tag, Ticket } from 'lucide-react';
+import { MessagesSquare, Tag, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
@@ -23,6 +23,8 @@ import SeatMapEditorPage from '@/features/cinema-management/pages/SeatMapEditorP
 import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
 import CinemaPublicPage from '@/features/cinemas/pages/CinemaPublicPage';
 import HomePage from '@/features/home/pages/HomePage';
+import FnbMenuPage from '@/features/fnb/pages/FnbMenuPage';
+import FnbManagementPage from '@/features/fnb-management/pages/FnbManagementPage';
 import GenreManagementPage from '@/features/movie-management/pages/GenreManagementPage';
 import MovieCreatePage from '@/features/movie-management/pages/MovieCreatePage';
 import MovieEditPage from '@/features/movie-management/pages/MovieEditPage';
@@ -56,16 +58,7 @@ export function AppRoutes(): ReactElement {
             <Route path="/" element={<HomePage />} />
             <Route path="/movies" element={<MovieListPage />} />
             <Route path="/movies/:movieSlug" element={<MovieDetailPage />} />
-            <Route
-               path="/fnb"
-               element={
-                  <ComingSoonPage
-                     title="Thức ăn & nước"
-                     description="Combo bắp nước và đồ ăn nhẹ đặt kèm vé sẽ sớm có mặt tại đây."
-                     icon={Popcorn}
-                  />
-               }
-            />
+            <Route path="/fnb" element={<FnbMenuPage />} />
             <Route path="/cinemas" element={<CinemaListPage />} />
             <Route path="/cinemas/:slug" element={<CinemaPublicPage />} />
             <Route
@@ -121,6 +114,7 @@ export function AppRoutes(): ReactElement {
                <Route path="movies/persons" element={<PersonManagementPage />} />
                <Route path="movies/new" element={<MovieCreatePage />} />
                <Route path="movies/:movieId" element={<MovieEditPage />} />
+               <Route path="fnb" element={<FnbManagementPage />} />
                <Route path="showtimes" element={<ShowtimeManagementPage />} />
                <Route path="price-rules" element={<PriceRuleManagementPage />} />
                <Route

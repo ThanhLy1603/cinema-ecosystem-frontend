@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { getUploadErrorMessage, uploadPendingMedia } from '@/api/mediaApi';
-import type { MediaFieldState, MediaPurpose } from '@/types/media';
+import type { MediaFieldState, MediaPurpose } from '@/types/media/media';
 
 export interface PendingUploadRequest {
    label: string;

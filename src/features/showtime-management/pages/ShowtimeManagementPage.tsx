@@ -8,8 +8,8 @@ import Button from '@/components/ui/Button';
 import LinkButton from '@/components/ui/LinkButton';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { getErrorMessage } from '@/lib/apiError';
-import { useCinemaOptions } from '@/lib/useCinemaOptions';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { useCinemaOptions } from '@/lib/cinema/useCinemaOptions';
 import {
    addDaysToDate,
    formatDisplayDate,
@@ -17,9 +17,9 @@ import {
    isValidDate,
    toVietnamDate,
    todayInVietnam,
-} from '@/lib/vietnamTime';
-import type { CinemaOption, Hall } from '@/types/cinema';
-import type { MovieInfo, Showtime, ShowtimeConflict } from '@/types/showtime';
+} from '@/lib/common/vietnamTime';
+import type { CinemaOption, Hall } from '@/types/cinema/cinema';
+import type { MovieInfo, Showtime, ShowtimeConflict } from '@/types/showtime/showtime';
 import ShowtimeFormPanel, { type ShowtimePanelState } from '../components/ShowtimeFormPanel';
 import ShowtimeTimeline, { type AttemptedSlot } from '../components/ShowtimeTimeline';
 import { useSchedulableMovies } from '../hooks/useSchedulableMovies';

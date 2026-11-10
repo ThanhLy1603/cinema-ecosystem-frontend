@@ -5,7 +5,7 @@ import { useNavigate, type NavigateFunction } from 'react-router-dom';
 import { deleteMovie } from '@/api/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
 import { useMovieRefresh } from '../hooks/useMovieRefresh';
 
 interface DeleteMovieCardProps {

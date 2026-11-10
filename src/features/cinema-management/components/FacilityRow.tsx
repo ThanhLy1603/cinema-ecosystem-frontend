@@ -4,9 +4,9 @@ import { useState, type ReactElement } from 'react';
 import { deleteFacility, restoreFacility } from '@/api/cinemaApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import { PUBLIC_CINEMAS_KEY } from '@/lib/cinemaQueryKeys';
-import type { Facility } from '@/types/cinema';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { PUBLIC_CINEMAS_KEY } from '@/lib/cinema/cinemaQueryKeys';
+import type { Facility } from '@/types/cinema/cinema';
 import { ADMIN_CINEMA_LIST_KEY, ADMIN_FACILITIES_KEY } from '../utils/queryKeys';
 import RestoreButton from '@/components/common/RestoreButton';
 

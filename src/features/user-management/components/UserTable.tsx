@@ -1,9 +1,9 @@
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import UserAvatar from '@/components/common/UserAvatar';
-import { getPrimaryRoleLabel } from '@/lib/roleLabels';
-import type { AdminUser } from '@/types/admin';
-import type { BranchAssignment } from '@/types/auth';
+import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';
+import type { AdminUser } from '@/types/auth/admin';
+import type { BranchAssignment } from '@/types/auth/auth';
 import { formatDateTime } from '../utils/format';
 import StatusBadge from './StatusBadge';
 

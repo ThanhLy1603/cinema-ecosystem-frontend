@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse, PageResponse } from '@/types/api';
+import type { ApiResponse, PageResponse } from '@/types/common/api';
 import type {
    Cinema,
    CinemaDetail,
@@ -11,7 +11,7 @@ import type {
    FacilityRequest,
    SeatLayout,
    SeatType,
-} from '@/types/cinema';
+} from '@/types/cinema/cinema';
 
 export async function getCinemaOptions(): Promise<CinemaOption[]> {
    const axiosResponse: AxiosResponse<ApiResponse<CinemaOption[]>> =

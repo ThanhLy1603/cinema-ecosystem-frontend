@@ -30,6 +30,7 @@ import MovieManagementPage from '@/features/movie-management/pages/MovieManageme
 import PersonManagementPage from '@/features/movie-management/pages/PersonManagementPage';
 import MovieDetailPage from '@/features/movies/pages/MovieDetailPage';
 import MovieListPage from '@/features/movies/pages/MovieListPage';
+import PriceRuleManagementPage from '@/features/price-management/pages/PriceRuleManagementPage';
 import ShowtimeManagementPage from '@/features/showtime-management/pages/ShowtimeManagementPage';
 import CreateStaffPage from '@/features/user-management/pages/CreateStaffPage';
 import UserDetailPage from '@/features/user-management/pages/UserDetailPage';
@@ -121,6 +122,7 @@ export function AppRoutes(): ReactElement {
                <Route path="movies/new" element={<MovieCreatePage />} />
                <Route path="movies/:movieId" element={<MovieEditPage />} />
                <Route path="showtimes" element={<ShowtimeManagementPage />} />
+               <Route path="price-rules" element={<PriceRuleManagementPage />} />
                <Route
                   path="promotions"
                   element={

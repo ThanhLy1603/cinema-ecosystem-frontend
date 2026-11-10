@@ -1,6 +1,6 @@
 import { LoaderCircle } from 'lucide-react';
 import type { ButtonHTMLAttributes, ReactElement, ReactNode } from 'react';
-import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/buttonStyles';
+import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/common/buttonStyles';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    variant?: ButtonVariant;

@@ -4,10 +4,10 @@ import { getPublicCinemas, getPublicCities } from '@/api/cinemaApi';
 import PageBanner from '@/components/common/PageBanner';
 import Alert from '@/components/ui/Alert';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
-import { getErrorMessage } from '@/lib/apiError';
-import { PUBLIC_CITIES_KEY, publicCinemaListKey } from '@/lib/cinemaQueryKeys';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { PUBLIC_CITIES_KEY, publicCinemaListKey } from '@/lib/cinema/cinemaQueryKeys';
 import { useCityStore } from '@/stores/useCityStore';
-import type { Cinema } from '@/types/cinema';
+import type { Cinema } from '@/types/cinema/cinema';
 import CinemaCard from '../components/CinemaCard';
 
 const ALL_CITIES_LABEL: string = 'Tất cả tỉnh/thành';

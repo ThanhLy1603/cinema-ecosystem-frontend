@@ -7,11 +7,11 @@ import MovieStatusTabs from '@/components/common/MovieStatusTabs';
 import PageBanner from '@/components/common/PageBanner';
 import Pagination from '@/components/common/Pagination';
 import Alert from '@/components/ui/Alert';
-import { getErrorMessage } from '@/lib/apiError';
-import { AGE_RATINGS, MOVIE_STATUSES, MOVIE_STATUS_LABELS } from '@/lib/movieLabels';
-import { PUBLIC_GENRES_KEY, publicMovieListKey } from '@/lib/movieQueryKeys';
-import type { PageResponse } from '@/types/api';
-import type { AgeRating, Genre, Movie, MovieSearchParams, MovieStatus } from '@/types/movie';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { AGE_RATINGS, MOVIE_STATUSES, MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
+import { PUBLIC_GENRES_KEY, publicMovieListKey } from '@/lib/movie/movieQueryKeys';
+import type { PageResponse } from '@/types/common/api';
+import type { AgeRating, Genre, Movie, MovieSearchParams, MovieStatus } from '@/types/movie/movie';
 import MovieFilterBar, { type MovieFilters } from '../components/MovieFilterBar';
 
 const STATUS_PARAM: string = 'status';

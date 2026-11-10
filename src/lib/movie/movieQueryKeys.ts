@@ -1,4 +1,4 @@
-import type { MovieSearchParams } from '@/types/movie';
+import type { MovieSearchParams } from '@/types/movie/movie';
 
 export const PUBLIC_MOVIES_KEY: readonly string[] = ['public-movies'];
 export const PUBLIC_GENRES_KEY: readonly string[] = ['public-movies', 'genres'];

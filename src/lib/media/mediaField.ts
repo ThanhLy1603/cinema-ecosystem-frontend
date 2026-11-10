@@ -1,4 +1,4 @@
-import type { MediaFieldState } from '@/types/media';
+import type { MediaFieldState } from '@/types/media/media';
 
 export function createMediaFieldState(url: string | null | undefined): MediaFieldState {
    return { url: url ?? '', file: null };

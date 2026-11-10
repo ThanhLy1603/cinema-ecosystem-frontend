@@ -1,4 +1,4 @@
-import type { User, UserRole } from '@/types/auth';
+import type { User, UserRole } from '@/types/auth/auth';
 
 const ROLE_PRIORITY: UserRole[] = ['ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_STAFF', 'ROLE_CUSTOMER'];
 

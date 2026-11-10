@@ -6,15 +6,15 @@ import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
+import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { Gender, UpdateProfileRequest, User, UserProfile } from '@/types/auth';
+import type { Gender, UpdateProfileRequest, User, UserProfile } from '@/types/auth/auth';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
 import MediaUploadField from '@/components/common/MediaUploadField';
-import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/mediaField';
-import { useDeferredUpload, type DeferredUpload } from '@/lib/useDeferredUpload';
-import type { MediaFieldState } from '@/types/media';
-import { validateAvatarUrl, validateDateOfBirth, validateFullName, validatePhone } from '@/lib/validation';
+import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/media/mediaField';
+import { useDeferredUpload, type DeferredUpload } from '@/lib/media/useDeferredUpload';
+import type { MediaFieldState } from '@/types/media/media';
+import { validateAvatarUrl, validateDateOfBirth, validateFullName, validatePhone } from '@/lib/auth/validation';
 
 interface ProfileFormProps {
    userProfile: UserProfile;

@@ -1,9 +1,9 @@
 import axios, { type AxiosError, type AxiosInstance, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
-import { getErrorCode, REFRESH_IN_PROGRESS_ERROR_CODE } from '@/lib/apiError';
-import { wait } from '@/lib/utils';
+import { getErrorCode, REFRESH_IN_PROGRESS_ERROR_CODE } from '@/lib/common/apiError';
+import { wait } from '@/lib/common/utils';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { ApiResponse } from '@/types/api';
-import type { RefreshTokenResponse } from '@/types/auth';
+import type { ApiResponse } from '@/types/common/api';
+import type { RefreshTokenResponse } from '@/types/auth/auth';
 
 interface FailedRequestQueueItem {
    resolve: () => void;

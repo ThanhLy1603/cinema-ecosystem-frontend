@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import { restoreCinema } from '@/api/cinemaApi';
-import type { Cinema } from '@/types/cinema';
+import type { Cinema } from '@/types/cinema/cinema';
 import CinemaStatusBadge from './CinemaStatusBadge';
 import RestoreButton from '@/components/common/RestoreButton';
 

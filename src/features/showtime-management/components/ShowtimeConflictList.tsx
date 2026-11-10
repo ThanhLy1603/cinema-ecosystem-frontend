@@ -1,8 +1,8 @@
 import { TriangleAlert } from 'lucide-react';
 import type { ReactElement } from 'react';
-import { formatClockRange, toVietnamTimeOfDay } from '@/lib/vietnamTime';
-import { cn } from '@/lib/utils';
-import type { ShowtimeConflict } from '@/types/showtime';
+import { formatClockRange, toVietnamTimeOfDay } from '@/lib/common/vietnamTime';
+import { cn } from '@/lib/common/utils';
+import type { ShowtimeConflict } from '@/types/showtime/showtime';
 import { CONFLICT_TYPE_LABELS } from '../utils/labels';
 
 interface ShowtimeConflictListProps {

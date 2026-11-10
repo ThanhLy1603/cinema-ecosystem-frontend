@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import { SEAT_CELL_HEIGHT, SEAT_STATE_FILLS, getSeatTypeStyle, type SeatVisualState } from '@/lib/seatMap';
+import { SEAT_CELL_HEIGHT, SEAT_STATE_FILLS, getSeatTypeStyle, type SeatVisualState } from '@/lib/cinema/seatMap';
 
 interface SeatIconProps {
    x: number;

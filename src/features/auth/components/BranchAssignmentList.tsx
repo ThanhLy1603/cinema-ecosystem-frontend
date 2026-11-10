@@ -1,6 +1,6 @@
 import { MapPin } from 'lucide-react';
 import type { ReactElement } from 'react';
-import type { BranchAssignment } from '@/types/auth';
+import type { BranchAssignment } from '@/types/auth/auth';
 
 interface BranchAssignmentListProps {
    branchAssignments: BranchAssignment[];

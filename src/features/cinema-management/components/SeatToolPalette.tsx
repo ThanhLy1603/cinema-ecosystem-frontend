@@ -1,9 +1,9 @@
 import { Eraser } from 'lucide-react';
 import type { ReactElement, ReactNode } from 'react';
 import { SeatSwatch } from '@/components/common/SeatLegend';
-import { formatSurcharge } from '@/lib/seatMap';
-import { cn } from '@/lib/utils';
-import type { SeatType } from '@/types/cinema';
+import { formatSurcharge } from '@/lib/cinema/seatMap';
+import { cn } from '@/lib/common/utils';
+import type { SeatType } from '@/types/cinema/cinema';
 import type { EditorTool } from '../utils/seatMapEditing';
 
 interface SeatToolPaletteProps {

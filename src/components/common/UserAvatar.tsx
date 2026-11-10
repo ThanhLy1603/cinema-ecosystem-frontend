@@ -1,7 +1,7 @@
 import { useState, type ReactElement } from 'react';
-import { getInitials } from '@/lib/initials';
-import { cn } from '@/lib/utils';
-import type { User } from '@/types/auth';
+import { getInitials } from '@/lib/auth/initials';
+import { cn } from '@/lib/common/utils';
+import type { User } from '@/types/auth/auth';
 
 interface UserAvatarProps {
    user: Pick<User, 'fullName' | 'avatarUrl'>;

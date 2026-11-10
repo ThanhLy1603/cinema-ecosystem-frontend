@@ -1,4 +1,4 @@
-import { isDirectVideoUrl } from '@/lib/mediaUrl';
+import { isDirectVideoUrl } from '@/lib/media/mediaUrl';
 
 const YOUTUBE_ID_PATTERN: RegExp = /^[\w-]{11}$/;
 const YOUTUBE_HOSTS: string[] = ['youtube.com', 'www.youtube.com', 'm.youtube.com'];

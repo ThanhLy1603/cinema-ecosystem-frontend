@@ -4,8 +4,8 @@ import { useNavigate, type NavigateFunction } from 'react-router-dom';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { AGE_RATING_FILTER_OPTIONS } from '@/lib/movieLabels';
-import type { Genre } from '@/types/movie';
+import { AGE_RATING_FILTER_OPTIONS } from '@/lib/movie/movieLabels';
+import type { Genre } from '@/types/movie/movie';
 
 interface QuickSearchBarProps {
    genres: Genre[];

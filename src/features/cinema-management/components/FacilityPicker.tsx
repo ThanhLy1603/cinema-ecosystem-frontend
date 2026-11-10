@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import type { Facility } from '@/types/cinema';
+import type { Facility } from '@/types/cinema/cinema';
 
 interface FacilityPickerProps {
    facilities: Facility[];

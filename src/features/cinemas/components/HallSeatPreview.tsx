@@ -4,11 +4,11 @@ import { getPublicSeatLayout } from '@/api/cinemaApi';
 import SeatGrid from '@/components/common/SeatGrid';
 import SeatLegend from '@/components/common/SeatLegend';
 import Alert from '@/components/ui/Alert';
-import { getErrorMessage } from '@/lib/apiError';
-import { publicSeatLayoutKey } from '@/lib/cinemaQueryKeys';
-import { getLayoutRowLetters } from '@/lib/seatMap';
-import { useSeatTypes } from '@/lib/useSeatTypes';
-import type { SeatLayout, SeatType } from '@/types/cinema';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { publicSeatLayoutKey } from '@/lib/cinema/cinemaQueryKeys';
+import { getLayoutRowLetters } from '@/lib/cinema/seatMap';
+import { useSeatTypes } from '@/lib/cinema/useSeatTypes';
+import type { SeatLayout, SeatType } from '@/types/cinema/cinema';
 
 interface HallSeatPreviewProps {
    hallId: number;

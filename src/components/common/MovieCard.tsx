@@ -2,8 +2,8 @@ import { Clapperboard, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
-import { formatDuration } from '@/lib/movieFormat';
-import type { Movie } from '@/types/movie';
+import { formatDuration } from '@/lib/movie/movieFormat';
+import type { Movie } from '@/types/movie/movie';
 
 interface MovieCardProps {
    movie: Movie;

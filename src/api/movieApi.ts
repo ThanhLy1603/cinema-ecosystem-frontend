@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse, PageResponse } from '@/types/api';
+import type { ApiResponse, PageResponse } from '@/types/common/api';
 import type {
    AdminMovieSearchParams,
    Genre,
@@ -12,7 +12,7 @@ import type {
    Person,
    PersonOption,
    PersonRequest,
-} from '@/types/movie';
+} from '@/types/movie/movie';
 
 export async function searchPublicMovies(movieSearchParams: MovieSearchParams): Promise<PageResponse<Movie>> {
    const axiosResponse: AxiosResponse<ApiResponse<PageResponse<Movie>>> = await axiosInstance.get<

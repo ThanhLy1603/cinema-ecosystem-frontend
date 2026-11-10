@@ -1,6 +1,6 @@
 import { CircleAlert, CircleCheck, Info, type LucideIcon } from 'lucide-react';
 import type { ReactElement, ReactNode } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/common/utils';
 
 type AlertVariant = 'error' | 'success' | 'info';
 

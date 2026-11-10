@@ -1,4 +1,4 @@
-import type { AuditLog } from '@/types/admin';
+import type { AuditLog } from '@/types/auth/admin';
 
 export function formatDateTime(isoDateTime: string | undefined): string {
    if (!isoDateTime) {

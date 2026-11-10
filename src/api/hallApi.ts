@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse } from '@/types/api';
-import type { GenerateSeatsRequest, Hall, HallRequest, SeatLayout, SeatMapRequest } from '@/types/cinema';
+import type { ApiResponse } from '@/types/common/api';
+import type { GenerateSeatsRequest, Hall, HallRequest, SeatLayout, SeatMapRequest } from '@/types/cinema/cinema';
 
 export async function listHalls(cinemaId: number, deleted: boolean): Promise<Hall[]> {
    const axiosResponse: AxiosResponse<ApiResponse<Hall[]>> = await axiosInstance.get<ApiResponse<Hall[]>>(

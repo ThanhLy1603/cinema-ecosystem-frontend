@@ -7,11 +7,11 @@ import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import LinkButton from '@/components/ui/LinkButton';
 import TextField from '@/components/ui/TextField';
-import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
-import type { ResetPasswordRequest } from '@/types/auth';
+import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
+import type { ResetPasswordRequest } from '@/types/auth/auth';
 import PasswordStrength from '../components/PasswordStrength';
 import { PASSWORD_RESET_NOTICE } from '../utils/loginNotice';
-import { validateConfirmPassword, validateNewPassword } from '@/lib/validation';
+import { validateConfirmPassword, validateNewPassword } from '@/lib/auth/validation';
 
 interface ResetFieldErrors {
    newPassword?: string;

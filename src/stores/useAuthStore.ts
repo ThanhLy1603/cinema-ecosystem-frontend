@@ -1,5 +1,5 @@
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
-import type { User, UserRole } from '@/types/auth';
+import type { User, UserRole } from '@/types/auth/auth';
 
 interface AuthState {
    user: User | null;

@@ -1,7 +1,7 @@
 import { Armchair, MapPin, Navigation, Phone } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import type { Cinema } from '@/types/cinema';
+import type { Cinema } from '@/types/cinema/cinema';
 import { buildMapUrl } from '../utils/mapLink';
 import FacilityChips from './FacilityChips';
 

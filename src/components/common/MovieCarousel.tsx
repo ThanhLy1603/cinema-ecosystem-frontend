@@ -1,8 +1,8 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useEffect, useRef, useState, type ReactElement } from 'react';
 import MovieCard from '@/components/common/MovieCard';
-import { cn } from '@/lib/utils';
-import type { Movie } from '@/types/movie';
+import { cn } from '@/lib/common/utils';
+import type { Movie } from '@/types/movie/movie';
 
 interface MovieCarouselProps {
    movies: Movie[];

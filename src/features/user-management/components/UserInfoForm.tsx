@@ -5,9 +5,9 @@ import { updateUserInfo } from '@/api/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
-import { getErrorCode, getErrorMessage } from '@/lib/apiError';
-import { validateFullName, validatePhone } from '@/lib/validation';
-import type { AdminUser, UpdateUserInfoRequest } from '@/types/admin';
+import { getErrorCode, getErrorMessage } from '@/lib/common/apiError';
+import { validateFullName, validatePhone } from '@/lib/auth/validation';
+import type { AdminUser, UpdateUserInfoRequest } from '@/types/auth/admin';
 import { useAdminUserRefresh } from '../hooks/useAdminUserRefresh';
 import { emptyToNull } from '../utils/validation';
 

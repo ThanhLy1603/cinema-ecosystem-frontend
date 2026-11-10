@@ -1,7 +1,7 @@
 import { X } from 'lucide-react';
 import { useEffect, type ReactElement } from 'react';
 
-import type { TrailerSource } from '@/lib/trailer';
+import type { TrailerSource } from '@/lib/movie/trailer';
 
 interface TrailerModalProps {
    movieTitle: string;

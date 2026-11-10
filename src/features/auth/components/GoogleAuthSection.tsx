@@ -3,10 +3,10 @@ import { useEffect, useRef, useState, type ReactElement, type RefObject } from '
 import { useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
 import { loginWithGoogle } from '@/api/authApi';
 import Alert from '@/components/ui/Alert';
-import { getErrorMessage } from '@/lib/apiError';
-import { cn } from '@/lib/utils';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { cn } from '@/lib/common/utils';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { GoogleLoginRequest, LoginResponse, User } from '@/types/auth';
+import type { GoogleLoginRequest, LoginResponse, User } from '@/types/auth/auth';
 import { mountGoogleButton } from '../services/googleButtonService';
 import { getRedirectPath } from '../utils/redirect';
 

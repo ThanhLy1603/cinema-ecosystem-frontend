@@ -4,9 +4,9 @@ import { useState, type ReactElement } from 'react';
 import { deleteGenre } from '@/api/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import { PUBLIC_MOVIES_KEY } from '@/lib/movieQueryKeys';
-import type { Genre } from '@/types/movie';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { PUBLIC_MOVIES_KEY } from '@/lib/movie/movieQueryKeys';
+import type { Genre } from '@/types/movie/movie';
 import { ADMIN_GENRES_KEY } from '../utils/queryKeys';
 
 interface GenreRowProps {

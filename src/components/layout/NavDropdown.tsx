@@ -1,8 +1,8 @@
 import { ChevronDown } from 'lucide-react';
 import { useCallback, useRef, useState, type ReactElement } from 'react';
 import { Link, useLocation, type Location } from 'react-router-dom';
-import { useOutsideClick } from '@/lib/useOutsideClick';
-import { cn } from '@/lib/utils';
+import { useOutsideClick } from '@/lib/common/useOutsideClick';
+import { cn } from '@/lib/common/utils';
 
 export interface NavDropdownItem {
    label: string;

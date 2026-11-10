@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse } from '@/types/api';
-import type { ChangePasswordRequest, LoginResponse, UpdateProfileRequest, UserProfile } from '@/types/auth';
+import type { ApiResponse } from '@/types/common/api';
+import type { ChangePasswordRequest, LoginResponse, UpdateProfileRequest, UserProfile } from '@/types/auth/auth';
 
 export async function getMyProfile(): Promise<UserProfile> {
    const axiosResponse: AxiosResponse<ApiResponse<UserProfile>> =

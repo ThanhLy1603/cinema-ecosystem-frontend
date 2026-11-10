@@ -1,5 +1,5 @@
-import type { ScreenType } from '@/types/cinema';
-import type { AgeRating, MovieStatus } from '@/types/movie';
+import type { ScreenType } from '@/types/cinema/cinema';
+import type { AgeRating, MovieStatus } from '@/types/movie/movie';
 
 export type ShowtimeStatus = 'ACTIVE' | 'CANCELLED';
 

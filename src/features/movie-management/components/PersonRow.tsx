@@ -4,8 +4,8 @@ import { useState, type ReactElement } from 'react';
 import { deletePerson } from '@/api/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import type { Person } from '@/types/movie';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { Person } from '@/types/movie/movie';
 import { ADMIN_PERSONS_KEY, PERSON_OPTIONS_KEY } from '../utils/queryKeys';
 
 interface PersonRowProps {

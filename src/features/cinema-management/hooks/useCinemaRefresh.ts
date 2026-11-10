@@ -1,5 +1,5 @@
 import { useQueryClient, type QueryClient } from '@tanstack/react-query';
-import { CINEMA_OPTIONS_KEY, PUBLIC_CINEMAS_KEY } from '@/lib/cinemaQueryKeys';
+import { CINEMA_OPTIONS_KEY, PUBLIC_CINEMAS_KEY } from '@/lib/cinema/cinemaQueryKeys';
 import { ADMIN_CINEMA_LIST_KEY, adminCinemaDetailKey, adminDeletedHallsKey } from '../utils/queryKeys';
 
 export function useCinemaRefresh(cinemaId: number | null): () => void {

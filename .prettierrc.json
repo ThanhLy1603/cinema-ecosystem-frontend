@@ -8,7 +8,7 @@
   "endOfLine": "lf",
   "overrides": [
     {
-      "files": ["src/types/*.ts", "src/main.tsx", "*.config.ts", "*.config.js"],
+      "files": ["src/types/**/*.ts", "src/main.tsx", "*.config.ts", "*.config.js"],
       "options": { "tabWidth": 2 }
     }
   ]

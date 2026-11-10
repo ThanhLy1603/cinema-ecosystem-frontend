@@ -1,5 +1,5 @@
 import { useQueryClient, type QueryClient } from '@tanstack/react-query';
-import { PUBLIC_SHOWTIMES_KEY } from '@/lib/showtimeQueryKeys';
+import { PUBLIC_SHOWTIMES_KEY } from '@/lib/showtime/showtimeQueryKeys';
 import { ADMIN_SHOWTIMES_KEY } from '../utils/queryKeys';
 
 export function useShowtimeRefresh(): () => void {

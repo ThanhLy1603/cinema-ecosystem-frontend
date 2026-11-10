@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import MovieCard from '@/components/common/MovieCard';
 import MovieCarousel from '@/components/common/MovieCarousel';
 import SectionTitle from '@/components/common/SectionTitle';
-import type { Movie } from '@/types/movie';
+import type { Movie } from '@/types/movie/movie';
 
 type MovieSectionLayout = 'carousel' | 'grid';
 

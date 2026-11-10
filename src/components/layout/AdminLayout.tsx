@@ -2,7 +2,7 @@ import { Menu, Store } from 'lucide-react';
 import { useEffect, useState, type ReactElement } from 'react';
 import { Link, Outlet, useLocation, type Location } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { User } from '@/types/auth';
+import type { User } from '@/types/auth/auth';
 import AdminSidebar from './AdminSidebar';
 import UserMenu from './UserMenu';
 
@@ -17,7 +17,8 @@ const ADMIN_TITLE_RULES: RouteTitleRule[] = [
    { prefix: '/admin/users', title: 'Quản lý người dùng' },
    { prefix: '/admin/cinemas', title: 'Cụm rạp & phòng chiếu' },
    { prefix: '/admin/movies', title: 'Quản lý phim' },
-   { prefix: '/admin/showtimes', title: 'Suất chiếu & giá vé' },
+   { prefix: '/admin/showtimes', title: 'Suất chiếu' },
+   { prefix: '/admin/price-rules', title: 'Cấu hình giá vé' },
    { prefix: '/admin/promotions', title: 'Khuyến mãi & F&B' },
    { prefix: '/admin/community', title: 'Cộng đồng & blog' },
 ];

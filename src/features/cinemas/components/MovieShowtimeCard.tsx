@@ -1,17 +1,28 @@
 import { Clapperboard } from 'lucide-react';
-import type { ReactElement } from 'react';
+import { useState, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
-import { formatVnd } from '@/lib/currencyFormat';
-import { formatDuration } from '@/lib/movieFormat';
-import { formatClockRange, toVietnamTimeOfDay } from '@/lib/vietnamTime';
-import type { PublicMovieShowtimes, PublicShowtime } from '@/types/showtime';
+import { formatVnd } from '@/lib/common/currencyFormat';
+import { formatDuration } from '@/lib/movie/movieFormat';
+import { cn } from '@/lib/common/utils';
+import { formatClockRange, toVietnamTimeOfDay } from '@/lib/common/vietnamTime';
+import type { PublicMovieShowtimes, PublicShowtime } from '@/types/showtime/showtime';
+import ShowtimePricePanel from './ShowtimePricePanel';
 
 interface MovieShowtimeCardProps {
    publicMovieShowtimes: PublicMovieShowtimes;
 }
 
 export function MovieShowtimeCard({ publicMovieShowtimes }: MovieShowtimeCardProps): ReactElement {
+   const [selectedShowtimeId, setSelectedShowtimeId] = useState<number | null>(null);
+   const selectedShowtime: PublicShowtime | undefined = publicMovieShowtimes.showtimes.find(
+      (publicShowtime) => publicShowtime.id === selectedShowtimeId,
+   );
+
+   function toggleShowtime(showtimeId: number): void {
+      setSelectedShowtimeId(selectedShowtimeId === showtimeId ? null : showtimeId);
+   }
+
    return (
       <article className="flex gap-4 rounded-2xl border border-ink-100 bg-white p-4 shadow-sm sm:gap-5">
          <Link
@@ -48,20 +59,40 @@ export function MovieShowtimeCard({ publicMovieShowtimes }: MovieShowtimeCardPro
             </div>
             <ul className="flex flex-wrap gap-2">
                {publicMovieShowtimes.showtimes.map((publicShowtime: PublicShowtime) => (
-                  <li
-                     key={publicShowtime.id}
-                     title={`${formatClockRange(publicShowtime.startTime, publicShowtime.endTime)} · ${publicShowtime.hallName} · giá gốc ${formatVnd(publicShowtime.basePrice)}`}
-                     className="rounded-xl border border-brand-200 bg-brand-50 px-3 py-1.5 text-center"
-                  >
-                     <span className="block text-sm font-extrabold text-brand-800">
-                        {toVietnamTimeOfDay(publicShowtime.startTime)}
-                     </span>
-                     <span className="block text-[11px] font-semibold text-ink-600">
-                        {publicShowtime.screenType} · {publicShowtime.hallName}
-                     </span>
+                  <li key={publicShowtime.id}>
+                     <button
+                        type="button"
+                        aria-pressed={publicShowtime.id === selectedShowtimeId}
+                        onClick={() => toggleShowtime(publicShowtime.id)}
+                        title={`${formatClockRange(publicShowtime.startTime, publicShowtime.endTime)} · ${publicShowtime.hallName} · giá gốc ${formatVnd(publicShowtime.basePrice)}`}
+                        className={cn(
+                           'rounded-xl border px-3 py-1.5 text-center transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
+                           publicShowtime.id === selectedShowtimeId
+                              ? 'border-brand-600 bg-brand-600 text-white'
+                              : 'border-brand-200 bg-brand-50 text-brand-800 hover:border-brand-400',
+                        )}
+                     >
+                        <span className="block text-sm font-extrabold">
+                           {toVietnamTimeOfDay(publicShowtime.startTime)}
+                        </span>
+                        <span
+                           className={cn(
+                              'block text-[11px] font-semibold',
+                              publicShowtime.id === selectedShowtimeId ? 'text-white/85' : 'text-ink-600',
+                           )}
+                        >
+                           {publicShowtime.screenType} · {publicShowtime.hallName}
+                        </span>
+                     </button>
                   </li>
                ))}
             </ul>
+            {selectedShowtime && (
+               <ShowtimePricePanel
+                  showtimeId={selectedShowtime.id}
+                  title={`${toVietnamTimeOfDay(selectedShowtime.startTime)} · ${selectedShowtime.hallName}`}
+               />
+            )}
          </div>
       </article>
    );

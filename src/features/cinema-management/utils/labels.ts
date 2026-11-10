@@ -1,5 +1,5 @@
 import type { SelectOption } from '@/components/ui/SelectField';
-import type { CinemaStatus, HallStatus, ScreenType } from '@/types/cinema';
+import type { CinemaStatus, HallStatus, ScreenType } from '@/types/cinema/cinema';
 
 export const CINEMA_STATUS_LABELS: Record<CinemaStatus, string> = {
    ACTIVE: 'Đang hoạt động',

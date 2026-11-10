@@ -6,8 +6,8 @@ import {
    formatSurcharge,
    getSeatWidth,
    type SeatVisualState,
-} from '@/lib/seatMap';
-import type { SeatType } from '@/types/cinema';
+} from '@/lib/cinema/seatMap';
+import type { SeatType } from '@/types/cinema/cinema';
 import SeatIcon from './SeatIcon';
 
 type SeatStateVariant = Exclude<SeatVisualState, 'available'>;

@@ -1,5 +1,5 @@
 import type { ReactElement } from 'react';
-import type { Genre } from '@/types/movie';
+import type { Genre } from '@/types/movie/movie';
 
 interface GenrePickerProps {
    genres: Genre[];

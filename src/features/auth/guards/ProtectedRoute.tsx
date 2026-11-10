@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
 import { Navigate, Outlet, useLocation, type Location } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { UserRole } from '@/types/auth';
+import type { UserRole } from '@/types/auth/auth';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 
 interface ProtectedRouteProps {

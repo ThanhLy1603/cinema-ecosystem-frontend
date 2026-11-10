@@ -1,6 +1,6 @@
 import { CircleAlert, Eye, EyeOff, type LucideIcon } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/common/utils';
 
 interface TextFieldProps {
    id: string;

@@ -1,8 +1,8 @@
 import { refreshSession } from '@/api/authApi';
-import { getErrorCode, REFRESH_IN_PROGRESS_ERROR_CODE } from '@/lib/apiError';
-import { wait } from '@/lib/utils';
+import { getErrorCode, REFRESH_IN_PROGRESS_ERROR_CODE } from '@/lib/common/apiError';
+import { wait } from '@/lib/common/utils';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { RefreshTokenResponse } from '@/types/auth';
+import type { RefreshTokenResponse } from '@/types/auth/auth';
 
 const MAX_RESTORE_ATTEMPTS: number = 3;
 const RESTORE_RETRY_DELAY_MS: number = 300;

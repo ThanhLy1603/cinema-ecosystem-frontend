@@ -1,5 +1,6 @@
-import { validateRequiredSelection } from '@/lib/formValidation';
-import { isValidDate, isValidTimeOfDay, toVietnamInstant } from '@/lib/vietnamTime';
+import { validateRequiredSelection } from '@/lib/common/formValidation';
+import { validateMoneyInput } from '@/lib/common/moneyInput';
+import { isValidDate, isValidTimeOfDay, toVietnamInstant } from '@/lib/common/vietnamTime';
 
 export interface ShowtimeFormValues {
    hallId: string;
@@ -14,26 +15,6 @@ export type ShowtimeFormErrors = Partial<Record<keyof ShowtimeFormValues, string
 interface StartMomentErrors {
    date?: string;
    startTime?: string;
-}
-
-const MAX_BASE_PRICE: number = 10_000_000;
-const PRICE_SEPARATOR_PATTERN: RegExp = /[.,\s]/g;
-const DIGITS_PATTERN: RegExp = /^\d+$/;
-
-export function parseBasePrice(rawBasePrice: string): number | null {
-   const digits: string = rawBasePrice.replace(PRICE_SEPARATOR_PATTERN, '');
-   return DIGITS_PATTERN.test(digits) ? Number(digits) : null;
-}
-
-function validateBasePrice(rawBasePrice: string): string | undefined {
-   if (rawBasePrice.trim().length === 0) {
-      return 'Vui lòng nhập giá vé gốc';
-   }
-   const basePrice: number | null = parseBasePrice(rawBasePrice);
-   if (basePrice === null) {
-      return 'Giá vé gốc chỉ gồm chữ số';
-   }
-   return basePrice > MAX_BASE_PRICE ? 'Giá vé gốc tối đa 10.000.000đ' : undefined;
 }
 
 function validateStartMoment(date: string, startTime: string): StartMomentErrors {
@@ -56,7 +37,7 @@ export function validateShowtimeForm(showtimeFormValues: ShowtimeFormValues): Sh
       movieId: validateRequiredSelection(showtimeFormValues.movieId, 'Vui lòng chọn phim'),
       date: startMomentErrors.date,
       startTime: startMomentErrors.startTime,
-      basePrice: validateBasePrice(showtimeFormValues.basePrice),
+      basePrice: validateMoneyInput(showtimeFormValues.basePrice, 'Vui lòng nhập giá vé gốc', 'Giá vé gốc'),
    };
 }
 

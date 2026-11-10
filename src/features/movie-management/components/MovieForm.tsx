@@ -6,11 +6,11 @@ import SelectField from '@/components/ui/SelectField';
 import TextAreaField from '@/components/ui/TextAreaField';
 import TextField from '@/components/ui/TextField';
 import MediaUploadField from '@/components/common/MediaUploadField';
-import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/mediaField';
-import { useDeferredUpload, type DeferredUpload } from '@/lib/useDeferredUpload';
-import type { MediaFieldState } from '@/types/media';
-import { emptyToNull } from '@/lib/formValidation';
-import { AGE_RATING_OPTIONS, MOVIE_STATUS_OPTIONS } from '@/lib/movieLabels';
+import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/media/mediaField';
+import { useDeferredUpload, type DeferredUpload } from '@/lib/media/useDeferredUpload';
+import type { MediaFieldState } from '@/types/media/media';
+import { emptyToNull } from '@/lib/common/formValidation';
+import { AGE_RATING_OPTIONS, MOVIE_STATUS_OPTIONS } from '@/lib/movie/movieLabels';
 import type {
    AgeRating,
    CastRoleType,
@@ -19,7 +19,7 @@ import type {
    MovieRequest,
    MovieStatus,
    PersonOption,
-} from '@/types/movie';
+} from '@/types/movie/movie';
 import {
    hasMovieFieldErrors,
    validateMovieForm,

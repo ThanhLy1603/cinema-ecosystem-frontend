@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse } from '@/types/common/api';
 
 export const REFRESH_IN_PROGRESS_ERROR_CODE: string = 'REFRESH_IN_PROGRESS';
 

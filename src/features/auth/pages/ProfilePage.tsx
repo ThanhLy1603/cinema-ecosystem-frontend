@@ -6,14 +6,14 @@ import FullPageSpinner from '@/components/common/FullPageSpinner';
 import UserAvatar from '@/components/common/UserAvatar';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import type { MembershipTier, UserProfile } from '@/types/auth';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { MembershipTier, UserProfile } from '@/types/auth/auth';
 import BranchAssignmentList from '../components/BranchAssignmentList';
 import ChangePasswordForm from '../components/ChangePasswordForm';
 import EmailVerificationNotice from '../components/EmailVerificationNotice';
 import ProfileForm from '../components/ProfileForm';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
-import { getPrimaryRoleLabel } from '@/lib/roleLabels';
+import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';
 
 const TIER_LABELS: Record<MembershipTier, string> = {
    STAR: 'Star',

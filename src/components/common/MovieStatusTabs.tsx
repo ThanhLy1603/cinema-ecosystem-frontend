@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
-import { MOVIE_STATUSES, MOVIE_STATUS_LABELS } from '@/lib/movieLabels';
-import { cn } from '@/lib/utils';
-import type { MovieStatus } from '@/types/movie';
+import { MOVIE_STATUSES, MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
+import { cn } from '@/lib/common/utils';
+import type { MovieStatus } from '@/types/movie/movie';
 
 type MovieStatusTabsTone = 'light' | 'dark';
 

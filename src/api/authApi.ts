@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse } from '@/types/common/api';
 import type {
    ForgotPasswordRequest,
    GoogleLoginRequest,
@@ -11,7 +11,7 @@ import type {
    ResetPasswordRequest,
    User,
    VerifyEmailRequest,
-} from '@/types/auth';
+} from '@/types/auth/auth';
 
 export async function register(registerRequest: RegisterRequest): Promise<User> {
    const axiosResponse: AxiosResponse<ApiResponse<User>> = await axiosInstance.post<ApiResponse<User>>(

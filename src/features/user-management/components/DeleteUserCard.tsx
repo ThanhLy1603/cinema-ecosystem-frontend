@@ -5,8 +5,8 @@ import { useNavigate, type NavigateFunction } from 'react-router-dom';
 import { deleteUser } from '@/api/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import type { AdminUser } from '@/types/admin';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { AdminUser } from '@/types/auth/admin';
 import { ADMIN_USER_LIST_KEY } from '../utils/queryKeys';
 
 interface DeleteUserCardProps {

@@ -6,9 +6,9 @@ import { login, register } from '@/api/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
-import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
+import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { LoginResponse, RegisterRequest, User } from '@/types/auth';
+import type { LoginResponse, RegisterRequest, User } from '@/types/auth/auth';
 import GoogleAuthSection from '../components/GoogleAuthSection';
 import PasswordStrength from '../components/PasswordStrength';
 import { getRedirectPath } from '../utils/redirect';
@@ -18,7 +18,7 @@ import {
    validateFullName,
    validateNewPassword,
    validatePhone,
-} from '@/lib/validation';
+} from '@/lib/auth/validation';
 
 interface RegisterFieldErrors {
    fullName?: string;

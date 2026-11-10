@@ -3,10 +3,10 @@ import { CalendarX } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { getPublicShowtimes } from '@/api/showtimeApi';
 import Alert from '@/components/ui/Alert';
-import { getErrorMessage } from '@/lib/apiError';
-import { publicShowtimeListKey } from '@/lib/showtimeQueryKeys';
-import { formatDisplayDate, todayInVietnam } from '@/lib/vietnamTime';
-import type { PublicMovieShowtimes } from '@/types/showtime';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { publicShowtimeListKey } from '@/lib/showtime/showtimeQueryKeys';
+import { formatDisplayDate, todayInVietnam } from '@/lib/common/vietnamTime';
+import type { PublicMovieShowtimes } from '@/types/showtime/showtime';
 import MovieShowtimeCard from './MovieShowtimeCard';
 import ShowtimeDateTabs from './ShowtimeDateTabs';
 

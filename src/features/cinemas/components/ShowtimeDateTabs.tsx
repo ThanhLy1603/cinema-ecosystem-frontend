@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
-import { cn } from '@/lib/utils';
-import { addDaysToDate, formatDayMonth, getWeekdayLabel } from '@/lib/vietnamTime';
+import { cn } from '@/lib/common/utils';
+import { addDaysToDate, formatDayMonth, getWeekdayLabel } from '@/lib/common/vietnamTime';
 
 interface ShowtimeDateTabsProps {
    startDate: string;

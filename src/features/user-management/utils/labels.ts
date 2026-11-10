@@ -1,8 +1,8 @@
 import type { SelectOption } from '@/components/ui/SelectField';
-import { getRoleLabel } from '@/lib/roleLabels';
-import type { AuditAction, UserStatus } from '@/types/admin';
-import type { UserRole } from '@/types/auth';
-import type { StaffPosition, StaffStatus } from '@/types/staff';
+import { getRoleLabel } from '@/lib/auth/roleLabels';
+import type { AuditAction, UserStatus } from '@/types/auth/admin';
+import type { UserRole } from '@/types/auth/auth';
+import type { StaffPosition, StaffStatus } from '@/types/auth/staff';
 
 export const ALL_ROLES: UserRole[] = ['ROLE_CUSTOMER', 'ROLE_STAFF', 'ROLE_MANAGER', 'ROLE_ADMIN'];
 

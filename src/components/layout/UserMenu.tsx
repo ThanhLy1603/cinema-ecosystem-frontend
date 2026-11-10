@@ -3,13 +3,13 @@ import { ChevronDown, LayoutDashboard, LogOut, MonitorSmartphone, Store, Ticket,
 import { useCallback, useRef, useState, type ReactElement } from 'react';
 import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
 import { logout, logoutAll } from '@/api/authApi';
-import { getErrorMessage } from '@/lib/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
 import UserAvatar from '@/components/common/UserAvatar';
-import { getPrimaryRoleLabel } from '@/lib/roleLabels';
-import { cn } from '@/lib/utils';
-import { useOutsideClick } from '@/lib/useOutsideClick';
+import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';
+import { cn } from '@/lib/common/utils';
+import { useOutsideClick } from '@/lib/common/useOutsideClick';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { User } from '@/types/auth';
+import type { User } from '@/types/auth/auth';
 
 interface UserMenuProps {
    user: User;

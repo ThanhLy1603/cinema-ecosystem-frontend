@@ -1,5 +1,6 @@
 import {
    ArrowLeft,
+   BadgeDollarSign,
    Building2,
    CalendarClock,
    Clapperboard,
@@ -13,9 +14,9 @@ import {
 import type { ReactElement } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import Logo from '@/components/brand/Logo';
-import { getPrimaryRoleLabel } from '@/lib/roleLabels';
-import { cn } from '@/lib/utils';
-import type { User } from '@/types/auth';
+import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';
+import { cn } from '@/lib/common/utils';
+import type { User } from '@/types/auth/auth';
 
 type AdminNavStatus = 'ready' | 'next' | 'soon';
 
@@ -39,6 +40,7 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
    { label: 'Cụm rạp', to: '/admin/cinemas', icon: Building2, status: 'ready' },
    { label: 'Phim', to: '/admin/movies', icon: Clapperboard, status: 'ready' },
    { label: 'Suất chiếu', to: '/admin/showtimes', icon: CalendarClock, status: 'ready' },
+   { label: 'Giá vé', to: '/admin/price-rules', icon: BadgeDollarSign, status: 'ready' },
    { label: 'Khuyến mãi & F&B', to: '/admin/promotions', icon: Tag, status: 'soon' },
    { label: 'Cộng đồng & blog', to: '/admin/community', icon: MessagesSquare, status: 'soon' },
 ];

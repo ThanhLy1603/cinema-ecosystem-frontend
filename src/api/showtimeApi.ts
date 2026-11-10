@@ -1,13 +1,13 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse } from '@/types/api';
+import type { ApiResponse } from '@/types/common/api';
 import type {
    AdminShowtimeSearchParams,
    MovieInfo,
    PublicMovieShowtimes,
    Showtime,
    ShowtimeRequest,
-} from '@/types/showtime';
+} from '@/types/showtime/showtime';
 
 export async function getPublicShowtimes(
    cinemaId: number,

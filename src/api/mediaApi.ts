@@ -1,8 +1,8 @@
 import axios, { type AxiosProgressEvent, type AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse } from '@/types/api';
-import { getErrorMessage } from '@/lib/apiError';
-import type { MediaFieldState, MediaPurpose, UploadSignature } from '@/types/media';
+import type { ApiResponse } from '@/types/common/api';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { MediaFieldState, MediaPurpose, UploadSignature } from '@/types/media/media';
 
 interface CloudinaryUploadResult {
    secure_url: string;

@@ -1,5 +1,5 @@
 import type { SelectOption } from '@/components/ui/SelectField';
-import type { AgeRating, CastRoleType, MovieStatus } from '@/types/movie';
+import type { AgeRating, CastRoleType, MovieStatus } from '@/types/movie/movie';
 
 export const AGE_RATINGS: AgeRating[] = ['P', 'C13', 'C16', 'C18'];
 

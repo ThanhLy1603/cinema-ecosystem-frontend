@@ -3,7 +3,7 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/common/utils';
 import { CINEMA_STATUS_FILTER_OPTIONS, DELETED_FILTER_OPTIONS } from '../utils/labels';
 import { buildCityFilterOptions } from '../utils/provinces';
 

@@ -1,8 +1,8 @@
 import { Check, ChevronDown, CircleAlert, Search, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactElement } from 'react';
-import { normalizeSearchText } from '@/lib/searchText';
-import { cn } from '@/lib/utils';
-import { useOutsideClick } from '@/lib/useOutsideClick';
+import { normalizeSearchText } from '@/lib/common/searchText';
+import { cn } from '@/lib/common/utils';
+import { useOutsideClick } from '@/lib/common/useOutsideClick';
 
 export interface SelectOption {
    value: string;

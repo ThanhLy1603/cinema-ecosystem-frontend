@@ -3,8 +3,8 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { cn } from '@/lib/utils';
-import type { CinemaOption } from '@/types/cinema';
+import { cn } from '@/lib/common/utils';
+import type { CinemaOption } from '@/types/cinema/cinema';
 import { ROLE_FILTER_OPTIONS, STATUS_FILTER_OPTIONS } from '../utils/labels';
 
 export interface UserFilters {

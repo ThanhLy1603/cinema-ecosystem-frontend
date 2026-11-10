@@ -7,8 +7,8 @@ import type {
    UpdateUserRolesRequest,
    UpdateUserStatusRequest,
    UserSearchParams,
-} from '@/types/admin';
-import type { ApiResponse, PageResponse } from '@/types/api';
+} from '@/types/auth/admin';
+import type { ApiResponse, PageResponse } from '@/types/common/api';
 
 export async function searchUsers(userSearchParams: UserSearchParams): Promise<PageResponse<AdminUser>> {
    const axiosResponse: AxiosResponse<ApiResponse<PageResponse<AdminUser>>> = await axiosInstance.get<

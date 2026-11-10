@@ -1,35 +1,31 @@
-import { useMutation, type UseMutationResult } from '@tanstack/react-query';
+import { useMutation, type UseMutationResult, type UseQueryResult } from '@tanstack/react-query';
 import { Ban, CalendarClock, Save, X } from 'lucide-react';
 import { useEffect, useState, type FormEvent, type ReactElement } from 'react';
 import { cancelShowtime, createShowtime, updateShowtime } from '@/api/showtimeApi';
+import ShowtimePriceTable from '@/components/common/ShowtimePriceTable';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { getErrorData, getErrorMessage, getFieldErrors } from '@/lib/apiError';
-import { formatVnd } from '@/lib/currencyFormat';
-import { formatDuration } from '@/lib/movieFormat';
-import { MOVIE_STATUS_LABELS } from '@/lib/movieLabels';
+import { getErrorData, getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
+import { parseMoneyInput } from '@/lib/common/moneyInput';
+import { formatDuration } from '@/lib/movie/movieFormat';
+import { MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
 import {
    addMinutesToInstant,
-   formatDisplayDate,
    isValidDate,
    isValidTimeOfDay,
    toVietnamDate,
    toVietnamInstant,
    toVietnamTimeOfDay,
-} from '@/lib/vietnamTime';
-import type { Hall } from '@/types/cinema';
-import type { MovieInfo, Showtime, ShowtimeConflict, ShowtimeRequest } from '@/types/showtime';
+} from '@/lib/common/vietnamTime';
+import type { Hall } from '@/types/cinema/cinema';
+import type { ShowtimePrice } from '@/types/showtime/pricing';
+import type { MovieInfo, Showtime, ShowtimeConflict, ShowtimeRequest } from '@/types/showtime/showtime';
 import { getSuggestedStartTime } from '../utils/conflictSuggestion';
+import { useShowtimePricePreview } from '../hooks/useShowtimePricePreview';
 import { CLEANING_MINUTES } from '../utils/labels';
-import {
-   hasErrors,
-   parseBasePrice,
-   validateShowtimeForm,
-   type ShowtimeFormErrors,
-   type ShowtimeFormValues,
-} from '../utils/validation';
+import { hasErrors, validateShowtimeForm, type ShowtimeFormErrors, type ShowtimeFormValues } from '../utils/validation';
 import ShowtimeConflictList from './ShowtimeConflictList';
 import type { AttemptedSlot } from './ShowtimeTimeline';
 
@@ -129,6 +125,7 @@ export function ShowtimeFormPanel({
       (movieInfo) => String(movieInfo.id) === showtimeFormValues.movieId,
    );
    const slotPreview: SlotPreview | null = computeSlotPreview(showtimeFormValues, selectedMovieInfo);
+   const pricePreviewQuery: UseQueryResult<ShowtimePrice> = useShowtimePricePreview(showtimeFormValues, halls);
    const attemptedStartTime: string | null =
       slotPreview && isValidDate(showtimeFormValues.date) && isValidTimeOfDay(showtimeFormValues.startTime)
          ? toVietnamInstant(showtimeFormValues.date, showtimeFormValues.startTime)
@@ -206,7 +203,7 @@ export function ShowtimeFormPanel({
       formEvent.preventDefault();
       const nextShowtimeFormErrors: ShowtimeFormErrors = validateShowtimeForm(showtimeFormValues);
       setShowtimeFormErrors(nextShowtimeFormErrors);
-      const basePrice: number | null = parseBasePrice(showtimeFormValues.basePrice);
+      const basePrice: number | null = parseMoneyInput(showtimeFormValues.basePrice);
       if (hasErrors(nextShowtimeFormErrors) || basePrice === null || !slotPreview) {
          return;
       }
@@ -235,7 +232,7 @@ export function ShowtimeFormPanel({
             role="dialog"
             aria-modal="true"
             aria-labelledby="showtime-form-title"
-            className="relative z-10 flex h-full w-full max-w-md flex-col bg-white shadow-soft"
+            className="relative z-10 flex h-full w-full max-w-xl flex-col bg-white shadow-soft"
          >
             <header className="flex items-start justify-between gap-4 border-b border-ink-100 px-6 py-5">
                <div className="flex items-center gap-3">
@@ -341,18 +338,18 @@ export function ShowtimeFormPanel({
                               <strong>{toVietnamTimeOfDay(slotPreview.occupiedUntil)}</strong> (đã gồm{' '}
                               {CLEANING_MINUTES} phút dọn phòng).
                            </li>
-                           {parseBasePrice(showtimeFormValues.basePrice) !== null && (
-                              <li>
-                                 Giá gốc:{' '}
-                                 <strong>{formatVnd(parseBasePrice(showtimeFormValues.basePrice) ?? 0)}</strong> · ngày{' '}
-                                 {formatDisplayDate(showtimeFormValues.date)}
-                              </li>
-                           )}
                         </ul>
                      ) : (
                         <p>Chọn phim, ngày và giờ để xem giờ kết thúc và thời điểm phòng sẵn sàng trở lại.</p>
                      )}
                   </div>
+
+                  {pricePreviewQuery.data && (
+                     <div className="space-y-2">
+                        <h3 className="text-sm font-extrabold text-ink-900">Bảng giá vé dự kiến</h3>
+                        <ShowtimePriceTable showtimePrice={pricePreviewQuery.data} />
+                     </div>
+                  )}
 
                   {editingShowtime?.cancellable && (
                      <div className="space-y-3 border-t border-ink-100 pt-5">

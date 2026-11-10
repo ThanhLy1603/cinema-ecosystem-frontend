@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import type { GoogleAccountsId } from '@/types/google';
+import type { GoogleAccountsId } from '@/types/auth/google';
 
 const GOOGLE_SCRIPT_URL: string = 'https://accounts.google.com/gsi/client';
 const MAX_BUTTON_WIDTH: number = 400;

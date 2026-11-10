@@ -4,7 +4,7 @@ import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import type { CinemaDetail, CinemaRequest, CinemaStatus, Facility } from '@/types/cinema';
+import type { CinemaDetail, CinemaRequest, CinemaStatus, Facility } from '@/types/cinema/cinema';
 import { CINEMA_STATUS_OPTIONS } from '../utils/labels';
 import { buildCityOptions } from '../utils/provinces';
 import {

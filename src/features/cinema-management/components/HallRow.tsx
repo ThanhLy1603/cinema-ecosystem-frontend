@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { deleteHall } from '@/api/hallApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import type { Hall } from '@/types/cinema';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { Hall } from '@/types/cinema/cinema';
 import { useCinemaRefresh } from '../hooks/useCinemaRefresh';
 import CinemaStatusBadge from './CinemaStatusBadge';
 

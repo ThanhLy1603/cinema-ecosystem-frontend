@@ -5,20 +5,20 @@ import { createPerson, updatePerson } from '@/api/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import MediaUploadField from '@/components/common/MediaUploadField';
-import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/mediaField';
-import { useDeferredUpload, type DeferredUpload } from '@/lib/useDeferredUpload';
-import type { MediaFieldState } from '@/types/media';
+import { createMediaFieldState, getMediaUrlToValidate } from '@/lib/media/mediaField';
+import { useDeferredUpload, type DeferredUpload } from '@/lib/media/useDeferredUpload';
+import type { MediaFieldState } from '@/types/media/media';
 import TextAreaField from '@/components/ui/TextAreaField';
 import TextField from '@/components/ui/TextField';
-import { getErrorMessage } from '@/lib/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
 import {
    emptyToNull,
    validateOptionalHttpsUrl,
    validateOptionalText,
    validateRequiredText,
-} from '@/lib/formValidation';
-import { PUBLIC_MOVIES_KEY } from '@/lib/movieQueryKeys';
-import type { Person, PersonRequest } from '@/types/movie';
+} from '@/lib/common/formValidation';
+import { PUBLIC_MOVIES_KEY } from '@/lib/movie/movieQueryKeys';
+import type { Person, PersonRequest } from '@/types/movie/movie';
 import { ADMIN_MOVIE_LIST_KEY, ADMIN_PERSONS_KEY, PERSON_OPTIONS_KEY } from '../utils/queryKeys';
 
 interface PersonFormProps {

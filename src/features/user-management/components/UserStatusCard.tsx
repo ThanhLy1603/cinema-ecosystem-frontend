@@ -4,8 +4,8 @@ import { useState, type ReactElement } from 'react';
 import { updateUserStatus } from '@/api/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import type { AdminUser, UpdateUserStatusRequest } from '@/types/admin';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { AdminUser, UpdateUserStatusRequest } from '@/types/auth/admin';
 import { useAdminUserRefresh } from '../hooks/useAdminUserRefresh';
 import StatusBadge from './StatusBadge';
 

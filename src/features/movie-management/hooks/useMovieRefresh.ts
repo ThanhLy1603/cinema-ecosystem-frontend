@@ -1,5 +1,5 @@
 import { useQueryClient, type QueryClient } from '@tanstack/react-query';
-import { PUBLIC_MOVIES_KEY } from '@/lib/movieQueryKeys';
+import { PUBLIC_MOVIES_KEY } from '@/lib/movie/movieQueryKeys';
 import { ADMIN_MOVIE_LIST_KEY, adminMovieDetailKey } from '../utils/queryKeys';
 
 export function useMovieRefresh(movieId: number | null): () => void {

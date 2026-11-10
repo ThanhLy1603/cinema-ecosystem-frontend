@@ -1,4 +1,4 @@
-import { MINUTES_PER_DAY, getMinutesFromDayStart } from '@/lib/vietnamTime';
+import { MINUTES_PER_DAY, getMinutesFromDayStart } from '@/lib/common/vietnamTime';
 
 export const PIXELS_PER_HOUR: number = 96;
 export const PIXELS_PER_MINUTE: number = PIXELS_PER_HOUR / 60;

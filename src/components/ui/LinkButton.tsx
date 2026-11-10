@@ -1,6 +1,6 @@
 import type { ReactElement, ReactNode } from 'react';
 import { Link, type LinkProps } from 'react-router-dom';
-import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/buttonStyles';
+import { buttonClasses, type ButtonSize, type ButtonVariant } from '@/lib/common/buttonStyles';
 
 interface LinkButtonProps extends LinkProps {
    variant?: ButtonVariant;

@@ -1,6 +1,6 @@
 import { CircleAlert } from 'lucide-react';
 import type { ReactElement } from 'react';
-import type { CinemaOption } from '@/types/cinema';
+import type { CinemaOption } from '@/types/cinema/cinema';
 
 interface BranchPickerProps {
    cinemaOptions: CinemaOption[];

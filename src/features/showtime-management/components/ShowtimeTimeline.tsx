@@ -1,10 +1,10 @@
 import { Wrench } from 'lucide-react';
 import { useEffect, useRef, type MouseEvent, type ReactElement } from 'react';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
-import { MINUTES_PER_DAY, formatClockRange, getMinutesFromDayStart, todayInVietnam } from '@/lib/vietnamTime';
-import { cn } from '@/lib/utils';
-import type { Hall } from '@/types/cinema';
-import type { Showtime } from '@/types/showtime';
+import { MINUTES_PER_DAY, formatClockRange, getMinutesFromDayStart, todayInVietnam } from '@/lib/common/vietnamTime';
+import { cn } from '@/lib/common/utils';
+import type { Hall } from '@/types/cinema/cinema';
+import type { Showtime } from '@/types/showtime/showtime';
 import {
    HALL_LABEL_WIDTH,
    HEADER_HEIGHT,

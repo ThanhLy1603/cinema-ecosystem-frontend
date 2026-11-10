@@ -1,4 +1,4 @@
-import type { SeatStatus } from '@/types/cinema';
+import type { SeatStatus } from '@/types/cinema/cinema';
 
 export const SEAT_CELL_WIDTH: number = 40;
 export const SEAT_CELL_HEIGHT: number = 30;

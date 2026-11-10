@@ -3,7 +3,7 @@ import {
    validateOptionalText,
    validateRequiredSelection,
    validateRequiredText,
-} from '@/lib/formValidation';
+} from '@/lib/common/formValidation';
 
 const MIN_DURATION_MINUTES: number = 1;
 const MAX_DURATION_MINUTES: number = 600;

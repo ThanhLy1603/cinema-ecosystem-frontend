@@ -1,7 +1,7 @@
 import { History, Plus } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
-import type { Hall } from '@/types/cinema';
+import type { Hall } from '@/types/cinema/cinema';
 import DeletedHallList from './DeletedHallList';
 import HallForm from './HallForm';
 import HallRow from './HallRow';

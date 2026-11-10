@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
-import { cn } from '@/lib/utils';
-import type { UserStatus } from '@/types/admin';
+import { cn } from '@/lib/common/utils';
+import type { UserStatus } from '@/types/auth/admin';
 import { USER_STATUS_LABELS } from '../utils/labels';
 
 interface StatusBadgeProps {

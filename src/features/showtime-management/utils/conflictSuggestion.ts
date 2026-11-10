@@ -1,4 +1,4 @@
-import type { ShowtimeConflict } from '@/types/showtime';
+import type { ShowtimeConflict } from '@/types/showtime/showtime';
 
 export function getSuggestedStartTime(
    showtimeConflicts: ShowtimeConflict[],

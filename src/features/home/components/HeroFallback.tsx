@@ -2,7 +2,7 @@ import { ArrowRight, Clapperboard, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import LinkButton from '@/components/ui/LinkButton';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { User } from '@/types/auth';
+import type { User } from '@/types/auth/auth';
 
 function getFirstName(user: User): string {
    const words: string[] = user.fullName.trim().split(/\s+/);

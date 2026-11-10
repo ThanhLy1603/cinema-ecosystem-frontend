@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react';
-import { cn } from '@/lib/utils';
-import type { CinemaStatus, HallStatus } from '@/types/cinema';
+import { cn } from '@/lib/common/utils';
+import type { CinemaStatus, HallStatus } from '@/types/cinema/cinema';
 import { CINEMA_STATUS_LABELS, HALL_STATUS_LABELS } from '../utils/labels';
 
 interface CinemaStatusBadgeProps {

@@ -3,7 +3,7 @@ import { RotateCcw } from 'lucide-react';
 import type { ReactElement } from 'react';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
 
 interface RestoreButtonProps {
    restore: () => Promise<unknown>;

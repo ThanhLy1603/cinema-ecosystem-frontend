@@ -7,8 +7,8 @@ import {
    getSeatLabel,
    type GridCell,
    type GridSeat,
-} from '@/lib/seatMap';
-import type { SeatCellRequest, SeatLayout, SeatStatus, SeatType } from '@/types/cinema';
+} from '@/lib/cinema/seatMap';
+import type { SeatCellRequest, SeatLayout, SeatStatus, SeatType } from '@/types/cinema/cinema';
 
 export type SeatTypesByCode = Record<string, SeatType>;
 

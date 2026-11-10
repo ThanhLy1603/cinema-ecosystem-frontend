@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { restoreMovie } from '@/api/movieApi';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
 import RestoreButton from '@/components/common/RestoreButton';
-import { formatDuration, formatReleaseDate } from '@/lib/movieFormat';
-import type { Movie } from '@/types/movie';
+import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';
+import type { Movie } from '@/types/movie/movie';
 import MovieStatusBadge from './MovieStatusBadge';
 
 interface MovieTableProps {

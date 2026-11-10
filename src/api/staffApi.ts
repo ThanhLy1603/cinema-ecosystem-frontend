@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
-import type { ApiResponse } from '@/types/api';
-import type { AssignBranchesRequest, CreateStaffRequest, StaffResponse, UpdateStaffRequest } from '@/types/staff';
+import type { ApiResponse } from '@/types/common/api';
+import type { AssignBranchesRequest, CreateStaffRequest, StaffResponse, UpdateStaffRequest } from '@/types/auth/staff';
 
 export async function createStaff(createStaffRequest: CreateStaffRequest): Promise<StaffResponse> {
    const axiosResponse: AxiosResponse<ApiResponse<StaffResponse>> = await axiosInstance.post<

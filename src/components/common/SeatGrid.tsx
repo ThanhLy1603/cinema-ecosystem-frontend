@@ -17,8 +17,8 @@ import {
    type SeatVisualState,
    type GridCell,
    type GridSeat,
-} from '@/lib/seatMap';
-import { cn } from '@/lib/utils';
+} from '@/lib/cinema/seatMap';
+import { cn } from '@/lib/common/utils';
 import SeatIcon from './SeatIcon';
 
 interface SeatGridProps {

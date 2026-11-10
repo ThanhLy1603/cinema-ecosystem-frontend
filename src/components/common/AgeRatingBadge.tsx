@@ -1,7 +1,7 @@
 import type { ReactElement } from 'react';
-import { AGE_RATING_BADGE_CLASSES, AGE_RATING_DESCRIPTIONS } from '@/lib/movieLabels';
-import { cn } from '@/lib/utils';
-import type { AgeRating } from '@/types/movie';
+import { AGE_RATING_BADGE_CLASSES, AGE_RATING_DESCRIPTIONS } from '@/lib/movie/movieLabels';
+import { cn } from '@/lib/common/utils';
+import type { AgeRating } from '@/types/movie/movie';
 
 interface AgeRatingBadgeProps {
    ageRating: AgeRating;

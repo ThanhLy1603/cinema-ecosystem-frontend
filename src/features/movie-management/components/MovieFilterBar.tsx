@@ -3,9 +3,9 @@ import { useState, type FormEvent, type ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { AGE_RATING_FILTER_OPTIONS, MOVIE_STATUS_FILTER_OPTIONS } from '@/lib/movieLabels';
-import { cn } from '@/lib/utils';
-import type { Genre } from '@/types/movie';
+import { AGE_RATING_FILTER_OPTIONS, MOVIE_STATUS_FILTER_OPTIONS } from '@/lib/movie/movieLabels';
+import { cn } from '@/lib/common/utils';
+import type { Genre } from '@/types/movie/movie';
 import { DELETED_FILTER_OPTIONS } from '../utils/labels';
 
 export interface AdminMovieFilters {

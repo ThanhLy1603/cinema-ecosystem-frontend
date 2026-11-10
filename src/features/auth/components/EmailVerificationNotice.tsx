@@ -4,7 +4,7 @@ import type { ReactElement } from 'react';
 import { resendVerification } from '@/api/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
+import { getErrorMessage } from '@/lib/common/apiError';
 
 export function EmailVerificationNotice(): ReactElement {
    const resendMutation: UseMutationResult<void, unknown, void> = useMutation<void, unknown, void>({

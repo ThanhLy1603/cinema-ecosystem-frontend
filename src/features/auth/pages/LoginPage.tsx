@@ -6,13 +6,13 @@ import { login } from '@/api/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
-import { getErrorMessage, getFieldErrors } from '@/lib/apiError';
+import { getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { LoginRequest, LoginResponse, User } from '@/types/auth';
+import type { LoginRequest, LoginResponse, User } from '@/types/auth/auth';
 import GoogleAuthSection from '../components/GoogleAuthSection';
 import { getLoginNotice, PASSWORD_RESET_NOTICE } from '../utils/loginNotice';
 import { getRedirectPath } from '../utils/redirect';
-import { validateEmail, validateLoginPassword } from '@/lib/validation';
+import { validateEmail, validateLoginPassword } from '@/lib/auth/validation';
 
 interface LoginFieldErrors {
    email?: string;

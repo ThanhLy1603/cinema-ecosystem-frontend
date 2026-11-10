@@ -5,8 +5,8 @@ import { getUploadErrorMessage, getUploadSignature, validateMediaFile } from '@/
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
-import { toTrailerSource, type TrailerSource } from '@/lib/trailer';
-import type { MediaFieldState, MediaPurpose, UploadSignature } from '@/types/media';
+import { toTrailerSource, type TrailerSource } from '@/lib/movie/trailer';
+import type { MediaFieldState, MediaPurpose, UploadSignature } from '@/types/media/media';
 
 interface MediaUploadFieldProps {
    id: string;

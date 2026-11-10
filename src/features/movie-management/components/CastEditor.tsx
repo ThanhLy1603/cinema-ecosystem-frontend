@@ -3,8 +3,8 @@ import type { ReactElement } from 'react';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import TextField from '@/components/ui/TextField';
-import { CAST_ROLE_OPTIONS } from '@/lib/movieLabels';
-import type { PersonOption } from '@/types/movie';
+import { CAST_ROLE_OPTIONS } from '@/lib/movie/movieLabels';
+import type { PersonOption } from '@/types/movie/movie';
 
 export interface CastDraft {
    key: number;

@@ -5,10 +5,10 @@ import { createGenre, updateGenre } from '@/api/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
-import { getErrorCode, getErrorMessage } from '@/lib/apiError';
-import { validateRequiredText } from '@/lib/formValidation';
-import { PUBLIC_MOVIES_KEY } from '@/lib/movieQueryKeys';
-import type { Genre, GenreRequest } from '@/types/movie';
+import { getErrorCode, getErrorMessage } from '@/lib/common/apiError';
+import { validateRequiredText } from '@/lib/common/formValidation';
+import { PUBLIC_MOVIES_KEY } from '@/lib/movie/movieQueryKeys';
+import type { Genre, GenreRequest } from '@/types/movie/movie';
 import { ADMIN_GENRES_KEY, ADMIN_MOVIE_LIST_KEY } from '../utils/queryKeys';
 
 interface GenreFormProps {

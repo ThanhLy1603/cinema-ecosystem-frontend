@@ -8,12 +8,12 @@ import FullPageSpinner from '@/components/common/FullPageSpinner';
 import TrailerModal from '@/components/common/TrailerModal';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getErrorMessage } from '@/lib/apiError';
-import { formatDuration, formatReleaseDate } from '@/lib/movieFormat';
-import { MOVIE_STATUS_LABELS } from '@/lib/movieLabels';
-import { toTrailerSource, type TrailerSource } from '@/lib/trailer';
-import { publicMovieDetailKey } from '@/lib/movieQueryKeys';
-import type { MovieDetail } from '@/types/movie';
+import { getErrorMessage } from '@/lib/common/apiError';
+import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';
+import { MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
+import { toTrailerSource, type TrailerSource } from '@/lib/movie/trailer';
+import { publicMovieDetailKey } from '@/lib/movie/movieQueryKeys';
+import type { MovieDetail } from '@/types/movie/movie';
 import AgeWarningNotice from '../components/AgeWarningNotice';
 import CastList from '../components/CastList';
 

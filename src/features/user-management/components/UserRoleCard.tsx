@@ -5,9 +5,9 @@ import { updateUserRoles } from '@/api/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField from '@/components/ui/SelectField';
-import { getErrorMessage } from '@/lib/apiError';
-import type { AdminUser, UpdateUserRolesRequest } from '@/types/admin';
-import type { UserRole } from '@/types/auth';
+import { getErrorMessage } from '@/lib/common/apiError';
+import type { AdminUser, UpdateUserRolesRequest } from '@/types/auth/admin';
+import type { UserRole } from '@/types/auth/auth';
 import { useAdminUserRefresh } from '../hooks/useAdminUserRefresh';
 import { ROLE_OPTIONS } from '../utils/labels';
 

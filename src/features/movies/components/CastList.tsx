@@ -1,7 +1,7 @@
 import { UserRound } from 'lucide-react';
 import type { ReactElement } from 'react';
-import { CAST_ROLE_LABELS } from '@/lib/movieLabels';
-import type { MovieCast } from '@/types/movie';
+import { CAST_ROLE_LABELS } from '@/lib/movie/movieLabels';
+import type { MovieCast } from '@/types/movie/movie';
 
 interface CastListProps {
    movieCasts: MovieCast[];

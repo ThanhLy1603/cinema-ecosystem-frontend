@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { getPublicCities } from '@/api/cinemaApi';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
-import { PUBLIC_CITIES_KEY } from '@/lib/cinemaQueryKeys';
+import { PUBLIC_CITIES_KEY } from '@/lib/cinema/cinemaQueryKeys';
 import { useCityStore } from '@/stores/useCityStore';
 
 const ALL_CITIES_LABEL: string = 'Toàn quốc';

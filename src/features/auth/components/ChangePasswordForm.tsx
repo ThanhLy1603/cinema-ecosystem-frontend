@@ -5,11 +5,11 @@ import { changeMyPassword } from '@/api/userApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
-import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/apiError';
+import { getErrorCode, getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';
-import type { ChangePasswordRequest, LoginResponse, User } from '@/types/auth';
+import type { ChangePasswordRequest, LoginResponse, User } from '@/types/auth/auth';
 import { PROFILE_QUERY_KEY } from '../utils/queryKeys';
-import { validateConfirmPassword, validateLoginPassword, validateNewPassword } from '@/lib/validation';
+import { validateConfirmPassword, validateLoginPassword, validateNewPassword } from '@/lib/auth/validation';
 import PasswordStrength from './PasswordStrength';
 
 interface ChangePasswordFormProps {

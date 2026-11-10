@@ -5,11 +5,11 @@ import AgeRatingBadge from '@/components/common/AgeRatingBadge';
 import TrailerModal from '@/components/common/TrailerModal';
 import LinkButton from '@/components/ui/LinkButton';
 import Button from '@/components/ui/Button';
-import { formatDuration, formatReleaseDate } from '@/lib/movieFormat';
-import { MOVIE_STATUS_LABELS } from '@/lib/movieLabels';
-import { toTrailerSource, type TrailerSource } from '@/lib/trailer';
-import { cn } from '@/lib/utils';
-import type { Movie } from '@/types/movie';
+import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';
+import { MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
+import { toTrailerSource, type TrailerSource } from '@/lib/movie/trailer';
+import { cn } from '@/lib/common/utils';
+import type { Movie } from '@/types/movie/movie';
 
 interface HeroCarouselProps {
    movies: Movie[];

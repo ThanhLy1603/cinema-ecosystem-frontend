@@ -9,6 +9,7 @@ import { getErrorMessage } from '@/lib/apiError';
 import { publicCinemaDetailKey } from '@/lib/cinemaQueryKeys';
 import { cn } from '@/lib/utils';
 import type { CinemaDetail, Hall } from '@/types/cinema';
+import CinemaShowtimeSection from '../components/CinemaShowtimeSection';
 import FacilityChips from '../components/FacilityChips';
 import HallSeatPreview from '../components/HallSeatPreview';
 import { buildMapUrl, formatCoordinates } from '../utils/mapLink';
@@ -84,6 +85,8 @@ export function CinemaPublicPage(): ReactElement {
             </ul>
             <FacilityChips facilities={cinemaDetail.facilities} />
          </header>
+
+         <CinemaShowtimeSection cinemaId={cinemaDetail.id} />
 
          <section className="space-y-5 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 sm:p-8">
             <h2 className="text-xl font-bold text-ink-900">Phòng chiếu & sơ đồ ghế</h2>

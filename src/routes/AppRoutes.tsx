@@ -1,4 +1,4 @@
-import { CalendarClock, MessagesSquare, Popcorn, Tag, Ticket } from 'lucide-react';
+import { MessagesSquare, Popcorn, Tag, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
@@ -30,6 +30,7 @@ import MovieManagementPage from '@/features/movie-management/pages/MovieManageme
 import PersonManagementPage from '@/features/movie-management/pages/PersonManagementPage';
 import MovieDetailPage from '@/features/movies/pages/MovieDetailPage';
 import MovieListPage from '@/features/movies/pages/MovieListPage';
+import ShowtimeManagementPage from '@/features/showtime-management/pages/ShowtimeManagementPage';
 import CreateStaffPage from '@/features/user-management/pages/CreateStaffPage';
 import UserDetailPage from '@/features/user-management/pages/UserDetailPage';
 import UserManagementPage from '@/features/user-management/pages/UserManagementPage';
@@ -119,18 +120,7 @@ export function AppRoutes(): ReactElement {
                <Route path="movies/persons" element={<PersonManagementPage />} />
                <Route path="movies/new" element={<MovieCreatePage />} />
                <Route path="movies/:movieId" element={<MovieEditPage />} />
-               <Route
-                  path="showtimes"
-                  element={
-                     <ComingSoonPage
-                        title="Quản lý suất chiếu & giá vé"
-                        description="Xếp lịch chiếu theo phòng, phát hiện trùng giờ và cấu hình quy tắc giá vé sẽ sớm có mặt."
-                        icon={CalendarClock}
-                        backTo="/admin"
-                        backLabel="Về trang quản trị"
-                     />
-                  }
-               />
+               <Route path="showtimes" element={<ShowtimeManagementPage />} />
                <Route
                   path="promotions"
                   element={

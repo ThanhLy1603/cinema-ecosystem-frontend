@@ -47,3 +47,11 @@ export function getFieldErrors(error: unknown): Record<string, string> {
 export function getErrorCode(error: unknown): string | null {
    return getApiResponse(error)?.errorCode ?? null;
 }
+
+export function getErrorData<T>(error: unknown, expectedErrorCode: string): T | null {
+   const apiResponse: ApiResponse<unknown> | null = getApiResponse(error);
+   if (apiResponse?.errorCode !== expectedErrorCode || apiResponse.data === null || apiResponse.data === undefined) {
+      return null;
+   }
+   return apiResponse.data as T;
+}

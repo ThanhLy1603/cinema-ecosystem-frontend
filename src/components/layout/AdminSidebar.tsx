@@ -38,7 +38,7 @@ const ADMIN_NAV_ITEMS: AdminNavItem[] = [
    { label: 'Người dùng & nhân sự', to: '/admin/users', icon: Users, status: 'ready' },
    { label: 'Cụm rạp', to: '/admin/cinemas', icon: Building2, status: 'ready' },
    { label: 'Phim', to: '/admin/movies', icon: Clapperboard, status: 'ready' },
-   { label: 'Suất chiếu', to: '/admin/showtimes', icon: CalendarClock, status: 'next' },
+   { label: 'Suất chiếu', to: '/admin/showtimes', icon: CalendarClock, status: 'ready' },
    { label: 'Khuyến mãi & F&B', to: '/admin/promotions', icon: Tag, status: 'soon' },
    { label: 'Cộng đồng & blog', to: '/admin/community', icon: MessagesSquare, status: 'soon' },
 ];

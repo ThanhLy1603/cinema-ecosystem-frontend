@@ -7,7 +7,7 @@ interface TextFieldProps {
    label: string;
    value: string;
    onChange: (value: string) => void;
-   type?: 'text' | 'email' | 'password' | 'tel' | 'date';
+   type?: 'text' | 'email' | 'password' | 'tel' | 'date' | 'time';
    icon?: LucideIcon;
    error?: string;
    hint?: string;

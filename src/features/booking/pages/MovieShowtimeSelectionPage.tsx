@@ -1,6 +1,6 @@
-import { useQuery, type UseQueryResult } from '@tanstack/react-query';
+import { useQuery, useQueryClient, type QueryClient, type UseQueryResult } from '@tanstack/react-query';
 import { ArrowLeft, CalendarX } from 'lucide-react';
-import { useMemo, type ReactElement } from 'react';
+import { useCallback, useMemo, type ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { getPublicCinemas } from '@/api/cinemaApi';
 import { getPublicMovie } from '@/api/movieApi';
@@ -28,6 +28,7 @@ import BookingStepper from '../components/BookingStepper';
 import BookingSummaryAside from '../components/BookingSummaryAside';
 import CinemaShowtimeGroup from '../components/CinemaShowtimeGroup';
 import ShowtimeCalendar from '../components/ShowtimeCalendar';
+import { useShowtimeAvailabilityRealtime } from '../hooks/useShowtimeAvailabilityRealtime';
 import { useShowtimeSelectionParams, type ShowtimeSelectionParams } from '../hooks/useShowtimeSelectionParams';
 import { MAX_MONTHS_AHEAD } from '../utils/selectionParams';
 
@@ -71,6 +72,21 @@ export function MovieShowtimeSelectionPage(): ReactElement {
       refetchOnMount: 'always',
    });
    const cinemaShowtimes: CinemaShowtimes[] = showtimesQuery.data ?? [];
+   const queryClient: QueryClient = useQueryClient();
+   const refreshShowtimes: () => void = useCallback(
+      function refreshShowtimes(): void {
+         void queryClient.invalidateQueries({
+            queryKey: movieShowtimesByDateKey(movieId ?? 0, selectedDate, cinemaId),
+         });
+      },
+      [queryClient, movieId, selectedDate, cinemaId],
+   );
+   useShowtimeAvailabilityRealtime(
+      cinemaShowtimes.flatMap((cinemaShowtime) =>
+         cinemaShowtime.showtimes.map((bookableShowtime) => bookableShowtime.id),
+      ),
+      refreshShowtimes,
+   );
    const selectedCinemaShowtimes: CinemaShowtimes | undefined = cinemaShowtimes.find((cinemaShowtime) =>
       cinemaShowtime.showtimes.some((bookableShowtime) => bookableShowtime.id === showtimeId),
    );

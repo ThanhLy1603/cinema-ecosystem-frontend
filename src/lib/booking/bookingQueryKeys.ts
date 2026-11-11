@@ -9,3 +9,15 @@ export function mySeatHoldKey(showtimeId: number): readonly (string | number)[] 
 export function pendingFnbKey(): readonly string[] {
    return ['pending-fnb'];
 }
+
+export function pendingBookingKey(): readonly string[] {
+   return ['pending-booking'];
+}
+
+export function myBookingsKey(): readonly string[] {
+   return ['my-bookings'];
+}
+
+export function paymentResultKey(transactionRef: string): readonly string[] {
+   return ['payment-result', transactionRef];
+}

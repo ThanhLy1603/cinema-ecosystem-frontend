@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient, type QueryClient, type UseQueryResult } from '@tanstack/react-query';
-import { ArrowLeft, Timer } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactElement } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { cancelPendingBooking, getMySeatHold, getShowtimeSeatMap, holdSeat, releaseSeat } from '@/api/bookingApi';
@@ -11,11 +11,12 @@ import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { mySeatHoldKey, showtimeSeatMapKey } from '@/lib/booking/bookingQueryKeys';
 import { MAX_SEATS_PER_BOOKING, compareShowtimeSeats, getShowtimeSeatLabel } from '@/lib/booking/seatLabels';
+import { buildOrphanSeatMessage, findOrphanSeatLabels } from '@/lib/booking/seatGapRule';
 import { applySeatStatusMessage } from '@/lib/booking/seatStatusMessage';
 import { getLayoutRowLetters, type GridSeat } from '@/lib/cinema/seatMap';
 import { useSeatTypes } from '@/lib/cinema/useSeatTypes';
 import { getErrorCode, getErrorMessage } from '@/lib/common/apiError';
-import { getFnbSelectionPath, getSeatSelectionPath } from '@/lib/booking/bookingPaths';
+import { getFnbSelectionPath, getSeatSelectionPath, getShowtimeSelectionPath } from '@/lib/booking/bookingPaths';
 import { getMovieBookingPath } from '@/lib/movie/moviePath';
 import { useBookingStore } from '@/stores/useBookingStore';
 import type { SeatHold } from '@/types/booking/seatHold';
@@ -26,7 +27,7 @@ import BookingSummaryAside, { type SummarySeat } from '../components/BookingSumm
 import ConnectionBadge from '../components/ConnectionBadge';
 import { useHoldCountdown } from '../hooks/useHoldCountdown';
 import { useSeatMapRealtime } from '../hooks/useSeatMapRealtime';
-import { buildDisplayedSeatIds, formatCountdown, toGridSeat } from '../utils/seatSelection';
+import { buildDisplayedSeatIds, toGridSeat } from '../utils/seatSelection';
 import { parsePositiveInteger } from '../utils/selectionParams';
 
 const PENDING_OTHER_SHOWTIME_CODE: string = 'PENDING_BOOKING_OTHER_SHOWTIME';
@@ -180,6 +181,12 @@ export function SeatSelectionPage(): ReactElement {
          ),
       [showtimeSeatMap, displayedSeatIds, releasingSeatId],
    );
+   const orphanSeatLabels: string[] = useMemo(
+      (): string[] => findOrphanSeatLabels(showtimeSeatMap?.seats ?? [], displayedSeatIds),
+      [showtimeSeatMap, displayedSeatIds],
+   );
+   const orphanSeatMessage: string | null =
+      orphanSeatLabels.length > 0 ? buildOrphanSeatMessage(orphanSeatLabels) : null;
    const heldShowtimeSeats: ShowtimeSeat[] = useMemo(
       () =>
          (showtimeSeatMap?.seats ?? [])
@@ -256,7 +263,7 @@ export function SeatSelectionPage(): ReactElement {
    }
 
    return (
-      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-28 pt-8 sm:px-6 lg:px-12 lg:pb-8">
          <div className="space-y-4">
             <Link
                to={`${getMovieBookingPath(seatMap.movieSlug)}?showtime=${seatMap.showtimeId}`}
@@ -266,7 +273,10 @@ export function SeatSelectionPage(): ReactElement {
                Đổi suất chiếu
             </Link>
             <h1 className="text-2xl font-extrabold text-ink-900">Chọn ghế: {seatMap.movieTitle}</h1>
-            <BookingStepper currentStepIndex={1} />
+            <BookingStepper
+               currentStepIndex={1}
+               stepPaths={[getShowtimeSelectionPath(seatMap.movieSlug, seatMap.showtimeId)]}
+            />
          </div>
 
          <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
@@ -274,22 +284,11 @@ export function SeatSelectionPage(): ReactElement {
                <div className="flex flex-wrap items-center justify-between gap-3">
                   <h2 className="text-lg font-bold text-ink-900">Sơ đồ ghế · {seatMap.hallName}</h2>
                   <div className="flex flex-wrap items-center gap-2">
-                     {remainingSeconds !== null && remainingSeconds > 0 && (
-                        <span
-                           className={
-                              remainingSeconds <= 120
-                                 ? 'inline-flex items-center gap-1.5 rounded-full bg-danger-50 px-3 py-1 text-xs font-bold text-danger-800'
-                                 : 'inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-700'
-                           }
-                        >
-                           <Timer className="size-3.5" aria-hidden="true" />
-                           Giữ ghế còn {formatCountdown(remainingSeconds)}
-                        </span>
-                     )}
                      <ConnectionBadge connectionState={connectionState} />
                   </div>
                </div>
                {notice && <Alert variant="info">{notice}</Alert>}
+               {orphanSeatMessage && <Alert variant="error">{orphanSeatMessage}</Alert>}
                {conflictSeatId !== null && (
                   <Alert variant="error">
                      <span className="block">
@@ -340,8 +339,18 @@ export function SeatSelectionPage(): ReactElement {
                priceFrom={null}
                summarySeats={summarySeats}
                actionLabel="Tiếp tục"
-               actionTo={summarySeats.length > 0 ? getFnbSelectionPath(seatMap.movieSlug, seatMap.showtimeId) : null}
-               actionHint="Ghế được giữ trong 10 phút kể từ lúc chọn ghế đầu tiên."
+               actionTo={
+                  summarySeats.length > 0 && orphanSeatMessage === null
+                     ? getFnbSelectionPath(seatMap.movieSlug, seatMap.showtimeId)
+                     : null
+               }
+               actionHint={
+                  orphanSeatMessage === null
+                     ? 'Ghế được giữ trong 10 phút kể từ lúc chọn ghế đầu tiên.'
+                     : orphanSeatMessage
+               }
+               holdRemainingSeconds={remainingSeconds}
+               collapsibleOnMobile
             />
          </div>
       </div>

@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient, type QueryClient, type UseQueryResult } from '@tanstack/react-query';
-import { ArrowLeft, Timer } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
 import { Link, Navigate, useNavigate, useParams, type NavigateFunction } from 'react-router-dom';
 import { getMySeatHold, getPendingFnb, getShowtimeSeatMap, replacePendingFnb } from '@/api/bookingApi';
@@ -7,7 +7,12 @@ import { getPublicFnbMenu } from '@/api/fnbApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
-import { getFnbSelectionPath, getPaymentPath, getSeatSelectionPath } from '@/lib/booking/bookingPaths';
+import {
+   getFnbSelectionPath,
+   getPaymentPath,
+   getSeatSelectionPath,
+   getShowtimeSelectionPath,
+} from '@/lib/booking/bookingPaths';
 import { mySeatHoldKey, pendingFnbKey, showtimeSeatMapKey } from '@/lib/booking/bookingQueryKeys';
 import {
    MAX_FNB_QUANTITY_PER_LINE,
@@ -30,11 +35,11 @@ import BookingStepper from '../components/BookingStepper';
 import BookingSummaryAside, { type SummaryFnbLine, type SummarySeat } from '../components/BookingSummaryAside';
 import FnbProductCard from '../components/FnbProductCard';
 import { useHoldCountdown } from '../hooks/useHoldCountdown';
-import { formatCountdown } from '../utils/seatSelection';
 import { parsePositiveInteger } from '../utils/selectionParams';
 import { buildSummaryFnbLines, buildSummarySeats } from '../utils/summaryLines';
 
 const NO_PENDING_BOOKING_CODE: string = 'NO_PENDING_BOOKING';
+const SEAT_GAP_LEFT_CODE: string = 'SEAT_GAP_LEFT';
 const UNORDERABLE_PRODUCT_CODES: string[] = ['FNB_PRODUCT_UNAVAILABLE', 'FNB_PRODUCT_NOT_FOUND'];
 
 export function FnbSelectionPage(): ReactElement {
@@ -101,6 +106,10 @@ export function FnbSelectionPage(): ReactElement {
       const errorCode: string | null = getErrorCode(error);
       if (errorCode === NO_PENDING_BOOKING_CODE) {
          backToSeatSelection('Bạn chưa giữ ghế hoặc đã hết thời gian giữ ghế. Vui lòng chọn lại ghế.');
+         return;
+      }
+      if (errorCode === SEAT_GAP_LEFT_CODE) {
+         backToSeatSelection(getErrorMessage(error));
          return;
       }
       if (errorCode !== null && UNORDERABLE_PRODUCT_CODES.includes(errorCode)) {
@@ -251,7 +260,7 @@ export function FnbSelectionPage(): ReactElement {
    );
 
    return (
-      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-12">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-28 pt-8 sm:px-6 lg:px-12 lg:pb-8">
          <div className="space-y-4">
             <Link
                to={getSeatSelectionPath(seatMap.movieSlug, seatMap.showtimeId)}
@@ -261,25 +270,19 @@ export function FnbSelectionPage(): ReactElement {
                Quay lại chọn ghế
             </Link>
             <h1 className="text-2xl font-extrabold text-ink-900">Chọn bắp nước: {seatMap.movieTitle}</h1>
-            <BookingStepper currentStepIndex={2} />
+            <BookingStepper
+               currentStepIndex={2}
+               stepPaths={[
+                  getShowtimeSelectionPath(seatMap.movieSlug, seatMap.showtimeId),
+                  getSeatSelectionPath(seatMap.movieSlug, seatMap.showtimeId),
+               ]}
+            />
          </div>
 
          <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
             <div className="space-y-6">
                <div className="flex flex-wrap items-center justify-between gap-3">
                   <p className="text-sm text-ink-600">Thêm bắp nước để nhận nhanh tại quầy, không cần xếp hàng lại.</p>
-                  {remainingSeconds !== null && remainingSeconds > 0 && (
-                     <span
-                        className={
-                           remainingSeconds <= 120
-                              ? 'inline-flex items-center gap-1.5 rounded-full bg-danger-50 px-3 py-1 text-xs font-bold text-danger-800'
-                              : 'inline-flex items-center gap-1.5 rounded-full bg-brand-50 px-3 py-1 text-xs font-bold text-brand-700'
-                        }
-                     >
-                        <Timer className="size-3.5" aria-hidden="true" />
-                        Giữ ghế còn {formatCountdown(remainingSeconds)}
-                     </span>
-                  )}
                </div>
                {errorMessage && <Alert variant="error">{errorMessage}</Alert>}
                {isMenuEmpty && (
@@ -359,6 +362,8 @@ export function FnbSelectionPage(): ReactElement {
                summarySeats={summarySeats}
                summaryFnbLines={summaryFnbLines}
                footer={footer}
+               holdRemainingSeconds={remainingSeconds}
+               collapsibleOnMobile
             />
          </div>
       </div>

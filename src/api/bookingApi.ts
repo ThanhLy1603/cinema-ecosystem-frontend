@@ -1,5 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
+import type { BookingDetail } from '@/types/booking/bookingDetail';
 import type { BookingFnb, BookingFnbRequest } from '@/types/booking/bookingFnb';
 import type { SeatHold } from '@/types/booking/seatHold';
 import type { ShowtimeSeatMap } from '@/types/booking/seatMap';
@@ -48,5 +49,17 @@ export async function replacePendingFnb(bookingFnbRequest: BookingFnbRequest): P
       '/bookings/pending/fnb',
       bookingFnbRequest,
    );
+   return axiosResponse.data.data;
+}
+
+export async function getPendingBooking(): Promise<BookingDetail | null> {
+   const axiosResponse: AxiosResponse<ApiResponse<BookingDetail | null>> =
+      await axiosInstance.get<ApiResponse<BookingDetail | null>>('/bookings/pending');
+   return axiosResponse.data.data ?? null;
+}
+
+export async function getMyBookings(): Promise<BookingDetail[]> {
+   const axiosResponse: AxiosResponse<ApiResponse<BookingDetail[]>> =
+      await axiosInstance.get<ApiResponse<BookingDetail[]>>('/bookings/my');
    return axiosResponse.data.data;
 }

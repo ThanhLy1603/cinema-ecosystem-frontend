@@ -1,4 +1,4 @@
-import { CreditCard, MessagesSquare, Tag, Ticket } from 'lucide-react';
+import { MessagesSquare, Tag } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
@@ -21,6 +21,10 @@ import CinemaManagementPage from '@/features/cinema-management/pages/CinemaManag
 import FacilityManagementPage from '@/features/cinema-management/pages/FacilityManagementPage';
 import SeatMapEditorPage from '@/features/cinema-management/pages/SeatMapEditorPage';
 import FnbSelectionPage from '@/features/booking/pages/FnbSelectionPage';
+import MyTicketsPage from '@/features/tickets/pages/MyTicketsPage';
+import PaymentPage from '@/features/booking/pages/PaymentPage';
+import PaymentResultPage from '@/features/booking/pages/PaymentResultPage';
+import PaymentSimulatorPage from '@/features/booking/pages/PaymentSimulatorPage';
 import SeatSelectionPage from '@/features/booking/pages/SeatSelectionPage';
 import MovieShowtimeSelectionPage from '@/features/booking/pages/MovieShowtimeSelectionPage';
 import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
@@ -88,27 +92,11 @@ export function AppRoutes(): ReactElement {
             <Route element={<ProtectedRoute />}>
                <Route path="/movies/:movieSlug/booking/:showtimeId/seats" element={<SeatSelectionPage />} />
                <Route path="/movies/:movieSlug/booking/:showtimeId/fnb" element={<FnbSelectionPage />} />
-               <Route
-                  path="/movies/:movieSlug/booking/:showtimeId/payment"
-                  element={
-                     <ComingSoonPage
-                        title="Thanh toán"
-                        description="Bước thanh toán qua VNPay và vé điện tử QR đang được xây dựng. Ghế và bắp nước của bạn vẫn được giữ đến hết thời gian."
-                        icon={CreditCard}
-                     />
-                  }
-               />
+               <Route path="/movies/:movieSlug/booking/:showtimeId/payment" element={<PaymentPage />} />
+               <Route path="/payment/result" element={<PaymentResultPage />} />
+               <Route path="/payment/simulator" element={<PaymentSimulatorPage />} />
                <Route path="/profile" element={<ProfilePage />} />
-               <Route
-                  path="/tickets"
-                  element={
-                     <ComingSoonPage
-                        title="Vé của tôi"
-                        description="Lịch sử đặt vé và mã QR vé điện tử của bạn sẽ hiển thị ở đây."
-                        icon={Ticket}
-                     />
-                  }
-               />
+               <Route path="/tickets" element={<MyTicketsPage />} />
             </Route>
             <Route path="/forbidden" element={<ForbiddenPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -31,7 +31,7 @@ export function MovieFilterBar({ movieFilters, genres, onChange }: MovieFilterBa
    }
 
    return (
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100">
+      <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-ink-200 bg-white p-5 shadow-xs">
          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
             <div className="flex-1">
                <TextField

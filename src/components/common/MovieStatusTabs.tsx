@@ -3,18 +3,14 @@ import { MOVIE_STATUSES, MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
 import { cn } from '@/lib/common/utils';
 import type { MovieStatus } from '@/types/movie/movie';
 
-type MovieStatusTabsTone = 'light' | 'dark';
-
 interface MovieStatusTabsProps {
    activeStatus: MovieStatus;
-   tone?: MovieStatusTabsTone;
    statuses?: MovieStatus[];
    onChange: (movieStatus: MovieStatus) => void;
 }
 
 export function MovieStatusTabs({
    activeStatus,
-   tone = 'light',
    statuses = MOVIE_STATUSES,
    onChange,
 }: MovieStatusTabsProps): ReactElement {
@@ -28,14 +24,10 @@ export function MovieStatusTabs({
                aria-selected={movieStatus === activeStatus}
                onClick={() => onChange(movieStatus)}
                className={cn(
-                  'rounded-full px-5 py-2 text-sm font-semibold transition-colors',
+                  'whitespace-nowrap rounded-xl px-5 py-2 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
                   movieStatus === activeStatus
-                     ? tone === 'dark'
-                        ? 'bg-white text-brand-700 shadow-sm'
-                        : 'bg-brand-600 text-white shadow-sm'
-                     : tone === 'dark'
-                       ? 'bg-white/15 text-white ring-1 ring-white/30 hover:bg-white/25'
-                       : 'bg-white text-ink-600 ring-1 ring-ink-200 hover:text-brand-700 hover:ring-brand-200',
+                     ? 'bg-brand-500 text-white shadow-glow'
+                     : 'border border-ink-200 bg-white text-ink-700 shadow-xs hover:text-brand-600',
                )}
             >
                {MOVIE_STATUS_LABELS[movieStatus]}

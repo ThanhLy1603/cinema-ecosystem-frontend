@@ -2,6 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { getPublicCinemas } from '@/api/cinemaApi';
 import { searchPublicMovies } from '@/api/movieApi';
+import Reveal from '@/components/common/Reveal';
 import LinkButton from '@/components/ui/LinkButton';
 import { publicCinemaListKey } from '@/lib/cinema/cinemaQueryKeys';
 import { publicMovieListKey } from '@/lib/movie/movieQueryKeys';
@@ -61,28 +62,30 @@ export function HomePage(): ReactElement {
          <BenefitStrip />
 
          {!user && (
-            <section aria-label="Đăng ký thành viên" className="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-               <div className="flex flex-wrap items-center justify-between gap-6 rounded-lg bg-brand-900 px-8 py-8">
-                  <div className="space-y-1">
-                     <h2 className="text-xl font-bold text-white">Trở thành thành viên CinemaSphere</h2>
-                     <p className="text-sm text-white/75">
-                        Đặt vé nhanh hơn, tích điểm mỗi giao dịch và nhận ưu đãi dành riêng cho thành viên.
-                     </p>
+            <section aria-label="Đăng ký thành viên" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-12">
+               <Reveal>
+                  <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl px-8 py-8 shadow-glow [background:var(--cta-bg)]">
+                     <div className="space-y-1">
+                        <h2 className="text-xl font-bold text-white">Trở thành thành viên CinemaSphere</h2>
+                        <p className="text-sm text-white/75">
+                           Đặt vé nhanh hơn, tích điểm mỗi giao dịch và nhận ưu đãi dành riêng cho thành viên.
+                        </p>
+                     </div>
+                     <div className="flex flex-wrap gap-3">
+                        <LinkButton to="/register" size="lg" variant="light">
+                           Đăng ký ngay
+                        </LinkButton>
+                        <LinkButton
+                           to="/login"
+                           size="lg"
+                           variant="ghost"
+                           className="text-white hover:bg-white/10 hover:text-white"
+                        >
+                           Tôi đã có tài khoản
+                        </LinkButton>
+                     </div>
                   </div>
-                  <div className="flex flex-wrap gap-3">
-                     <LinkButton to="/register" size="lg" variant="light">
-                        Đăng ký ngay
-                     </LinkButton>
-                     <LinkButton
-                        to="/login"
-                        size="lg"
-                        variant="ghost"
-                        className="text-white hover:bg-white/10 hover:text-white"
-                     >
-                        Tôi đã có tài khoản
-                     </LinkButton>
-                  </div>
-               </div>
+               </Reveal>
             </section>
          )}
       </>

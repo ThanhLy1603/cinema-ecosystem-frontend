@@ -9,6 +9,10 @@ export function adminCinemaDetailKey(cinemaId: number): readonly (string | numbe
    return ['admin-cinemas', 'detail', cinemaId];
 }
 
+export function adminSeatMapLockKey(hallId: number): readonly (string | number)[] {
+   return ['admin-cinemas', 'seat-map-lock', hallId];
+}
+
 export function adminSeatMapKey(hallId: number): readonly (string | number)[] {
    return ['admin-cinemas', 'seat-map', hallId];
 }

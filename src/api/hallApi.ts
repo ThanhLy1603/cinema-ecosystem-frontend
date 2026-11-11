@@ -1,7 +1,14 @@
 import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
 import type { ApiResponse } from '@/types/common/api';
-import type { GenerateSeatsRequest, Hall, HallRequest, SeatLayout, SeatMapRequest } from '@/types/cinema/cinema';
+import type {
+   GenerateSeatsRequest,
+   Hall,
+   HallRequest,
+   SeatLayout,
+   SeatMapLock,
+   SeatMapRequest,
+} from '@/types/cinema/cinema';
 
 export async function listHalls(cinemaId: number, deleted: boolean): Promise<Hall[]> {
    const axiosResponse: AxiosResponse<ApiResponse<Hall[]>> = await axiosInstance.get<ApiResponse<Hall[]>>(
@@ -34,6 +41,13 @@ export async function deleteHall(hallId: number): Promise<void> {
 export async function getSeatMap(hallId: number): Promise<SeatLayout> {
    const axiosResponse: AxiosResponse<ApiResponse<SeatLayout>> = await axiosInstance.get<ApiResponse<SeatLayout>>(
       `/admin/halls/${hallId}/seat-map`,
+   );
+   return axiosResponse.data.data;
+}
+
+export async function getSeatMapLock(hallId: number): Promise<SeatMapLock> {
+   const axiosResponse: AxiosResponse<ApiResponse<SeatMapLock>> = await axiosInstance.get<ApiResponse<SeatMapLock>>(
+      `/admin/halls/${hallId}/seat-map/lock`,
    );
    return axiosResponse.data.data;
 }

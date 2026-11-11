@@ -45,7 +45,7 @@ export function AuthShowcase(): ReactElement {
          />
 
          <div className="relative z-10">
-            <Logo tone="light" />
+            <Logo tone="light" variant="cinema" />
          </div>
 
          <div className="relative z-10 max-w-lg space-y-8">

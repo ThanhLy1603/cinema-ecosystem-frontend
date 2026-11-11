@@ -1,7 +1,14 @@
-import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
+import {
+   useMutation,
+   useQuery,
+   useQueryClient,
+   type QueryClient,
+   type UseMutationResult,
+   type UseQueryResult,
+} from '@tanstack/react-query';
 import { Grid3x3, Redo2, RotateCcw, Save, Undo2 } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactElement } from 'react';
-import { getSeatMap, saveSeatMap } from '@/api/hallApi';
+import { getSeatMap, getSeatMapLock, saveSeatMap } from '@/api/hallApi';
 import SeatGrid from '@/components/common/SeatGrid';
 import SeatLegend from '@/components/common/SeatLegend';
 import SectionCard from '@/components/common/SectionCard';
@@ -10,10 +17,11 @@ import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import { getErrorCode, getErrorMessage } from '@/lib/common/apiError';
 import { MAX_SEAT_COLUMNS, MAX_SEAT_ROWS, buildRowLetters, type GridCell } from '@/lib/cinema/seatMap';
-import type { SeatLayout, SeatType } from '@/types/cinema/cinema';
+import { cn } from '@/lib/common/utils';
+import type { SeatLayout, SeatMapLock, SeatType } from '@/types/cinema/cinema';
 import { useCinemaRefresh } from '../hooks/useCinemaRefresh';
 import { useSeatMapDraft, type SeatMapDraftController } from '../hooks/useSeatMapDraft';
-import { adminSeatMapKey } from '../utils/queryKeys';
+import { adminSeatMapKey, adminSeatMapLockKey } from '../utils/queryKeys';
 import {
    applyTool,
    applyToolToColumn,
@@ -41,7 +49,7 @@ interface SeatMapEditorProps {
 const DEFAULT_GENERATE_ROWS: number = 10;
 const DEFAULT_GENERATE_COLUMNS: number = 10;
 const SEAT_MAP_CONFLICT_CODE: string = 'SEAT_MAP_CONFLICT';
-const SEAT_IN_USE_CODE: string = 'SEAT_IN_USE';
+const SEAT_MAP_LOCKED_CODE: string = 'SEAT_MAP_LOCKED';
 
 function indexSeatTypes(seatTypes: SeatType[]): SeatTypesByCode {
    const seatTypesByCode: SeatTypesByCode = {};
@@ -77,6 +85,11 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
 
    const baselineSerialized: string = useMemo(() => serializeSeats(createDraftFromLayout(savedLayout)), [savedLayout]);
    const isDirty: boolean = serializeSeats(seatMapDraft) !== baselineSerialized;
+   const seatMapLockQuery: UseQueryResult<SeatMapLock> = useQuery<SeatMapLock>({
+      queryKey: adminSeatMapLockKey(seatLayout.hallId),
+      queryFn: () => getSeatMapLock(seatLayout.hallId),
+   });
+   const isEditingLocked: boolean = seatMapLockQuery.data?.locked ?? false;
    const seatMapStatistics: SeatMapStatistics = computeStatistics(seatMapDraft);
    const rowLetters: string[] = buildRowLetters(seatMapDraft.rowCount);
    const seatTypeOptions: SelectOption[] = seatTypes.map((seatType) => ({
@@ -112,7 +125,7 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
    });
 
    const isConflict: boolean = saveMutation.isError && getErrorCode(saveMutation.error) === SEAT_MAP_CONFLICT_CODE;
-   const isSeatInUse: boolean = saveMutation.isError && getErrorCode(saveMutation.error) === SEAT_IN_USE_CODE;
+   const isSeatMapLocked: boolean = saveMutation.isError && getErrorCode(saveMutation.error) === SEAT_MAP_LOCKED_CODE;
 
    function handleCellPointerDown(gridCell: GridCell): void {
       saveMutation.reset();
@@ -201,7 +214,10 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
 
    return (
       <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)]">
-         <aside className="space-y-6">
+         <aside
+            className={cn('space-y-6', isEditingLocked && 'pointer-events-none opacity-50')}
+            inert={isEditingLocked}
+         >
             <SectionCard title="Công cụ" description="Chọn công cụ rồi bấm hoặc kéo trên sơ đồ để vẽ.">
                <SeatToolPalette seatTypes={seatTypes} editorTool={editorTool} onSelect={setEditorTool} />
                <p className="mt-4 text-xs text-ink-500">
@@ -303,7 +319,7 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
                      {seatMapStatistics.maintenanceSeats > 0 && ` · ${seatMapStatistics.maintenanceSeats} bảo trì`}
                   </span>
                   <Button
-                     disabled={!isDirty}
+                     disabled={!isDirty || isEditingLocked}
                      isLoading={saveMutation.isPending}
                      icon={<Save className="size-4" aria-hidden="true" />}
                      onClick={() => saveMutation.mutate()}
@@ -313,15 +329,28 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
                </div>
             </div>
 
+            {seatMapLockQuery.data?.locked && (
+               <Alert variant="info">
+                  <span className="block font-semibold">Sơ đồ ghế đang bị khóa</span>
+                  <span className="block text-xs font-normal">
+                     Phòng này còn {seatMapLockQuery.data.upcomingShowtimeCount} suất chiếu chưa kết thúc (đang mở bán
+                     hoặc đang chiếu)
+                     {seatMapLockQuery.data.bookedShowtimeCount > 0 &&
+                        `, trong đó ${seatMapLockQuery.data.bookedShowtimeCount} suất đã có khách đặt vé hoặc đang giữ chỗ`}
+                     . Bạn chỉ có thể xem sơ đồ. Hãy chờ các suất kết thúc, hoặc hủy các suất chưa có khách đặt vé ở
+                     trang Suất chiếu để chỉnh sửa.
+                  </span>
+               </Alert>
+            )}
             {isDirty && !saveMutation.isPending && <Alert variant="info">Bạn có thay đổi chưa được lưu.</Alert>}
             {saveMutation.isSuccess && !isDirty && <Alert variant="success">Đã lưu sơ đồ ghế.</Alert>}
             {saveMutation.isError && (
                <Alert variant="error">
                   <span>{getErrorMessage(saveMutation.error)}</span>
-                  {isSeatInUse && (
+                  {isSeatMapLocked && (
                      <span className="mt-1 block text-xs font-normal">
-                        Dùng công cụ «Đánh dấu bảo trì» để ngừng bán những ghế này, rồi bỏ chúng khỏi sơ đồ sau khi các
-                        suất chiếu liên quan đã diễn ra.
+                        Sơ đồ ghế bị khóa cho tới khi các suất chiếu đã có vé hoặc lượt giữ chỗ kết thúc. Bạn có thể
+                        thiết kế sẵn trên màn hình này nhưng chưa lưu được.
                      </span>
                   )}
                   {isConflict && (
@@ -338,7 +367,13 @@ export function SeatMapEditor({ seatLayout, seatTypes }: SeatMapEditorProps): Re
             )}
             {reloadMutation.isError && <Alert variant="error">{getErrorMessage(reloadMutation.error)}</Alert>}
 
-            <div className="space-y-5 rounded-3xl bg-white p-4 shadow-card ring-1 ring-ink-200/80 sm:p-6">
+            <div
+               className={cn(
+                  'space-y-5 rounded-3xl bg-white p-4 shadow-card ring-1 ring-ink-200/80 sm:p-6',
+                  isEditingLocked && 'pointer-events-none',
+               )}
+               inert={isEditingLocked}
+            >
                <SeatGrid
                   rows={rowLetters}
                   columns={seatMapDraft.columns}

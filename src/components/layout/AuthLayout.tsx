@@ -6,13 +6,13 @@ import AuthShowcase from './AuthShowcase';
 
 export function AuthLayout(): ReactElement {
    return (
-      <div className="grid min-h-screen lg:grid-cols-[1fr_1.05fr]">
+      <div className="theme-shinkai grid min-h-screen lg:grid-cols-[1fr_1.05fr]">
          <AuthShowcase />
 
          <main className="relative flex flex-col bg-gradient-to-b from-cream to-sand/70">
             <div className="flex items-center justify-between px-6 py-5 sm:px-10">
                <div className="lg:hidden">
-                  <Logo />
+                  <Logo variant="cinema" />
                </div>
                <Link
                   to="/"

@@ -1,4 +1,4 @@
-import { Ticket } from 'lucide-react';
+import { ArrowRight, Calendar, Film, MapPin, Sparkles } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { useNavigate, type NavigateFunction } from 'react-router-dom';
 import Button from '@/components/ui/Button';
@@ -54,49 +54,83 @@ export function QuickBookingBar({ movies, cinemas }: QuickBookingBarProps): Reac
    }
 
    return (
-      <form onSubmit={handleSubmit} aria-label="Đặt vé nhanh" noValidate className="border-b border-ink-200 bg-white">
-         <div className="mx-auto flex max-w-7xl flex-wrap items-start gap-x-3 gap-y-3 px-4 py-4 sm:px-6 lg:px-8">
-            <p className="flex h-10 shrink-0 items-center gap-2 pr-3 text-sm font-bold uppercase tracking-wide text-ink-900 lg:border-r lg:border-ink-200">
-               <Ticket className="size-5 text-brand-600" aria-hidden="true" />
-               Đặt vé nhanh
-            </p>
-            <div className="min-w-[200px] flex-1">
-               <SelectField
-                  id="quick-booking-movie"
-                  label="Phim"
-                  hideLabel
-                  value={movieId}
-                  onChange={setMovieId}
-                  options={movieOptions}
-                  placeholder="Chọn phim"
-               />
+      <form
+         onSubmit={handleSubmit}
+         aria-label="Đặt vé nhanh"
+         noValidate
+         className="relative z-20 mx-auto -mt-8 max-w-6xl animate-fade-up px-4 sm:px-6"
+      >
+         <div className="rounded-2xl border border-ink-200 bg-white p-4 shadow-xl sm:p-5">
+            <div className="mb-4 flex items-center justify-between gap-4 border-b border-ink-100 pb-3">
+               <p className="flex items-center gap-2 text-xs font-extrabold uppercase tracking-wider text-brand-600 sm:text-sm">
+                  <Sparkles className="size-4" aria-hidden="true" />
+                  Mua vé trực tuyến nhanh
+               </p>
+               <p className="hidden text-xs font-medium text-ink-500 sm:block">
+                  Chọn phim, rạp và ngày chiếu để xem suất chiếu ngay
+               </p>
             </div>
-            <div className="min-w-[200px] flex-1">
-               <SelectField
-                  id="quick-booking-cinema"
-                  label="Rạp"
-                  hideLabel
-                  value={cinemaSlug}
-                  onChange={handleCinemaChange}
-                  options={cinemaOptions}
-                  placeholder="Chọn rạp"
-                  error={cinemaError}
-               />
+            <div className="grid items-start gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+               <div className="space-y-1.5">
+                  <p className="flex items-center gap-1.5 text-xs font-bold text-ink-700">
+                     <Film className="size-3.5 text-brand-600" aria-hidden="true" />
+                     1. Chọn phim
+                  </p>
+                  <SelectField
+                     id="quick-booking-movie"
+                     label="Phim"
+                     hideLabel
+                     value={movieId}
+                     onChange={setMovieId}
+                     options={movieOptions}
+                     placeholder="Chọn phim"
+                  />
+               </div>
+               <div className="space-y-1.5">
+                  <p className="flex items-center gap-1.5 text-xs font-bold text-ink-700">
+                     <MapPin className="size-3.5 text-brand-600" aria-hidden="true" />
+                     2. Chọn cụm rạp
+                  </p>
+                  <SelectField
+                     id="quick-booking-cinema"
+                     label="Rạp"
+                     hideLabel
+                     value={cinemaSlug}
+                     onChange={handleCinemaChange}
+                     options={cinemaOptions}
+                     placeholder="Chọn rạp"
+                     error={cinemaError}
+                  />
+               </div>
+               <div className="space-y-1.5">
+                  <p className="flex items-center gap-1.5 text-xs font-bold text-ink-700">
+                     <Calendar className="size-3.5 text-brand-600" aria-hidden="true" />
+                     3. Ngày chiếu
+                  </p>
+                  <SelectField
+                     id="quick-booking-date"
+                     label="Ngày chiếu"
+                     hideLabel
+                     value={date}
+                     onChange={setDate}
+                     options={dateOptions}
+                     placeholder="Chọn ngày"
+                  />
+               </div>
+               <div className="space-y-1.5">
+                  <p className="text-xs font-bold text-transparent select-none" aria-hidden="true">
+                     4.
+                  </p>
+                  <Button
+                     type="submit"
+                     fullWidth
+                     className="h-10"
+                     icon={<ArrowRight className="order-last size-4" aria-hidden="true" />}
+                  >
+                     Xem suất chiếu
+                  </Button>
+               </div>
             </div>
-            <div className="min-w-[170px] flex-1 sm:max-w-[200px]">
-               <SelectField
-                  id="quick-booking-date"
-                  label="Ngày chiếu"
-                  hideLabel
-                  value={date}
-                  onChange={setDate}
-                  options={dateOptions}
-                  placeholder="Chọn ngày"
-               />
-            </div>
-            <Button type="submit" className="w-full sm:w-auto">
-               Xem suất chiếu
-            </Button>
          </div>
       </form>
    );

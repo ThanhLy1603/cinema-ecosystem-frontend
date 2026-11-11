@@ -34,6 +34,7 @@ interface SeatGridProps {
    onRowLabelClick?: (row: string) => void;
    onColumnLabelClick?: (column: number) => void;
    onSeatPick?: (gridSeat: GridSeat) => void;
+   showSeatLabels?: boolean;
 }
 
 function buildCells(rows: string[], columns: number): GridCell[] {
@@ -67,6 +68,7 @@ function buildColumnNumbers(columns: number): number[] {
 interface SeatShapeProps {
    gridSeat: GridSeat;
    isSelected: boolean;
+   showLabel: boolean;
    onPick?: (gridSeat: GridSeat) => void;
 }
 
@@ -80,7 +82,7 @@ function resolveVisualState(gridSeat: GridSeat, isSelected: boolean): SeatVisual
    return isSelected ? 'selected' : 'available';
 }
 
-function SeatShape({ gridSeat, isSelected, onPick }: SeatShapeProps): ReactElement {
+function SeatShape({ gridSeat, isSelected, showLabel, onPick }: SeatShapeProps): ReactElement {
    const seatLabel: string =
       gridSeat.span > 1 ? `${gridSeat.number}-${gridSeat.number + gridSeat.span - 1}` : String(gridSeat.number);
    const visualState: SeatVisualState = resolveVisualState(gridSeat, isSelected);
@@ -116,7 +118,7 @@ function SeatShape({ gridSeat, isSelected, onPick }: SeatShapeProps): ReactEleme
             width={getSeatWidth(gridSeat.span)}
             seatTypeCode={gridSeat.type}
             visualState={visualState}
-            label={seatLabel}
+            label={showLabel ? seatLabel : undefined}
          />
       </g>
    );
@@ -135,6 +137,7 @@ export function SeatGrid({
    onRowLabelClick,
    onColumnLabelClick,
    onSeatPick,
+   showSeatLabels = true,
 }: SeatGridProps): ReactElement {
    const svgRef = useRef<SVGSVGElement>(null);
    const lastCellKeyRef = useRef<string | null>(null);
@@ -288,6 +291,7 @@ export function SeatGrid({
                   key={getSeatLabel(gridSeat.row, gridSeat.number)}
                   gridSeat={gridSeat}
                   isSelected={selectedSeatLabels?.has(getSeatLabel(gridSeat.row, gridSeat.number)) ?? false}
+                  showLabel={showSeatLabels}
                   onPick={onSeatPick}
                />
             ))}

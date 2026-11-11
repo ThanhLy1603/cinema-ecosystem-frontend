@@ -85,7 +85,7 @@ export function AppRoutes(): ReactElement {
                }
             />
             <Route element={<ProtectedRoute />}>
-               <Route path="/booking/showtimes/:showtimeId/seats" element={<SeatSelectionPage />} />
+               <Route path="/movies/:movieSlug/booking/:showtimeId/seats" element={<SeatSelectionPage />} />
                <Route path="/profile" element={<ProfilePage />} />
                <Route
                   path="/tickets"

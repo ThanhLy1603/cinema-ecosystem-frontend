@@ -11,7 +11,7 @@ interface CinemaCardProps {
 
 export function CinemaCard({ cinema }: CinemaCardProps): ReactElement {
    return (
-      <article className="flex h-full flex-col gap-4 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 transition-shadow hover:shadow-soft">
+      <article className="flex h-full flex-col gap-4 rounded-2xl border border-ink-200 bg-white p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-lg">
          <div className="space-y-1">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-600">{cinema.city}</span>
             <h2 className="text-xl font-bold text-ink-900">

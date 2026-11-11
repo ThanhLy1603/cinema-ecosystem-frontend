@@ -13,12 +13,12 @@ export function HeroFallback(): ReactElement {
    const user: User | null = useAuthStore((authState) => authState.user);
 
    return (
-      <section className="bg-ink-900">
-         <div className="mx-auto flex min-h-[340px] max-w-7xl flex-col justify-center gap-5 px-4 py-14 sm:px-6 lg:px-8">
-            <h1 className="max-w-3xl text-balance text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+      <section className="bg-gradient-to-br from-brand-100 via-white to-brand-200">
+         <div className="mx-auto flex min-h-[380px] max-w-6xl flex-col justify-center gap-5 px-4 py-14 sm:px-6 lg:px-12">
+            <h1 className="max-w-3xl text-balance text-3xl font-bold leading-tight tracking-tight text-ink-900 sm:text-4xl lg:text-5xl">
                {user ? `Chào ${getFirstName(user)}, hôm nay bạn muốn xem gì?` : 'Đặt vé xem phim nhanh gọn, chắc chỗ'}
             </h1>
-            <p className="max-w-xl text-base leading-relaxed text-white/80">
+            <p className="max-w-xl text-base leading-relaxed text-ink-600">
                Chọn phim, chọn ghế theo thời gian thực và nhận vé điện tử ngay trên điện thoại.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -28,7 +28,7 @@ export function HeroFallback(): ReactElement {
                <LinkButton
                   to={user ? '/tickets' : '/register'}
                   size="lg"
-                  variant="light"
+                  variant="secondary"
                   icon={<Ticket className="size-5" aria-hidden="true" />}
                >
                   {user ? 'Vé của tôi' : 'Tạo tài khoản'}

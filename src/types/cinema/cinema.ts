@@ -78,6 +78,12 @@ export interface SeatLayoutSeat {
   status: SeatStatus;
 }
 
+export interface SeatMapLock {
+  locked: boolean;
+  upcomingShowtimeCount: number;
+  bookedShowtimeCount: number;
+}
+
 export interface SeatLayout {
   hallId: number;
   cinemaId: number;

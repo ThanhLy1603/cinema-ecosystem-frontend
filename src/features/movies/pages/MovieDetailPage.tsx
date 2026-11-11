@@ -68,17 +68,21 @@ export function MovieDetailPage(): ReactElement {
 
    return (
       <article className="pb-16">
-         <div className="relative isolate overflow-hidden bg-ink-900">
+         <div className="relative isolate overflow-hidden bg-ink-50">
             {movieDetail.bannerUrl && (
                <img
                   src={movieDetail.bannerUrl}
                   alt=""
-                  className="absolute inset-0 -z-10 size-full object-cover opacity-30"
+                  className="absolute inset-0 -z-10 size-full object-cover object-top opacity-35"
                />
             )}
-            <div className="mx-auto grid w-full max-w-6xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[260px_1fr]">
-               <div className="mx-auto w-full max-w-[260px] overflow-hidden rounded-3xl bg-ink-800 shadow-soft">
-                  <div className="relative aspect-[2/3]">
+            <div className="absolute inset-0 -z-10 bg-gradient-to-r from-white via-white/85 to-brand-100/40" />
+            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink-50 via-transparent to-white/70" />
+
+            <div className="mx-auto w-full max-w-6xl space-y-5 px-4 py-10 sm:px-6 lg:px-12">
+               {backLink}
+               <div className="flex flex-col gap-6 rounded-2xl border border-ink-200/80 bg-white/70 p-6 shadow-md backdrop-blur-md sm:flex-row">
+                  <div className="relative mx-auto aspect-[2/3] w-44 shrink-0 overflow-hidden rounded-xl border border-ink-200 bg-ink-900 shadow-xl sm:mx-0 sm:w-52">
                      {movieDetail.posterUrl ? (
                         <img
                            src={movieDetail.posterUrl}
@@ -91,57 +95,61 @@ export function MovieDetailPage(): ReactElement {
                         </div>
                      )}
                   </div>
-               </div>
 
-               <div className="space-y-5 text-white">
-                  <div className="[&_a]:text-white/80">{backLink}</div>
-                  <div className="space-y-2">
-                     <div className="flex flex-wrap items-center gap-3">
-                        <AgeRatingBadge ageRating={movieDetail.rated} className="text-sm" />
-                        <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
+                  <div className="flex-1 space-y-4">
+                     <div className="space-y-2">
+                        <span className="inline-flex items-center rounded-full border border-brand-200 bg-brand-100 px-3 py-1 text-xs font-bold text-brand-700">
                            {MOVIE_STATUS_LABELS[movieDetail.status]}
                         </span>
+                        <h1 className="text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+                           {movieDetail.title}
+                        </h1>
+                        {movieDetail.originalTitle && (
+                           <p className="text-sm font-semibold text-brand-600">{movieDetail.originalTitle}</p>
+                        )}
                      </div>
-                     <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">{movieDetail.title}</h1>
-                     {movieDetail.originalTitle && <p className="text-white/70">{movieDetail.originalTitle}</p>}
-                  </div>
 
-                  <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/85">
-                     <li className="flex items-center gap-2">
-                        <Clock className="size-4" aria-hidden="true" />
-                        {formatDuration(movieDetail.durationMinutes)}
-                     </li>
-                     <li className="flex items-center gap-2">
-                        <CalendarDays className="size-4" aria-hidden="true" />
-                        Khởi chiếu {formatReleaseDate(movieDetail.releaseDate)}
-                     </li>
-                  </ul>
-
-                  {movieDetail.genres.length > 0 && (
-                     <ul className="flex flex-wrap gap-2">
-                        {movieDetail.genres.map((genre) => (
-                           <li key={genre.id} className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">
-                              {genre.name}
-                           </li>
-                        ))}
+                     <ul className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm font-semibold text-ink-600">
+                        <li>
+                           <AgeRatingBadge ageRating={movieDetail.rated} className="text-sm" />
+                        </li>
+                        <li className="flex items-center gap-2">
+                           <Clock className="size-4 text-brand-600" aria-hidden="true" />
+                           {formatDuration(movieDetail.durationMinutes)}
+                        </li>
+                        <li className="flex items-center gap-2">
+                           <CalendarDays className="size-4 text-brand-600" aria-hidden="true" />
+                           Khởi chiếu {formatReleaseDate(movieDetail.releaseDate)}
+                        </li>
                      </ul>
-                  )}
 
-                  <div className="flex flex-wrap items-center gap-3">
-                     {movieDetail.status !== 'ENDED' && (
-                        <LinkButton
-                           to={getMovieBookingPath(movieDetail.slug)}
-                           size="lg"
-                           icon={<Ticket className="size-5" aria-hidden="true" />}
-                        >
-                           Đặt vé
-                        </LinkButton>
+                     {movieDetail.genres.length > 0 && (
+                        <ul className="flex flex-wrap gap-2">
+                           {movieDetail.genres.map((genre) => (
+                              <li
+                                 key={genre.id}
+                                 className="rounded-full border border-ink-300 bg-white/90 px-3.5 py-1 text-xs font-semibold text-ink-700 shadow-xs"
+                              >
+                                 {genre.name}
+                              </li>
+                           ))}
+                        </ul>
                      )}
-                     {movieDetail.trailerUrl && (
-                        <div>
-                           {trailerSource ? (
+
+                     <div className="flex flex-wrap items-center gap-3 pt-1">
+                        {movieDetail.status !== 'ENDED' && (
+                           <LinkButton
+                              to={getMovieBookingPath(movieDetail.slug)}
+                              size="lg"
+                              icon={<Ticket className="size-5" aria-hidden="true" />}
+                           >
+                              Mua vé phim này
+                           </LinkButton>
+                        )}
+                        {movieDetail.trailerUrl &&
+                           (trailerSource ? (
                               <Button
-                                 variant="light"
+                                 variant="secondary"
                                  size="lg"
                                  icon={<Play className="size-4" aria-hidden="true" />}
                                  onClick={() => setIsTrailerOpen(true)}
@@ -153,20 +161,19 @@ export function MovieDetailPage(): ReactElement {
                                  href={movieDetail.trailerUrl}
                                  target="_blank"
                                  rel="noopener noreferrer"
-                                 className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-ink-900"
+                                 className="inline-flex h-12 items-center gap-2 rounded-lg border border-ink-200 bg-white px-6 text-base font-semibold text-ink-800 shadow-sm hover:bg-ink-50"
                               >
                                  <ExternalLink className="size-4" aria-hidden="true" />
                                  Xem trailer
                               </a>
-                           )}
-                        </div>
-                     )}
+                           ))}
+                     </div>
                   </div>
                </div>
             </div>
          </div>
 
-         <div className="mx-auto w-full max-w-6xl space-y-10 px-4 py-10 sm:px-6">
+         <div className="mx-auto w-full max-w-6xl space-y-10 px-4 py-10 sm:px-6 lg:px-12">
             <AgeWarningNotice ageRating={movieDetail.rated} />
 
             <section className="space-y-3">

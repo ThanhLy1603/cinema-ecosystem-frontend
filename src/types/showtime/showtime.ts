@@ -96,6 +96,7 @@ export interface BookableShowtime {
   totalSeats: number;
   availableSeats: number;
   soldOut: boolean;
+  started: boolean;
 }
 
 export interface CinemaShowtimes {

@@ -25,11 +25,11 @@ function ShowtimeButton({ bookableShowtime, isSelected, onSelectShowtime }: Show
          title={formatClockRange(bookableShowtime.startTime, bookableShowtime.endTime)}
          onClick={() => onSelectShowtime(bookableShowtime)}
          className={cn(
-            'min-w-[104px] rounded-xl border px-3 py-2 text-center transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
-            isSelected && 'border-brand-600 bg-brand-600 text-white shadow-glow',
+            'min-w-[104px] rounded-xl border px-3 py-2 text-center shadow-xs transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
+            isSelected && 'animate-pop border-brand-500 bg-brand-500 text-white shadow-glow',
             !isSelected &&
                !bookableShowtime.soldOut &&
-               'border-brand-200 bg-brand-50 text-brand-800 hover:border-brand-400',
+               'border-ink-200 bg-ink-50 text-ink-900 hover:-translate-y-0.5 hover:border-brand-500 hover:bg-brand-500 hover:text-white',
             bookableShowtime.soldOut && 'cursor-not-allowed border-ink-200 bg-ink-50 text-ink-400',
          )}
       >
@@ -38,7 +38,9 @@ function ShowtimeButton({ bookableShowtime, isSelected, onSelectShowtime }: Show
             {bookableShowtime.screenType} · {bookableShowtime.hallName}
          </span>
          <span className="block text-[11px] font-semibold">
-            {bookableShowtime.soldOut ? 'Hết vé' : `Còn ${bookableShowtime.availableSeats} ghế`}
+            {bookableShowtime.soldOut
+               ? 'Hết vé'
+               : `${bookableShowtime.started ? 'Đang chiếu · ' : ''}Còn ${bookableShowtime.availableSeats} ghế`}
          </span>
       </button>
    );

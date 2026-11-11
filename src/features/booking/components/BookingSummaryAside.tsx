@@ -56,7 +56,7 @@ export function BookingSummaryAside({
    return (
       <aside
          aria-label="Thông tin đặt vé"
-         className="space-y-5 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 lg:sticky lg:top-24"
+         className="space-y-5 rounded-2xl border border-ink-200 bg-white p-5 shadow-xs lg:sticky lg:top-24"
       >
          <div className="flex gap-4">
             <div className="relative aspect-[2/3] w-20 shrink-0 overflow-hidden rounded-xl bg-ink-100">

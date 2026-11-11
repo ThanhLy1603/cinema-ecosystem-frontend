@@ -2,6 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { getPublicCinemas, getPublicCities } from '@/api/cinemaApi';
 import PageBanner from '@/components/common/PageBanner';
+import Reveal from '@/components/common/Reveal';
 import Alert from '@/components/ui/Alert';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import { getErrorMessage } from '@/lib/common/apiError';
@@ -31,10 +32,11 @@ export function CinemaListPage(): ReactElement {
    return (
       <>
          <PageBanner
+            eyebrow="Rạp chiếu toàn quốc"
             title="Hệ thống rạp chiếu"
             description="Chọn tỉnh/thành phố để xem các cụm rạp, tiện ích đi kèm và sơ đồ ghế từng phòng chiếu."
          />
-         <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-10 sm:px-6 lg:px-8">
+         <section className="mx-auto w-full max-w-6xl space-y-8 px-4 py-10 sm:px-6 lg:px-12">
             <div className="max-w-sm">
                <SelectField
                   id="public-city-filter"
@@ -49,14 +51,16 @@ export function CinemaListPage(): ReactElement {
             {cinemasQuery.isError && <Alert variant="error">{getErrorMessage(cinemasQuery.error)}</Alert>}
             {cinemasQuery.isPending && <p className="text-sm text-ink-500">Đang tải danh sách rạp...</p>}
             {cinemasQuery.data && cinemasQuery.data.length === 0 && (
-               <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-100">
+               <p className="rounded-2xl border border-ink-200 bg-white p-10 text-center text-sm text-ink-500">
                   Chưa có cụm rạp nào {city ? `tại ${city}` : 'trong hệ thống'}.
                </p>
             )}
             {cinemasQuery.data && cinemasQuery.data.length > 0 && (
                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {cinemasQuery.data.map((cinema) => (
-                     <CinemaCard key={cinema.id} cinema={cinema} />
+                  {cinemasQuery.data.map((cinema, cinemaIndex) => (
+                     <Reveal key={cinema.id} delayMs={(cinemaIndex % 3) * 90} className="h-full">
+                        <CinemaCard cinema={cinema} />
+                     </Reveal>
                   ))}
                </div>
             )}

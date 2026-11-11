@@ -1,3 +1,3 @@
-export function getSeatSelectionPath(showtimeId: number): string {
-   return `/booking/showtimes/${showtimeId}/seats`;
+export function getSeatSelectionPath(movieSlug: string, showtimeId: number): string {
+   return `/movies/${movieSlug}/booking/${showtimeId}/seats`;
 }

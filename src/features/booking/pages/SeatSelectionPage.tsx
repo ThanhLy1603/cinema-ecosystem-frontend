@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient, type QueryClient, type UseQueryResult } from '@tanstack/react-query';
 import { ArrowLeft, Timer } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactElement } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useParams } from 'react-router-dom';
 import { cancelPendingBooking, getMySeatHold, getShowtimeSeatMap, holdSeat, releaseSeat } from '@/api/bookingApi';
 import type { ConnectionState } from '@/api/websocketClient';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
@@ -15,6 +15,7 @@ import { applySeatStatusMessage } from '@/lib/booking/seatStatusMessage';
 import { getLayoutRowLetters, type GridSeat } from '@/lib/cinema/seatMap';
 import { useSeatTypes } from '@/lib/cinema/useSeatTypes';
 import { getErrorCode, getErrorMessage } from '@/lib/common/apiError';
+import { getSeatSelectionPath } from '@/lib/booking/bookingPaths';
 import { getMovieBookingPath } from '@/lib/movie/moviePath';
 import { useBookingStore } from '@/stores/useBookingStore';
 import type { SeatHold } from '@/types/booking/seatHold';
@@ -38,7 +39,10 @@ const OCCUPIED_SEAT_NOTICES: Record<Exclude<SeatAvailability, 'AVAILABLE'>, stri
 };
 
 export function SeatSelectionPage(): ReactElement {
-   const { showtimeId: showtimeIdParam } = useParams<{ showtimeId: string }>();
+   const { movieSlug: movieSlugParam, showtimeId: showtimeIdParam } = useParams<{
+      movieSlug: string;
+      showtimeId: string;
+   }>();
    const showtimeId: number | null = parsePositiveInteger(showtimeIdParam ?? null);
    const queryClient: QueryClient = useQueryClient();
    const selectShowtime: (showtimeId: number) => void = useBookingStore((bookingState) => bookingState.selectShowtime);
@@ -210,6 +214,9 @@ export function SeatSelectionPage(): ReactElement {
    }
 
    const seatMap: ShowtimeSeatMap = showtimeSeatMap;
+   if (seatMap.movieSlug !== movieSlugParam) {
+      return <Navigate to={getSeatSelectionPath(seatMap.movieSlug, seatMap.showtimeId)} replace />;
+   }
    const priceBySeatId: Map<number, number> = new Map<number, number>(
       (myHold?.seats ?? []).map((heldSeat) => [heldSeat.seatId, heldSeat.price]),
    );
@@ -249,7 +256,7 @@ export function SeatSelectionPage(): ReactElement {
    }
 
    return (
-      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-12">
          <div className="space-y-4">
             <Link
                to={`${getMovieBookingPath(seatMap.movieSlug)}?showtime=${seatMap.showtimeId}`}
@@ -263,7 +270,7 @@ export function SeatSelectionPage(): ReactElement {
          </div>
 
          <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
-            <section className="space-y-5 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 sm:p-6">
+            <section className="space-y-5 rounded-2xl border border-ink-200 bg-white p-5 shadow-xs sm:p-6">
                <div className="flex flex-wrap items-center justify-between gap-3">
                   <h2 className="text-lg font-bold text-ink-900">Sơ đồ ghế · {seatMap.hallName}</h2>
                   <div className="flex flex-wrap items-center gap-2">
@@ -308,6 +315,7 @@ export function SeatSelectionPage(): ReactElement {
                      ariaLabel={`Sơ đồ ghế ${seatMap.hallName}`}
                      selectedSeatLabels={selectedSeatLabels}
                      onSeatPick={handleSeatPick}
+                     showSeatLabels={false}
                   />
                )}
                <SeatLegend

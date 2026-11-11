@@ -4,10 +4,11 @@ export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'light';
 export type ButtonSize = 'sm' | 'md' | 'lg';
 
 const BASE_CLASSES: string =
-   'inline-flex items-center justify-center gap-2 rounded-lg font-semibold transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-60';
+   'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-60 in-[.theme-shinkai]:active:scale-[0.98]';
 
 const VARIANT_CLASSES: Record<ButtonVariant, string> = {
-   primary: 'bg-brand-600 text-white shadow-glow hover:bg-brand-700 focus-visible:ring-brand-200',
+   primary:
+      'text-white shadow-glow [background:var(--cta-bg)] hover:[background:var(--cta-bg-hover)] focus-visible:ring-brand-200 in-[.theme-shinkai]:hover:-translate-y-0.5',
    secondary:
       'border border-ink-200 bg-white text-ink-800 shadow-sm hover:border-ink-300 hover:bg-ink-50 focus-visible:ring-brand-100',
    ghost: 'text-ink-700 hover:bg-brand-50 hover:text-brand-700 focus-visible:ring-brand-100',

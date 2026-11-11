@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Logo from '@/components/brand/Logo';
 import LinkButton from '@/components/ui/LinkButton';
 import { cn } from '@/lib/common/utils';
+import { useScrolled } from '@/lib/common/useScrolled';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { User } from '@/types/auth/auth';
 import CitySelector from './CitySelector';
@@ -30,13 +31,14 @@ const NAV_ITEMS: NavItem[] = [
 
 function getNavLinkClassName(isActive: boolean): string {
    return cn(
-      'relative whitespace-nowrap px-3 py-2 text-[13px] font-semibold uppercase tracking-wide transition-colors',
-      isActive ? 'text-brand-700' : 'text-ink-700 hover:text-brand-700',
+      'group relative whitespace-nowrap px-2.5 py-2 text-sm font-semibold transition-colors',
+      isActive ? 'font-bold text-brand-600' : 'text-ink-600 hover:text-brand-600',
    );
 }
 
 export function Navbar(): ReactElement {
    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+   const isScrolled: boolean = useScrolled();
    const user: User | null = useAuthStore((authState) => authState.user);
    const isLoading: boolean = useAuthStore((authState) => authState.isLoading);
 
@@ -45,9 +47,14 @@ export function Navbar(): ReactElement {
    }
 
    return (
-      <header className="sticky top-0 z-40 border-b border-ink-200 bg-white">
-         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-            <Logo />
+      <header
+         className={cn(
+            'sticky top-0 z-40 border-b border-ink-200 bg-white transition-shadow duration-300',
+            isScrolled ? 'shadow-lg shadow-ink-900/5' : 'shadow-sm',
+         )}
+      >
+         <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+            <Logo variant="cinema" />
 
             <nav className="ml-4 hidden items-center lg:flex" aria-label="Điều hướng chính">
                <NavDropdown label="Phim" items={MOVIE_MENU_ITEMS} matchPathPrefix="/movies" />
@@ -56,7 +63,12 @@ export function Navbar(): ReactElement {
                      {({ isActive }) => (
                         <>
                            {navItem.label}
-                           {isActive && <span className="absolute inset-x-3 -bottom-[15px] h-0.5 bg-brand-600" />}
+                           <span
+                              className={cn(
+                                 'absolute inset-x-2.5 -bottom-[18px] h-0.5 origin-left bg-brand-600 transition-transform duration-300',
+                                 isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+                              )}
+                           />
                         </>
                      )}
                   </NavLink>
@@ -105,7 +117,7 @@ export function Navbar(): ReactElement {
                         key={navItem.to}
                         to={navItem.to}
                         onClick={closeMobileMenu}
-                        className="rounded-lg px-4 py-3 text-sm font-semibold uppercase tracking-wide text-ink-800 transition-colors hover:bg-ink-50 hover:text-brand-700"
+                        className="rounded-lg px-4 py-3 text-sm font-semibold text-ink-800 transition-colors hover:bg-brand-50 hover:text-brand-700"
                      >
                         {navItem.label}
                      </NavLink>

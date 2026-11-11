@@ -4,6 +4,7 @@ import { useSearchParams, type SetURLSearchParams } from 'react-router-dom';
 import { getPublicGenres, searchPublicMovies } from '@/api/movieApi';
 import MovieCard from '@/components/common/MovieCard';
 import MovieStatusTabs from '@/components/common/MovieStatusTabs';
+import Reveal from '@/components/common/Reveal';
 import PageBanner from '@/components/common/PageBanner';
 import Pagination from '@/components/common/Pagination';
 import Alert from '@/components/ui/Alert';
@@ -105,13 +106,14 @@ export function MovieListPage(): ReactElement {
    return (
       <>
          <PageBanner
+            eyebrow="Phim chiếu rạp"
             title="Phim"
             description={`Khám phá phim ${MOVIE_STATUS_LABELS[movieStatus].toLowerCase()}, xem trailer, dàn diễn viên và nhãn phân loại độ tuổi trước khi đặt vé.`}
          >
-            <MovieStatusTabs activeStatus={movieStatus} tone="dark" onChange={handleStatusChange} />
+            <MovieStatusTabs activeStatus={movieStatus} onChange={handleStatusChange} />
          </PageBanner>
 
-         <section className="mx-auto w-full max-w-7xl space-y-8 px-4 py-10 sm:px-6 lg:px-8">
+         <section className="mx-auto w-full max-w-6xl space-y-8 px-4 py-10 sm:px-6 lg:px-12">
             <MovieFilterBar
                key={movieFilters.keyword}
                movieFilters={movieFilters}
@@ -122,15 +124,17 @@ export function MovieListPage(): ReactElement {
             {moviesQuery.isError && <Alert variant="error">{getErrorMessage(moviesQuery.error)}</Alert>}
             {moviesQuery.isPending && <p className="text-sm text-ink-500">Đang tải danh sách phim...</p>}
             {moviesQuery.data && moviesQuery.data.content.length === 0 && (
-               <p className="rounded-3xl bg-white p-10 text-center text-sm text-ink-500 shadow-card ring-1 ring-ink-100">
+               <p className="rounded-2xl border border-ink-200 bg-white p-10 text-center text-sm text-ink-500">
                   Không tìm thấy phim {MOVIE_STATUS_LABELS[movieStatus].toLowerCase()} phù hợp với bộ lọc.
                </p>
             )}
             {moviesQuery.data && moviesQuery.data.content.length > 0 && (
                <>
-                  <div className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                     {moviesQuery.data.content.map((movie) => (
-                        <MovieCard key={movie.id} movie={movie} />
+                  <div className="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
+                     {moviesQuery.data.content.map((movie, movieIndex) => (
+                        <Reveal key={movie.id} delayMs={(movieIndex % 4) * 90} className="h-full">
+                           <MovieCard movie={movie} />
+                        </Reveal>
                      ))}
                   </div>
                   <Pagination

@@ -47,9 +47,9 @@ function CalendarDayButton({
          aria-label={`${formatDisplayDate(date)}${availabilityLabel}`}
          onClick={() => onSelectDate(date)}
          className={cn(
-            'relative flex h-12 flex-col items-center justify-center rounded-xl text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
-            isSelected && 'bg-brand-600 text-white shadow-glow',
-            !isSelected && isSelectable && 'text-ink-900 hover:bg-brand-50',
+            'relative flex h-12 flex-col items-center justify-center rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
+            isSelected && 'animate-pop bg-brand-600 text-white shadow-glow',
+            !isSelected && isSelectable && 'text-ink-900 hover:scale-105 hover:bg-brand-50',
             !isSelectable && 'cursor-not-allowed text-ink-300',
             date === today && !isSelected && 'ring-1 ring-brand-300',
          )}

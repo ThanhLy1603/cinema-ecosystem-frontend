@@ -125,7 +125,7 @@ export function MovieShowtimeSelectionPage(): ReactElement {
    }
 
    return (
-      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6">
+      <div className="mx-auto w-full max-w-6xl space-y-6 px-4 py-8 sm:px-6 lg:px-12">
          <div className="space-y-4">
             <Link
                to={getMovieDetailPath(movieDetail.slug)}
@@ -144,7 +144,7 @@ export function MovieShowtimeSelectionPage(): ReactElement {
 
          <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
             <div className="space-y-6">
-               <section className="space-y-5 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 sm:p-6">
+               <section className="space-y-5 rounded-2xl border border-ink-200 bg-white p-5 shadow-xs sm:p-6">
                   <div className="flex flex-wrap items-end justify-between gap-3">
                      <h2 className="text-lg font-bold text-ink-900">Chọn ngày chiếu</h2>
                      <div className="w-full sm:w-64">
@@ -173,7 +173,7 @@ export function MovieShowtimeSelectionPage(): ReactElement {
                   />
                </section>
 
-               <section className="space-y-4 rounded-3xl bg-white p-5 shadow-card ring-1 ring-ink-100 sm:p-6">
+               <section className="space-y-4 rounded-2xl border border-ink-200 bg-white p-5 shadow-xs sm:p-6">
                   <h2 className="text-lg font-bold text-ink-900">
                      Chọn suất chiếu{selectedDate !== '' && ` · ${formatDisplayDate(selectedDate)}`}
                   </h2>
@@ -218,7 +218,7 @@ export function MovieShowtimeSelectionPage(): ReactElement {
                priceFrom={selectedShowtime?.basePrice ?? null}
                summarySeats={null}
                actionLabel="Tiếp tục chọn ghế"
-               actionTo={selectedShowtime ? getSeatSelectionPath(selectedShowtime.id) : null}
+               actionTo={selectedShowtime ? getSeatSelectionPath(movieDetail.slug, selectedShowtime.id) : null}
                actionHint={selectedShowtime ? null : 'Hãy chọn một suất chiếu để tiếp tục.'}
             />
          </div>

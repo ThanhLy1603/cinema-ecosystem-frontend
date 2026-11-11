@@ -50,7 +50,7 @@ export function CinemaPublicPage(): ReactElement {
       <section className="mx-auto w-full max-w-5xl space-y-8 px-4 py-12 sm:px-6">
          {backLink}
 
-         <header className="space-y-4 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 sm:p-8">
+         <header className="space-y-4 rounded-2xl border border-ink-200 bg-white p-6 shadow-xs sm:p-8">
             <span className="text-xs font-bold uppercase tracking-wider text-brand-600">{cinemaDetail.city}</span>
             <h1 className="text-3xl font-extrabold tracking-tight text-ink-900">{cinemaDetail.name}</h1>
             <ul className="space-y-2 text-sm text-ink-600">
@@ -88,7 +88,7 @@ export function CinemaPublicPage(): ReactElement {
 
          <CinemaShowtimeSection cinemaId={cinemaDetail.id} />
 
-         <section className="space-y-5 rounded-3xl bg-white p-6 shadow-card ring-1 ring-ink-100 sm:p-8">
+         <section className="space-y-5 rounded-2xl border border-ink-200 bg-white p-6 shadow-xs sm:p-8">
             <h2 className="text-xl font-bold text-ink-900">Phòng chiếu & sơ đồ ghế</h2>
             {cinemaDetail.halls.length === 0 && (
                <p className="text-sm text-ink-500">Cụm rạp này chưa mở phòng chiếu nào.</p>
@@ -104,14 +104,19 @@ export function CinemaPublicPage(): ReactElement {
                            aria-selected={hall.id === activeHall.id}
                            onClick={() => setSelectedHallId(hall.id)}
                            className={cn(
-                              'rounded-xl border px-4 py-2 text-sm font-semibold transition-colors',
+                              'rounded-xl border px-4 py-2 text-sm font-bold transition-all',
                               hall.id === activeHall.id
-                                 ? 'border-brand-400 bg-brand-50 text-brand-700'
-                                 : 'border-ink-200 text-ink-700 hover:border-brand-300',
+                                 ? 'border-brand-500 bg-brand-500 text-white shadow-glow'
+                                 : 'border-ink-200 bg-ink-100 text-ink-700 hover:text-brand-600',
                            )}
                         >
                            {hall.name}
-                           <span className="ml-2 rounded-full bg-ink-100 px-2 py-0.5 text-xs font-bold text-ink-700">
+                           <span
+                              className={cn(
+                                 'ml-2 rounded-full px-2 py-0.5 text-xs font-bold',
+                                 hall.id === activeHall.id ? 'bg-white/25 text-white' : 'bg-white text-ink-700',
+                              )}
+                           >
                               {hall.screenType}
                            </span>
                         </button>

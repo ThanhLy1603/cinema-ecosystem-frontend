@@ -15,7 +15,7 @@ import { applySeatStatusMessage } from '@/lib/booking/seatStatusMessage';
 import { getLayoutRowLetters, type GridSeat } from '@/lib/cinema/seatMap';
 import { useSeatTypes } from '@/lib/cinema/useSeatTypes';
 import { getErrorCode, getErrorMessage } from '@/lib/common/apiError';
-import { getSeatSelectionPath } from '@/lib/booking/bookingPaths';
+import { getFnbSelectionPath, getSeatSelectionPath } from '@/lib/booking/bookingPaths';
 import { getMovieBookingPath } from '@/lib/movie/moviePath';
 import { useBookingStore } from '@/stores/useBookingStore';
 import type { SeatHold } from '@/types/booking/seatHold';
@@ -340,8 +340,8 @@ export function SeatSelectionPage(): ReactElement {
                priceFrom={null}
                summarySeats={summarySeats}
                actionLabel="Tiếp tục"
-               actionTo={null}
-               actionHint="Ghế được giữ trong 10 phút. Bước chọn bắp nước sẽ được mở ở bản cập nhật tiếp theo."
+               actionTo={summarySeats.length > 0 ? getFnbSelectionPath(seatMap.movieSlug, seatMap.showtimeId) : null}
+               actionHint="Ghế được giữ trong 10 phút kể từ lúc chọn ghế đầu tiên."
             />
          </div>
       </div>

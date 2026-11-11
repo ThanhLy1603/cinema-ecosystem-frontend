@@ -1,4 +1,4 @@
-import { CalendarDays, Clapperboard, Clock, MapPin, Armchair } from 'lucide-react';
+import { CalendarDays, Clapperboard, Clock, MapPin, Armchair, UtensilsCrossed } from 'lucide-react';
 import type { ReactElement } from 'react';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
 import Button from '@/components/ui/Button';
@@ -13,6 +13,13 @@ export interface SummarySeat {
    id: number;
    label: string;
    price: number;
+}
+
+export interface SummaryFnbLine {
+   key: string;
+   name: string;
+   quantity: number;
+   amount: number;
 }
 
 export interface SummaryShowtime {
@@ -31,9 +38,11 @@ interface BookingSummaryAsideProps {
    summaryShowtime: SummaryShowtime | null;
    priceFrom: number | null;
    summarySeats: SummarySeat[] | null;
-   actionLabel: string;
-   actionTo: string | null;
-   actionHint: string | null;
+   summaryFnbLines?: SummaryFnbLine[] | null;
+   actionLabel?: string;
+   actionTo?: string | null;
+   actionHint?: string | null;
+   footer?: ReactElement;
 }
 
 export function BookingSummaryAside({
@@ -44,12 +53,22 @@ export function BookingSummaryAside({
    summaryShowtime,
    priceFrom,
    summarySeats,
-   actionLabel,
-   actionTo,
-   actionHint,
+   summaryFnbLines = null,
+   actionLabel = '',
+   actionTo = null,
+   actionHint = null,
+   footer,
 }: BookingSummaryAsideProps): ReactElement {
-   const totalAmount: number = (summarySeats ?? []).reduce(
+   const ticketAmount: number = (summarySeats ?? []).reduce(
       (sumAmount, summarySeat) => sumAmount + summarySeat.price,
+      0,
+   );
+   const fnbQuantity: number = (summaryFnbLines ?? []).reduce(
+      (sumQuantity, summaryFnbLine) => sumQuantity + summaryFnbLine.quantity,
+      0,
+   );
+   const fnbAmount: number = (summaryFnbLines ?? []).reduce(
+      (sumAmount, summaryFnbLine) => sumAmount + summaryFnbLine.amount,
       0,
    );
 
@@ -127,25 +146,66 @@ export function BookingSummaryAside({
                      ))}
                   </ul>
                )}
-               <div className="flex items-center justify-between border-t border-ink-100 pt-3">
-                  <span className="font-semibold text-ink-900">Tạm tính</span>
-                  <span className="text-lg font-extrabold text-brand-700">{formatVnd(totalAmount)}</span>
-               </div>
+               {summaryFnbLines === null && (
+                  <div className="flex items-center justify-between border-t border-ink-100 pt-3">
+                     <span className="font-semibold text-ink-900">Tạm tính</span>
+                     <span className="text-lg font-extrabold text-brand-700">{formatVnd(ticketAmount)}</span>
+                  </div>
+               )}
             </div>
          )}
 
-         <div className="space-y-2">
-            {actionTo ? (
-               <LinkButton to={actionTo} fullWidth>
-                  {actionLabel}
-               </LinkButton>
-            ) : (
-               <Button fullWidth disabled>
-                  {actionLabel}
-               </Button>
-            )}
-            {actionHint && <p className="text-center text-xs text-ink-500">{actionHint}</p>}
-         </div>
+         {summaryFnbLines !== null && (
+            <div className="space-y-3 border-t border-ink-100 pt-4 text-sm">
+               <h3 className="flex items-center gap-2 font-semibold text-ink-900">
+                  <UtensilsCrossed className="size-4 text-brand-600" aria-hidden="true" />
+                  Bắp nước ({fnbQuantity})
+               </h3>
+               {summaryFnbLines.length === 0 ? (
+                  <p className="text-ink-500">Chưa chọn bắp nước.</p>
+               ) : (
+                  <ul className="space-y-1.5">
+                     {summaryFnbLines.map((summaryFnbLine) => (
+                        <li key={summaryFnbLine.key} className="flex items-start justify-between gap-3 text-ink-700">
+                           <span>
+                              <span className="font-semibold">{summaryFnbLine.quantity} ×</span> {summaryFnbLine.name}
+                           </span>
+                           <span className="shrink-0">{formatVnd(summaryFnbLine.amount)}</span>
+                        </li>
+                     ))}
+                  </ul>
+               )}
+               <dl className="space-y-1.5 border-t border-ink-100 pt-3">
+                  <div className="flex items-center justify-between text-ink-700">
+                     <dt>Tiền vé</dt>
+                     <dd>{formatVnd(ticketAmount)}</dd>
+                  </div>
+                  <div className="flex items-center justify-between text-ink-700">
+                     <dt>Bắp nước</dt>
+                     <dd>{formatVnd(fnbAmount)}</dd>
+                  </div>
+                  <div className="flex items-center justify-between pt-1">
+                     <dt className="font-semibold text-ink-900">Tổng cộng</dt>
+                     <dd className="text-lg font-extrabold text-brand-700">{formatVnd(ticketAmount + fnbAmount)}</dd>
+                  </div>
+               </dl>
+            </div>
+         )}
+
+         {footer ?? (
+            <div className="space-y-2">
+               {actionTo ? (
+                  <LinkButton to={actionTo} fullWidth>
+                     {actionLabel}
+                  </LinkButton>
+               ) : (
+                  <Button fullWidth disabled>
+                     {actionLabel}
+                  </Button>
+               )}
+               {actionHint && <p className="text-center text-xs text-ink-500">{actionHint}</p>}
+            </div>
+         )}
       </aside>
    );
 }

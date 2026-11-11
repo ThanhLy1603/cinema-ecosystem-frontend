@@ -67,6 +67,8 @@ export function MovieShowtimeSelectionPage(): ReactElement {
       queryKey: movieShowtimesByDateKey(movieId ?? 0, selectedDate, cinemaId),
       queryFn: () => getMovieShowtimesByDate(movieId ?? 0, selectedDate, cinemaId),
       enabled: movieId !== null && selectedDate !== '',
+      staleTime: 0,
+      refetchOnMount: 'always',
    });
    const cinemaShowtimes: CinemaShowtimes[] = showtimesQuery.data ?? [];
    const selectedCinemaShowtimes: CinemaShowtimes | undefined = cinemaShowtimes.find((cinemaShowtime) =>

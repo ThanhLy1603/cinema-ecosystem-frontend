@@ -1,4 +1,4 @@
-import { MessagesSquare, Tag, Ticket } from 'lucide-react';
+import { CreditCard, MessagesSquare, Tag, Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
@@ -20,6 +20,7 @@ import CinemaDetailPage from '@/features/cinema-management/pages/CinemaDetailPag
 import CinemaManagementPage from '@/features/cinema-management/pages/CinemaManagementPage';
 import FacilityManagementPage from '@/features/cinema-management/pages/FacilityManagementPage';
 import SeatMapEditorPage from '@/features/cinema-management/pages/SeatMapEditorPage';
+import FnbSelectionPage from '@/features/booking/pages/FnbSelectionPage';
 import SeatSelectionPage from '@/features/booking/pages/SeatSelectionPage';
 import MovieShowtimeSelectionPage from '@/features/booking/pages/MovieShowtimeSelectionPage';
 import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
@@ -86,6 +87,17 @@ export function AppRoutes(): ReactElement {
             />
             <Route element={<ProtectedRoute />}>
                <Route path="/movies/:movieSlug/booking/:showtimeId/seats" element={<SeatSelectionPage />} />
+               <Route path="/movies/:movieSlug/booking/:showtimeId/fnb" element={<FnbSelectionPage />} />
+               <Route
+                  path="/movies/:movieSlug/booking/:showtimeId/payment"
+                  element={
+                     <ComingSoonPage
+                        title="Thanh toán"
+                        description="Bước thanh toán qua VNPay và vé điện tử QR đang được xây dựng. Ghế và bắp nước của bạn vẫn được giữ đến hết thời gian."
+                        icon={CreditCard}
+                     />
+                  }
+               />
                <Route path="/profile" element={<ProfilePage />} />
                <Route
                   path="/tickets"

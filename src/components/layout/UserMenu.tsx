@@ -61,7 +61,7 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
             onClick={() => setIsOpen(!isOpen)}
             aria-haspopup="menu"
             aria-expanded={isOpen}
-            className="flex items-center gap-2.5 rounded-lg border border-ink-200 bg-white py-1 pl-1 pr-2.5 transition-colors hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200"
+            className="flex items-center gap-2.5 rounded-xl border border-white bg-white py-1 pl-1 pr-3 shadow-sm transition-colors hover:bg-ink-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300"
          >
             <UserAvatar user={user} className="size-7" />
             <span className="hidden max-w-[140px] truncate text-sm font-semibold text-ink-800 sm:block">

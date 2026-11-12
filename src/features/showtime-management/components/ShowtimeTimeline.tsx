@@ -12,6 +12,7 @@ import {
    PIXELS_PER_HOUR,
    PIXELS_PER_MINUTE,
    TIMELINE_WIDTH,
+   CLEANING_BACKGROUND,
    computeBlockLayout,
    getHourMarks,
    getMovieColorClasses,
@@ -40,8 +41,6 @@ interface ShowtimeTimelineProps {
 const HOUR_MARKS: number[] = getHourMarks();
 const INITIAL_SCROLL_HOUR: number = 8;
 const GRID_BACKGROUND: string = `repeating-linear-gradient(to right, transparent 0, transparent ${PIXELS_PER_HOUR - 1}px, rgb(208 218 232 / 0.7) ${PIXELS_PER_HOUR - 1}px, rgb(208 218 232 / 0.7) ${PIXELS_PER_HOUR}px)`;
-const CLEANING_BACKGROUND: string =
-   'repeating-linear-gradient(135deg, rgb(126 146 173 / 0.35) 0, rgb(126 146 173 / 0.35) 4px, transparent 4px, transparent 8px)';
 
 function formatHourLabel(hour: number): string {
    return `${String(hour).padStart(2, '0')}:00`;

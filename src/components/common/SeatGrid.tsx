@@ -1,4 +1,4 @@
-import { useRef, type KeyboardEvent, type PointerEvent, type ReactElement } from 'react';
+import { useId, useRef, type KeyboardEvent, type PointerEvent, type ReactElement } from 'react';
 import {
    EMPTY_CELL_CLASS_NAME,
    SEAT_CELL_HEIGHT,
@@ -7,6 +7,7 @@ import {
    SEAT_CELL_WIDTH,
    SEAT_LABEL_WIDTH,
    SEAT_SCREEN_HEIGHT,
+   SEAT_STATE_FILLS,
    getCellX,
    getCellY,
    getGridHeight,
@@ -20,6 +21,8 @@ import {
 } from '@/lib/cinema/seatMap';
 import { cn } from '@/lib/common/utils';
 import SeatIcon from './SeatIcon';
+
+const SCREEN_COLOR: string = SEAT_STATE_FILLS.selected;
 
 interface SeatGridProps {
    rows: string[];
@@ -140,6 +143,7 @@ export function SeatGrid({
    showSeatLabels = true,
 }: SeatGridProps): ReactElement {
    const svgRef = useRef<SVGSVGElement>(null);
+   const screenGlowId: string = `screen-glow-${useId().replace(/:/g, '')}`;
    const lastCellKeyRef = useRef<string | null>(null);
    const isDraggingRef = useRef<boolean>(false);
    const isInteractive: boolean = Boolean(onCellPointerDown);
@@ -226,19 +230,25 @@ export function SeatGrid({
             onPointerUp={handlePointerEnd}
             onPointerCancel={handlePointerEnd}
          >
+            <defs>
+               <linearGradient id={screenGlowId} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={SCREEN_COLOR} stopOpacity={0.35} />
+                  <stop offset="100%" stopColor={SCREEN_COLOR} stopOpacity={0} />
+               </linearGradient>
+            </defs>
+            <path
+               d={`M ${SEAT_LABEL_WIDTH} 22 Q ${width / 2} 0 ${width - SEAT_LABEL_WIDTH} 22 L ${width - SEAT_LABEL_WIDTH} 50 Q ${width / 2} 28 ${SEAT_LABEL_WIDTH} 50 Z`}
+               fill={`url(#${screenGlowId})`}
+            />
             <path
                d={`M ${SEAT_LABEL_WIDTH} 22 Q ${width / 2} 0 ${width - SEAT_LABEL_WIDTH} 22`}
-               className="fill-none stroke-ink-300"
-               strokeWidth={5}
+               fill="none"
+               stroke={SCREEN_COLOR}
+               strokeWidth={4}
                strokeLinecap="round"
             />
-            <text
-               x={width / 2}
-               y={40}
-               textAnchor="middle"
-               className="fill-ink-400 text-[11px] font-bold tracking-[0.3em]"
-            >
-               MÀN HÌNH
+            <text x={width / 2} y={42} textAnchor="middle" className="fill-ink-400 text-[13px] font-bold">
+               Màn hình
             </text>
 
             {gridCells.map((gridCell) => (

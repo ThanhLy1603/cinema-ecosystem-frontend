@@ -1,7 +1,8 @@
 @import 'tailwindcss';
 
 @theme {
-   --font-sans: 'Be Vietnam Pro', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+   --font-sans: Arial, Helvetica, sans-serif;
+   --font-mono: Arial, Helvetica, sans-serif;
 
    --color-brand-50: #eef5ff;
    --color-brand-100: #dbe9ff;
@@ -165,16 +166,16 @@
 }
 
 .theme-shinkai {
-   --color-brand-50: #fff7ed;
-   --color-brand-100: #ffedd5;
-   --color-brand-200: #fed7aa;
-   --color-brand-300: #fdba74;
-   --color-brand-400: #fb923c;
-   --color-brand-500: #f97316;
-   --color-brand-600: #ea580c;
-   --color-brand-700: #c2410c;
-   --color-brand-800: #9a3412;
-   --color-brand-900: #7c2d12;
+   --color-brand-50: #f1fcf4;
+   --color-brand-100: #dff7e6;
+   --color-brand-200: #bdeccb;
+   --color-brand-300: #86dca0;
+   --color-brand-400: #46c46f;
+   --color-brand-500: #1faa4b;
+   --color-brand-600: #0f9a35;
+   --color-brand-700: #0b7d2b;
+   --color-brand-800: #0d6226;
+   --color-brand-900: #0d4a21;
 
    --color-accent-50: #fffbeb;
    --color-accent-100: #fef3c7;
@@ -195,8 +196,8 @@
    --color-ink-800: #1e293b;
    --color-ink-900: #0f172a;
 
-   --color-cream: #f8fafc;
-   --color-sand: #f1f5f9;
+   --color-cream: #ecf3f0;
+   --color-sand: #dfe9e6;
 
    --radius-lg: 0.5rem;
    --radius-xl: 0.75rem;
@@ -208,10 +209,19 @@
 
    --shadow-soft: 0 20px 25px -5px rgb(15 23 42 / 0.15);
    --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06);
-   --shadow-glow: 0 8px 14px -4px rgb(249 115 22 / 0.3);
+   --shadow-glow: 0 6px 14px -4px rgb(13 74 33 / 0.3);
 
-   --cta-bg: linear-gradient(to right, #f97316, #ea580c, #f59e0b);
-   --cta-bg-hover: linear-gradient(to right, #ea580c, #c2410c, #d97706);
+   --cta-bg: var(--color-brand-600);
+   --cta-bg-hover: var(--color-brand-700);
 
    color: var(--color-ink-800);
+}
+
+.app-backdrop {
+   background-color: #ecf3f0;
+   background-image:
+      radial-gradient(1100px 700px at 0% 22%, rgb(167 224 190 / 0.32), transparent 65%),
+      radial-gradient(1000px 700px at 100% 42%, rgb(170 208 232 / 0.32), transparent 65%),
+      radial-gradient(1100px 800px at 10% 78%, rgb(214 230 170 / 0.24), transparent 65%),
+      linear-gradient(180deg, #eef5f1 0%, #e6eff0 55%, #eaf1ec 100%);
 }

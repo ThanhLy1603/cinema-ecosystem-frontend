@@ -18,6 +18,18 @@ const MOVIE_COLOR_CLASSES: string[] = [
    'border-rose-300 bg-rose-50 text-rose-900',
 ];
 
+const MOVIE_SWATCH_CLASSES: string[] = [
+   'border-brand-400 bg-brand-200',
+   'border-accent-400 bg-accent-200',
+   'border-emerald-400 bg-emerald-200',
+   'border-amber-400 bg-amber-200',
+   'border-violet-400 bg-violet-200',
+   'border-rose-400 bg-rose-200',
+];
+
+export const CLEANING_BACKGROUND: string =
+   'repeating-linear-gradient(135deg, rgb(126 146 173 / 0.35) 0, rgb(126 146 173 / 0.35) 4px, transparent 4px, transparent 8px)';
+
 export interface TimelineBlockLayout {
    left: number;
    width: number;
@@ -29,6 +41,10 @@ export interface TimelineBlockLayout {
 
 export function getMovieColorClasses(movieId: number): string {
    return MOVIE_COLOR_CLASSES[movieId % MOVIE_COLOR_CLASSES.length];
+}
+
+export function getMovieSwatchClasses(movieId: number): string {
+   return MOVIE_SWATCH_CLASSES[movieId % MOVIE_SWATCH_CLASSES.length];
 }
 
 function clampMinutes(minutes: number): number {

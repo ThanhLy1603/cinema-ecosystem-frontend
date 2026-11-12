@@ -31,40 +31,37 @@ export function MovieFilterBar({ movieFilters, genres, onChange }: MovieFilterBa
    }
 
    return (
-      <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl border border-ink-200 bg-white p-5 shadow-xs">
-         <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-            <div className="flex-1">
-               <TextField
-                  id="movie-keyword"
-                  label="Tìm phim"
-                  value={keyword}
-                  onChange={setKeyword}
-                  icon={Search}
-                  placeholder="Tên phim, thể loại hoặc diễn viên"
-               />
-            </div>
-            <Button type="submit" className="sm:w-40" icon={<Search className="size-4" aria-hidden="true" />}>
-               Tìm
-            </Button>
-         </div>
-         <div className="grid gap-4 sm:grid-cols-2">
-            <SelectField
-               id="movie-genre-filter"
-               label="Thể loại"
-               value={movieFilters.genreId}
-               onChange={(genreId) => onChange({ ...movieFilters, genreId })}
-               options={genreOptions}
-               placeholder="Tất cả thể loại"
-            />
-            <SelectField
-               id="movie-rated-filter"
-               label="Độ tuổi"
-               value={movieFilters.rated}
-               onChange={(rated) => onChange({ ...movieFilters, rated })}
-               options={AGE_RATING_FILTER_OPTIONS}
-               placeholder="Mọi độ tuổi"
-            />
-         </div>
+      <form
+         onSubmit={handleSubmit}
+         className="grid items-end gap-4 rounded-2xl bg-white p-5 shadow-lg ring-1 ring-ink-100 md:grid-cols-[1fr_13rem_13rem_auto]"
+      >
+         <TextField
+            id="movie-keyword"
+            label="Tìm phim"
+            value={keyword}
+            onChange={setKeyword}
+            icon={Search}
+            placeholder="Tìm phim..."
+         />
+         <SelectField
+            id="movie-genre-filter"
+            label="Thể loại"
+            value={movieFilters.genreId}
+            onChange={(genreId) => onChange({ ...movieFilters, genreId })}
+            options={genreOptions}
+            placeholder="Thể loại"
+         />
+         <SelectField
+            id="movie-rated-filter"
+            label="Độ tuổi"
+            value={movieFilters.rated}
+            onChange={(rated) => onChange({ ...movieFilters, rated })}
+            options={AGE_RATING_FILTER_OPTIONS}
+            placeholder="Độ tuổi"
+         />
+         <Button type="submit" className="h-10 md:px-6" icon={<Search className="size-4" aria-hidden="true" />}>
+            Tìm phim
+         </Button>
       </form>
    );
 }

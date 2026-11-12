@@ -1,4 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
+import { MapPin } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { getPublicCities } from '@/api/cinemaApi';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
@@ -20,7 +21,11 @@ export function CitySelector(): ReactElement {
    ];
 
    return (
-      <div className="w-40">
+      <div className="relative w-56">
+         <MapPin
+            className="pointer-events-none absolute left-3.5 top-1/2 z-10 size-4 -translate-y-1/2 text-ink-700"
+            aria-hidden="true"
+         />
          <SelectField
             id="header-city"
             label="Chọn tỉnh/thành phố"
@@ -29,7 +34,7 @@ export function CitySelector(): ReactElement {
             onChange={setCity}
             options={cityOptions}
             placeholder={ALL_CITIES_LABEL}
-            triggerClassName="h-9 text-[13px] font-semibold"
+            triggerClassName="h-10 rounded-xl border-transparent bg-ink-100/80 pl-9 text-[13px] font-semibold shadow-none text-ink-800"
             menuClassName="right-0 w-60"
          />
       </div>

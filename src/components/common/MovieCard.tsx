@@ -1,23 +1,25 @@
-import { Clapperboard, Info, Ticket } from 'lucide-react';
+import { Clapperboard } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import AgeRatingBadge from '@/components/common/AgeRatingBadge';
+import AgeRatingLabel from '@/components/common/AgeRatingLabel';
+import StarRating from '@/components/common/StarRating';
 import LinkButton from '@/components/ui/LinkButton';
 import { formatDuration } from '@/lib/movie/movieFormat';
 import { getMovieBookingPath, getMovieDetailPath } from '@/lib/movie/moviePath';
-import type { Movie } from '@/types/movie/movie';
+import type { Movie, MovieRatingSummary } from '@/types/movie/movie';
 
 interface MovieCardProps {
    movie: Movie;
+   movieRatingSummary?: MovieRatingSummary;
 }
 
-export function MovieCard({ movie }: MovieCardProps): ReactElement {
+export function MovieCard({ movie, movieRatingSummary }: MovieCardProps): ReactElement {
    const genreLabel: string =
-      movie.genres.length === 0 ? 'Chưa phân loại' : movie.genres.map((genre) => genre.name).join(' · ');
+      movie.genres.length === 0 ? 'Chưa phân loại' : movie.genres.map((genre) => genre.name).join(' / ');
    const canBook: boolean = movie.status !== 'ENDED';
 
    return (
-      <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-ink-200 bg-white shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl">
+      <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-white shadow-md ring-1 ring-ink-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
          <Link
             to={getMovieDetailPath(movie.slug)}
             aria-label={`Xem phim ${movie.title}`}
@@ -35,41 +37,34 @@ export function MovieCard({ movie }: MovieCardProps): ReactElement {
                   <Clapperboard className="size-12" aria-hidden="true" />
                </div>
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-ink-900/70 via-transparent to-ink-900/20" />
             <div className="absolute left-3 top-3 flex items-center gap-1.5">
-               <AgeRatingBadge ageRating={movie.rated} />
-               <span className="rounded bg-ink-900/80 px-2 py-0.5 text-[11px] font-bold text-white backdrop-blur-xs">
+               <span className="rounded-md bg-black/70 px-2 py-0.5 text-[11px] font-bold text-white backdrop-blur-xs">
                   {formatDuration(movie.durationMinutes)}
                </span>
             </div>
          </Link>
-         <div className="flex flex-1 flex-col gap-4 p-4">
+         <div className="flex flex-1 flex-col gap-3 p-3">
             <div className="space-y-1">
-               <h3 className="line-clamp-2 text-base font-bold leading-snug text-ink-900 transition-colors group-hover:text-brand-600">
+               <h3 className="line-clamp-2 text-base font-extrabold leading-snug text-ink-900 transition-colors group-hover:text-brand-700">
                   <Link to={getMovieDetailPath(movie.slug)}>{movie.title}</Link>
                </h3>
-               <p className="line-clamp-1 text-xs font-semibold text-brand-600">{genreLabel}</p>
+               <AgeRatingLabel ageRating={movie.rated} className="text-xs text-ink-700" />
+               <p className="line-clamp-1 text-xs text-ink-600">{genreLabel}</p>
+               <StarRating movieRatingSummary={movieRatingSummary} />
             </div>
             <div className="mt-auto flex gap-2">
                {canBook && (
-                  <LinkButton
-                     to={getMovieBookingPath(movie.slug)}
-                     size="md"
-                     className="flex-1"
-                     icon={<Ticket className="size-4" aria-hidden="true" />}
-                  >
-                     Mua vé ngay
+                  <LinkButton to={getMovieBookingPath(movie.slug)} size="sm" className="h-9 flex-1 text-xs font-bold">
+                     Mua vé
                   </LinkButton>
                )}
                <LinkButton
                   to={getMovieDetailPath(movie.slug)}
                   variant="secondary"
-                  size="md"
-                  className={canBook ? 'px-3' : 'flex-1'}
-                  aria-label={`Chi tiết phim ${movie.title}`}
-                  icon={<Info className="size-4" aria-hidden="true" />}
+                  size="sm"
+                  className="h-9 flex-1 border-ink-300 text-xs font-bold"
                >
-                  {canBook ? null : 'Chi tiết'}
+                  Chi tiết
                </LinkButton>
             </div>
          </div>

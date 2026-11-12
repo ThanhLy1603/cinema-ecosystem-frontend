@@ -6,6 +6,7 @@ import ForbiddenPage from '@/components/common/ForbiddenPage';
 import AdminLayout from '@/components/layout/AdminLayout';
 import AuthLayout from '@/components/layout/AuthLayout';
 import MainLayout from '@/components/layout/MainLayout';
+import AboutPage from '@/features/about/pages/AboutPage';
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import GuestRoute from '@/features/auth/guards/GuestRoute';
 import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
@@ -67,6 +68,7 @@ export function AppRoutes(): ReactElement {
             <Route path="/movies/:movieSlug" element={<MovieDetailPage />} />
             <Route path="/movies/:movieSlug/booking" element={<MovieShowtimeSelectionPage />} />
             <Route path="/fnb" element={<FnbMenuPage />} />
+            <Route path="/about" element={<AboutPage />} />
             <Route path="/cinemas" element={<CinemaListPage />} />
             <Route path="/cinemas/:slug" element={<CinemaPublicPage />} />
             <Route

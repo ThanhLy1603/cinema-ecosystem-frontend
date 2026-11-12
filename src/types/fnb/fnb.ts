@@ -35,6 +35,11 @@ export interface FnbCombo {
   deleted: boolean;
 }
 
+export interface FnbBestSellers {
+  comboIds: number[];
+  itemIds: number[];
+}
+
 export interface FnbMenu {
   combos: FnbCombo[];
   items: FnbItem[];

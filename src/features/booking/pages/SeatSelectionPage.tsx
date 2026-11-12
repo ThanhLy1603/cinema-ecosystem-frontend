@@ -288,7 +288,6 @@ export function SeatSelectionPage(): ReactElement {
                   </div>
                </div>
                {notice && <Alert variant="info">{notice}</Alert>}
-               {orphanSeatMessage && <Alert variant="error">{orphanSeatMessage}</Alert>}
                {conflictSeatId !== null && (
                   <Alert variant="error">
                      <span className="block">
@@ -349,6 +348,7 @@ export function SeatSelectionPage(): ReactElement {
                      ? 'Ghế được giữ trong 10 phút kể từ lúc chọn ghế đầu tiên.'
                      : orphanSeatMessage
                }
+               isActionHintWarning={orphanSeatMessage !== null}
                holdRemainingSeconds={remainingSeconds}
                collapsibleOnMobile
             />

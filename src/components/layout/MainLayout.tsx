@@ -8,7 +8,7 @@ export function MainLayout(): ReactElement {
    const location: Location = useLocation();
 
    return (
-      <div className="theme-shinkai flex min-h-screen flex-col bg-cream">
+      <div className="theme-shinkai app-backdrop flex min-h-screen flex-col">
          <Navbar />
          <main key={location.pathname} className="flex-1 animate-fade-in">
             <Outlet />

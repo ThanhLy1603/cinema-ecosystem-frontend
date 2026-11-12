@@ -8,7 +8,6 @@ import { useScrolled } from '@/lib/common/useScrolled';
 import { useAuthStore } from '@/stores/useAuthStore';
 import type { User } from '@/types/auth/auth';
 import CitySelector from './CitySelector';
-import NavDropdown, { type NavDropdownItem } from './NavDropdown';
 import UserMenu from './UserMenu';
 
 interface NavItem {
@@ -16,23 +15,18 @@ interface NavItem {
    to: string;
 }
 
-const MOVIE_MENU_ITEMS: NavDropdownItem[] = [
-   { label: 'Phim đang chiếu', to: '/movies' },
-   { label: 'Phim sắp chiếu', to: '/movies?status=COMING_SOON' },
-   { label: 'Phim ngừng chiếu', to: '/movies?status=ENDED' },
-];
-
 const NAV_ITEMS: NavItem[] = [
-   { label: 'Rạp chiếu', to: '/cinemas' },
-   { label: 'Thức ăn & nước', to: '/fnb' },
-   { label: 'Ưu đãi & khuyến mãi', to: '/promotions' },
+   { label: 'Phim', to: '/movies' },
+   { label: 'Thức ăn và nước', to: '/fnb' },
+   { label: 'Ưu đãi và khuyến mãi', to: '/promotions' },
    { label: 'Cộng đồng', to: '/community' },
+   { label: 'Giới thiệu', to: '/about' },
 ];
 
 function getNavLinkClassName(isActive: boolean): string {
    return cn(
-      'group relative whitespace-nowrap px-2.5 py-2 text-sm font-semibold transition-colors',
-      isActive ? 'font-bold text-brand-600' : 'text-ink-600 hover:text-brand-600',
+      'group relative whitespace-nowrap px-3 py-2 text-[13px] font-semibold uppercase tracking-wide transition-colors',
+      isActive ? 'text-brand-600' : 'text-ink-900 hover:text-brand-600',
    );
 }
 
@@ -47,17 +41,16 @@ export function Navbar(): ReactElement {
    }
 
    return (
-      <header
-         className={cn(
-            'sticky top-0 z-40 border-b border-ink-200 bg-white transition-shadow duration-300',
-            isScrolled ? 'shadow-lg shadow-ink-900/5' : 'shadow-sm',
-         )}
-      >
-         <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-40 w-full">
+         <div
+            className={cn(
+               'flex h-16 w-full items-center gap-4 border-b border-white/70 px-4 backdrop-blur-xl transition-all duration-300 sm:px-8 lg:px-12',
+               isScrolled ? 'bg-white/90 shadow-md shadow-ink-900/10' : 'bg-white/70',
+            )}
+         >
             <Logo variant="cinema" />
 
-            <nav className="ml-4 hidden items-center lg:flex" aria-label="Điều hướng chính">
-               <NavDropdown label="Phim" items={MOVIE_MENU_ITEMS} matchPathPrefix="/movies" />
+            <nav className="ml-6 hidden items-center gap-1 lg:flex xl:ml-10 xl:gap-3" aria-label="Điều hướng chính">
                {NAV_ITEMS.map((navItem) => (
                   <NavLink key={navItem.to} to={navItem.to} className={({ isActive }) => getNavLinkClassName(isActive)}>
                      {({ isActive }) => (
@@ -65,7 +58,7 @@ export function Navbar(): ReactElement {
                            {navItem.label}
                            <span
                               className={cn(
-                                 'absolute inset-x-2.5 -bottom-[18px] h-0.5 origin-left bg-brand-600 transition-transform duration-300',
+                                 'absolute inset-x-3 -bottom-1 h-0.5 origin-left rounded-full bg-brand-600 transition-transform duration-300',
                                  isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
                               )}
                            />
@@ -80,18 +73,17 @@ export function Navbar(): ReactElement {
                   <CitySelector />
                </div>
                {isLoading ? (
-                  <span className="h-9 w-40 animate-pulse rounded-lg bg-ink-100" aria-hidden="true" />
+                  <span className="h-10 w-40 animate-pulse rounded-xl bg-ink-100" aria-hidden="true" />
                ) : user ? (
                   <UserMenu user={user} />
                ) : (
-                  <div className="hidden items-center gap-2 sm:flex">
-                     <LinkButton to="/login" variant="ghost" size="sm">
-                        Đăng nhập
-                     </LinkButton>
-                     <LinkButton to="/register" size="sm">
-                        Đăng ký
-                     </LinkButton>
-                  </div>
+                  <LinkButton
+                     to="/login"
+                     size="sm"
+                     className="hidden rounded-xl px-5 text-xs font-bold uppercase sm:inline-flex"
+                  >
+                     Đăng ký / Đăng nhập
+                  </LinkButton>
                )}
 
                <button
@@ -99,7 +91,7 @@ export function Navbar(): ReactElement {
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                   aria-label={isMobileMenuOpen ? 'Đóng menu' : 'Mở menu'}
                   aria-expanded={isMobileMenuOpen}
-                  className="grid size-10 place-items-center rounded-lg text-ink-700 transition-colors hover:bg-ink-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-200 lg:hidden"
+                  className="grid size-10 place-items-center rounded-xl text-ink-800 transition-colors hover:bg-ink-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-300 lg:hidden"
                >
                   {isMobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
                </button>
@@ -107,17 +99,17 @@ export function Navbar(): ReactElement {
          </div>
 
          {isMobileMenuOpen && (
-            <div className="space-y-4 border-t border-ink-100 bg-white px-4 pb-5 pt-4 lg:hidden">
+            <div className="w-full space-y-4 border-b border-ink-100 bg-white/95 px-4 pb-5 pt-4 shadow-lg backdrop-blur-xl lg:hidden">
                <div className="sm:hidden">
                   <CitySelector />
                </div>
                <nav className="flex flex-col gap-1" aria-label="Điều hướng di động">
-                  {[...MOVIE_MENU_ITEMS, ...NAV_ITEMS].map((navItem) => (
+                  {NAV_ITEMS.map((navItem) => (
                      <NavLink
                         key={navItem.to}
                         to={navItem.to}
                         onClick={closeMobileMenu}
-                        className="rounded-lg px-4 py-3 text-sm font-semibold text-ink-800 transition-colors hover:bg-brand-50 hover:text-brand-700"
+                        className="rounded-xl px-4 py-3 text-sm font-semibold uppercase tracking-wide text-ink-800 transition-colors hover:bg-brand-50 hover:text-brand-700"
                      >
                         {navItem.label}
                      </NavLink>

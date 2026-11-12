@@ -1,6 +1,16 @@
-import { Armchair, CalendarDays, Clapperboard, Clock, ChevronUp, MapPin, Timer, UtensilsCrossed } from 'lucide-react';
+import {
+   Armchair,
+   CalendarDays,
+   ChevronUp,
+   CircleAlert,
+   Clapperboard,
+   Clock,
+   MapPin,
+   Timer,
+   UtensilsCrossed,
+} from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import AgeRatingBadge from '@/components/common/AgeRatingBadge';
+import AgeRatingLabel from '@/components/common/AgeRatingLabel';
 import Button from '@/components/ui/Button';
 import LinkButton from '@/components/ui/LinkButton';
 import { formatVnd } from '@/lib/common/currencyFormat';
@@ -46,6 +56,7 @@ interface BookingSummaryAsideProps {
    actionLabel?: string;
    actionTo?: string | null;
    actionHint?: string | null;
+   isActionHintWarning?: boolean;
    footer?: ReactElement;
    holdRemainingSeconds?: number | null;
    collapsibleOnMobile?: boolean;
@@ -63,6 +74,7 @@ export function BookingSummaryAside({
    actionLabel = '',
    actionTo = null,
    actionHint = null,
+   isActionHintWarning = false,
    footer,
    holdRemainingSeconds = null,
    collapsibleOnMobile = false,
@@ -93,9 +105,9 @@ export function BookingSummaryAside({
       <aside
          aria-label="Thông tin đặt vé"
          className={cn(
-            'rounded-2xl border border-ink-200 bg-white shadow-xs lg:sticky lg:top-24',
+            'rounded-2xl border border-ink-200 bg-white shadow-xs lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto',
             collapsibleOnMobile &&
-               'fixed inset-x-0 bottom-0 z-40 max-h-[85vh] overflow-y-auto rounded-b-none border-x-0 border-b-0 lg:static lg:max-h-none lg:overflow-visible lg:rounded-2xl lg:border',
+               'fixed inset-x-0 bottom-0 z-40 max-h-[85vh] overflow-y-auto rounded-b-none border-x-0 border-b-0 lg:inset-x-auto lg:bottom-auto lg:z-auto lg:rounded-2xl lg:border',
          )}
       >
          {collapsibleOnMobile && (
@@ -149,9 +161,9 @@ export function BookingSummaryAside({
                </div>
                <div className="min-w-0 space-y-2">
                   <h2 className="text-base font-extrabold uppercase leading-snug text-brand-700">{movieTitle}</h2>
-                  <div className="flex flex-wrap items-center gap-2 text-xs text-ink-600">
-                     <AgeRatingBadge ageRating={rated} />
-                     <span>{formatDuration(durationMinutes)}</span>
+                  <div className="space-y-1 text-xs text-ink-600">
+                     <AgeRatingLabel ageRating={rated} />
+                     <p>{formatDuration(durationMinutes)}</p>
                   </div>
                </div>
             </div>
@@ -265,7 +277,15 @@ export function BookingSummaryAside({
                         {actionLabel}
                      </Button>
                   )}
-                  {actionHint && <p className="text-center text-xs text-ink-500">{actionHint}</p>}
+                  {actionHint &&
+                     (isActionHintWarning ? (
+                        <p role="status" className="flex items-start gap-1.5 text-xs font-semibold text-danger-700">
+                           <CircleAlert className="mt-0.5 size-3.5 shrink-0" aria-hidden="true" />
+                           {actionHint}
+                        </p>
+                     ) : (
+                        <p className="text-center text-xs text-ink-500">{actionHint}</p>
+                     ))}
                </div>
             )}
          </div>

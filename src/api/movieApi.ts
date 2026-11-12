@@ -7,6 +7,7 @@ import type {
    GenreRequest,
    Movie,
    MovieDetail,
+   MovieRatingSummary,
    MovieRequest,
    MovieSearchParams,
    Person,
@@ -18,6 +19,13 @@ export async function searchPublicMovies(movieSearchParams: MovieSearchParams): 
    const axiosResponse: AxiosResponse<ApiResponse<PageResponse<Movie>>> = await axiosInstance.get<
       ApiResponse<PageResponse<Movie>>
    >('/movies/public', { params: movieSearchParams });
+   return axiosResponse.data.data;
+}
+
+export async function getMovieRatingSummaries(movieIds: number[]): Promise<MovieRatingSummary[]> {
+   const axiosResponse: AxiosResponse<ApiResponse<MovieRatingSummary[]>> = await axiosInstance.get<
+      ApiResponse<MovieRatingSummary[]>
+   >('/movies/public/ratings', { params: { movieIds: movieIds.join(',') } });
    return axiosResponse.data.data;
 }
 

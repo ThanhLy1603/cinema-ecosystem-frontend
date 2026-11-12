@@ -1,33 +1,32 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { getPublicCinemas } from '@/api/cinemaApi';
+import { getPublicFnbMenu } from '@/api/fnbApi';
 import { searchPublicMovies } from '@/api/movieApi';
-import Reveal from '@/components/common/Reveal';
-import LinkButton from '@/components/ui/LinkButton';
 import { publicCinemaListKey } from '@/lib/cinema/cinemaQueryKeys';
+import { PUBLIC_FNB_KEY } from '@/lib/fnb/fnbQueryKeys';
 import { publicMovieListKey } from '@/lib/movie/movieQueryKeys';
-import { useAuthStore } from '@/stores/useAuthStore';
 import { useCityStore } from '@/stores/useCityStore';
-import type { PageResponse } from '@/types/common/api';
 import type { Cinema } from '@/types/cinema/cinema';
+import type { PageResponse } from '@/types/common/api';
+import type { FnbMenu } from '@/types/fnb/fnb';
 import type { Movie, MovieSearchParams } from '@/types/movie/movie';
-import type { User } from '@/types/auth/auth';
-import BenefitStrip from '../components/BenefitStrip';
-import CinemaHighlights from '../components/CinemaHighlights';
-import HeroCarousel from '../components/HeroCarousel';
 import HeroFallback from '../components/HeroFallback';
-import MovieShowcase from '../components/MovieShowcase';
-import QuickBookingBar from '../components/QuickBookingBar';
+import HomeCombos from '../components/HomeCombos';
+import HomeHero from '../components/HomeHero';
+import HomeMovieSection from '../components/HomeMovieSection';
+import HomePromotions from '../components/HomePromotions';
+import HomeSchedule from '../components/HomeSchedule';
+import { HomeLeftRail, HomeRightRail } from '../components/HomeSideRails';
 
-const NOW_SHOWING_PAGE_SIZE: number = 10;
-const COMING_SOON_PAGE_SIZE: number = 10;
-const HERO_SLIDE_COUNT: number = 5;
+const NOW_SHOWING_PAGE_SIZE: number = 6;
+const COMING_SOON_PAGE_SIZE: number = 6;
+const MAX_HERO_SLIDES: number = 5;
 
 const NOW_SHOWING_PARAMS: MovieSearchParams = { status: 'NOW_SHOWING', page: 0, size: NOW_SHOWING_PAGE_SIZE };
 const COMING_SOON_PARAMS: MovieSearchParams = { status: 'COMING_SOON', page: 0, size: COMING_SOON_PAGE_SIZE };
 
 export function HomePage(): ReactElement {
-   const user: User | null = useAuthStore((authState) => authState.user);
    const city: string = useCityStore((cityState) => cityState.city);
    const nowShowingQuery: UseQueryResult<PageResponse<Movie>> = useQuery<PageResponse<Movie>>({
       queryKey: publicMovieListKey(NOW_SHOWING_PARAMS),
@@ -37,57 +36,56 @@ export function HomePage(): ReactElement {
       queryKey: publicMovieListKey(COMING_SOON_PARAMS),
       queryFn: () => searchPublicMovies(COMING_SOON_PARAMS),
    });
+
    const cinemasQuery: UseQueryResult<Cinema[]> = useQuery<Cinema[]>({
       queryKey: publicCinemaListKey(city),
       queryFn: () => getPublicCinemas(city || undefined),
+   });
+   const fnbMenuQuery: UseQueryResult<FnbMenu> = useQuery<FnbMenu>({
+      queryKey: PUBLIC_FNB_KEY,
+      queryFn: getPublicFnbMenu,
    });
 
    const nowShowingMovies: Movie[] = nowShowingQuery.data?.content ?? [];
    const comingSoonMovies: Movie[] = comingSoonQuery.data?.content ?? [];
    const heroMovies: Movie[] = (nowShowingMovies.length > 0 ? nowShowingMovies : comingSoonMovies).slice(
       0,
-      HERO_SLIDE_COUNT,
+      MAX_HERO_SLIDES,
    );
+
+   const sideRailMovie: Movie | undefined = comingSoonMovies[0] ?? nowShowingMovies[nowShowingMovies.length - 1];
 
    return (
       <>
-         {heroMovies.length > 0 ? <HeroCarousel movies={heroMovies} /> : <HeroFallback />}
-         <QuickBookingBar movies={nowShowingMovies} cinemas={cinemasQuery.data ?? []} />
-         <MovieShowcase
-            nowShowingMovies={nowShowingMovies}
-            comingSoonMovies={comingSoonMovies}
-            isLoading={nowShowingQuery.isPending || comingSoonQuery.isPending}
-         />
-         <CinemaHighlights cinemas={cinemasQuery.data ?? []} />
-         <BenefitStrip />
-
-         {!user && (
-            <section aria-label="Đăng ký thành viên" className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-12">
-               <Reveal>
-                  <div className="flex flex-wrap items-center justify-between gap-6 rounded-2xl px-8 py-8 shadow-glow [background:var(--cta-bg)]">
-                     <div className="space-y-1">
-                        <h2 className="text-xl font-bold text-white">Trở thành thành viên CinemaSphere</h2>
-                        <p className="text-sm text-white/75">
-                           Đặt vé nhanh hơn, tích điểm mỗi giao dịch và nhận ưu đãi dành riêng cho thành viên.
-                        </p>
-                     </div>
-                     <div className="flex flex-wrap gap-3">
-                        <LinkButton to="/register" size="lg" variant="light">
-                           Đăng ký ngay
-                        </LinkButton>
-                        <LinkButton
-                           to="/login"
-                           size="lg"
-                           variant="ghost"
-                           className="text-white hover:bg-white/10 hover:text-white"
-                        >
-                           Tôi đã có tài khoản
-                        </LinkButton>
-                     </div>
-                  </div>
-               </Reveal>
-            </section>
-         )}
+         {heroMovies.length > 0 ? <HomeHero movies={heroMovies} /> : <HeroFallback />}
+         <div className="mx-auto w-full max-w-[1800px] xl:grid xl:grid-cols-[12rem_minmax(0,1fr)_12rem] xl:gap-6 xl:px-6 2xl:grid-cols-[14rem_minmax(0,1fr)_14rem] 2xl:gap-8">
+            <HomeLeftRail movie={sideRailMovie} />
+            <div className="min-w-0">
+               <HomeMovieSection
+                  sectionId="now-showing-section"
+                  title="Phim đang chiếu"
+                  movies={nowShowingMovies}
+                  isLoading={nowShowingQuery.isPending}
+                  columns={3}
+                  emptyMessage="Hiện chưa có phim nào đang chiếu."
+                  viewAllTo="/movies"
+               />
+               <HomeCombos fnbCombos={fnbMenuQuery.data?.combos ?? []} />
+               <HomePromotions />
+               <HomeMovieSection
+                  sectionId="coming-soon-section"
+                  title="Phim sắp chiếu"
+                  movies={comingSoonMovies}
+                  isLoading={comingSoonQuery.isPending}
+                  columns={3}
+                  emptyMessage="Hiện chưa có phim sắp chiếu."
+                  viewAllTo="/movies?status=COMING_SOON"
+                  hideWhenEmpty
+               />
+               <HomeSchedule cinemas={cinemasQuery.data ?? []} />
+            </div>
+            <HomeRightRail fnbCombos={fnbMenuQuery.data?.combos ?? []} />
+         </div>
       </>
    );
 }

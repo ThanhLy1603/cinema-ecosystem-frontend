@@ -66,6 +66,12 @@ export interface MovieDetail {
   deleted: boolean;
 }
 
+export interface MovieRatingSummary {
+  movieId: number;
+  averageRating: number;
+  reviewCount: number;
+}
+
 export interface MovieSearchParams {
   keyword?: string;
   genreId?: number;

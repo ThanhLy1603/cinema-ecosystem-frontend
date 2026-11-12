@@ -58,7 +58,7 @@ export function QuickBookingBar({ movies, cinemas }: QuickBookingBarProps): Reac
          onSubmit={handleSubmit}
          aria-label="Đặt vé nhanh"
          noValidate
-         className="relative z-20 mx-auto -mt-8 max-w-6xl animate-fade-up px-4 sm:px-6"
+         className="relative z-20 mx-auto mt-10 max-w-6xl animate-fade-up px-4 sm:px-6"
       >
          <div className="rounded-2xl border border-ink-200 bg-white p-4 shadow-xl sm:p-5">
             <div className="mb-4 flex items-center justify-between gap-4 border-b border-ink-100 pb-3">

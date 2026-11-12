@@ -24,10 +24,10 @@ export function MovieStatusTabs({
                aria-selected={movieStatus === activeStatus}
                onClick={() => onChange(movieStatus)}
                className={cn(
-                  'whitespace-nowrap rounded-xl px-5 py-2 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
+                  'whitespace-nowrap rounded-lg px-4 py-2 text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-100',
                   movieStatus === activeStatus
-                     ? 'bg-brand-500 text-white shadow-glow'
-                     : 'border border-ink-200 bg-white text-ink-700 shadow-xs hover:text-brand-600',
+                     ? 'bg-brand-600 text-white shadow-md'
+                     : 'bg-white text-ink-800 shadow-sm hover:text-brand-700',
                )}
             >
                {MOVIE_STATUS_LABELS[movieStatus]}

@@ -1,7 +1,7 @@
 import { Clapperboard } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import AgeRatingBadge from '@/components/common/AgeRatingBadge';
+import AgeRatingLabel from '@/components/common/AgeRatingLabel';
 import { formatVnd } from '@/lib/common/currencyFormat';
 import { formatDuration } from '@/lib/movie/movieFormat';
 import { getMovieDetailPath } from '@/lib/movie/moviePath';
@@ -47,7 +47,7 @@ export function MovieShowtimeCard({ publicMovieShowtimes }: MovieShowtimeCardPro
          <div className="min-w-0 flex-1 space-y-3">
             <div className="space-y-1.5">
                <div className="flex flex-wrap items-center gap-2">
-                  <AgeRatingBadge ageRating={publicMovieShowtimes.rated} />
+                  <AgeRatingLabel ageRating={publicMovieShowtimes.rated} className="text-xs text-ink-700" />
                   <span className="rounded-md bg-ink-900 px-2 py-0.5 text-[11px] font-bold uppercase text-white">
                      {formatDuration(publicMovieShowtimes.durationMinutes)}
                   </span>

@@ -2,6 +2,7 @@ import type { AxiosResponse } from 'axios';
 import axiosInstance from '@/api/axiosClient';
 import type { ApiResponse, PageResponse } from '@/types/common/api';
 import type {
+   FnbBestSellers,
    FnbCombo,
    FnbComboRequest,
    FnbComboSearchParams,
@@ -14,6 +15,12 @@ import type {
 export async function getPublicFnbMenu(): Promise<FnbMenu> {
    const axiosResponse: AxiosResponse<ApiResponse<FnbMenu>> =
       await axiosInstance.get<ApiResponse<FnbMenu>>('/fnb/public');
+   return axiosResponse.data.data;
+}
+
+export async function getFnbBestSellers(): Promise<FnbBestSellers> {
+   const axiosResponse: AxiosResponse<ApiResponse<FnbBestSellers>> =
+      await axiosInstance.get<ApiResponse<FnbBestSellers>>('/fnb/public/best-sellers');
    return axiosResponse.data.data;
 }
 

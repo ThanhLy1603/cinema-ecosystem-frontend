@@ -5,15 +5,16 @@ import { getPublicGenres, searchPublicMovies } from '@/api/movieApi';
 import MovieCard from '@/components/common/MovieCard';
 import MovieStatusTabs from '@/components/common/MovieStatusTabs';
 import Reveal from '@/components/common/Reveal';
-import PageBanner from '@/components/common/PageBanner';
 import Pagination from '@/components/common/Pagination';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';
+import { useMovieRatings } from '@/lib/movie/useMovieRatings';
 import { AGE_RATINGS, MOVIE_STATUSES, MOVIE_STATUS_LABELS } from '@/lib/movie/movieLabels';
 import { PUBLIC_GENRES_KEY, publicMovieListKey } from '@/lib/movie/movieQueryKeys';
 import type { PageResponse } from '@/types/common/api';
-import type { AgeRating, Genre, Movie, MovieSearchParams, MovieStatus } from '@/types/movie/movie';
+import type { AgeRating, Genre, Movie, MovieRatingSummary, MovieSearchParams, MovieStatus } from '@/types/movie/movie';
 import MovieFilterBar, { type MovieFilters } from '../components/MovieFilterBar';
+import MovieListBanner from '../components/MovieListBanner';
 
 const STATUS_PARAM: string = 'status';
 const KEYWORD_PARAM: string = 'keyword';
@@ -90,6 +91,10 @@ export function MovieListPage(): ReactElement {
       placeholderData: keepPreviousData,
    });
 
+   const movieRatings: ReadonlyMap<number, MovieRatingSummary> = useMovieRatings(
+      (moviesQuery.data?.content ?? []).map((movie) => movie.id),
+   );
+
    function handleStatusChange(nextMovieStatus: MovieStatus): void {
       setSearchParams(buildSearchParams(nextMovieStatus, movieFilters, 0));
    }
@@ -105,13 +110,14 @@ export function MovieListPage(): ReactElement {
 
    return (
       <>
-         <PageBanner
+         <MovieListBanner
+            movies={moviesQuery.data?.content ?? []}
             eyebrow="Phim chiếu rạp"
-            title="Phim"
-            description={`Khám phá phim ${MOVIE_STATUS_LABELS[movieStatus].toLowerCase()}, xem trailer, dàn diễn viên và nhãn phân loại độ tuổi trước khi đặt vé.`}
+            title={`Phim ${MOVIE_STATUS_LABELS[movieStatus].toLowerCase()}`}
+            description="Khám phá phim, xem trailer, dàn diễn viên và nhãn phân loại độ tuổi trước khi đặt vé."
          >
             <MovieStatusTabs activeStatus={movieStatus} onChange={handleStatusChange} />
-         </PageBanner>
+         </MovieListBanner>
 
          <section className="mx-auto w-full max-w-6xl space-y-8 px-4 py-10 sm:px-6 lg:px-12">
             <MovieFilterBar
@@ -133,7 +139,7 @@ export function MovieListPage(): ReactElement {
                   <div className="grid grid-cols-2 gap-5 sm:gap-6 lg:grid-cols-4">
                      {moviesQuery.data.content.map((movie, movieIndex) => (
                         <Reveal key={movie.id} delayMs={(movieIndex % 4) * 90} className="h-full">
-                           <MovieCard movie={movie} />
+                           <MovieCard movie={movie} movieRatingSummary={movieRatings.get(movie.id)} />
                         </Reveal>
                      ))}
                   </div>

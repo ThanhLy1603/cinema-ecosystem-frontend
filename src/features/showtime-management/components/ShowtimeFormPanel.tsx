@@ -26,6 +26,7 @@ import { getSuggestedStartTime } from '../utils/conflictSuggestion';
 import { useShowtimePricePreview } from '../hooks/useShowtimePricePreview';
 import { CLEANING_MINUTES } from '../utils/labels';
 import { hasErrors, validateShowtimeForm, type ShowtimeFormErrors, type ShowtimeFormValues } from '../utils/validation';
+import ShowtimeColorLegend from './ShowtimeColorLegend';
 import ShowtimeConflictList from './ShowtimeConflictList';
 import type { AttemptedSlot } from './ShowtimeTimeline';
 
@@ -308,6 +309,7 @@ export function ShowtimeFormPanel({
                      disabled={isReadOnly}
                      placeholder="Chọn phim"
                   />
+                  <ShowtimeColorLegend movieInfos={movieInfos} selectedMovieId={selectedMovieInfo?.id ?? null} />
                   <div className="grid gap-4 sm:grid-cols-2">
                      <TextField
                         id="showtime-date"

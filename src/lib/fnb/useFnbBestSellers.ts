@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getFnbBestSellers } from '@/api/fnbApi';
+import { getFnbBestSellers } from '@/api/fnb/fnbApi';
 import type { FnbBestSellers } from '@/types/fnb/fnb';
 import { FNB_BEST_SELLERS_KEY } from './fnbQueryKeys';
 

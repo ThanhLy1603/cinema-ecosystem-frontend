@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
-import { getPublicSeatLayout } from '@/api/cinemaApi';
+import { getPublicSeatLayout } from '@/api/cinema/cinemaApi';
 import SeatGrid from '@/components/common/SeatGrid';
 import SeatLegend from '@/components/common/SeatLegend';
 import Alert from '@/components/ui/Alert';

@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { useEffect, useRef, useState, type ReactElement, type RefObject } from 'react';
 import { useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
-import { loginWithGoogle } from '@/api/authApi';
+import { loginWithGoogle } from '@/api/auth/authApi';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';
 import { cn } from '@/lib/common/utils';

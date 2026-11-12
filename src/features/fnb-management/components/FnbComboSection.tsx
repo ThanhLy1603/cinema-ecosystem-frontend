@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Pencil, Plus, Search, TriangleAlert, UtensilsCrossed } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
-import { deleteFnbCombo, restoreFnbCombo, searchAdminFnbCombos } from '@/api/fnbApi';
+import { deleteFnbCombo, restoreFnbCombo, searchAdminFnbCombos } from '@/api/fnb/fnbApi';
 import Pagination from '@/components/common/Pagination';
 import RestoreButton from '@/components/common/RestoreButton';
 import Alert from '@/components/ui/Alert';

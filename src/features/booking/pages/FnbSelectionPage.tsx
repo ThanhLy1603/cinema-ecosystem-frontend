@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient, type QueryClient, type UseQueryR
 import { ArrowLeft } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState, type ReactElement } from 'react';
 import { Link, Navigate, useNavigate, useParams, type NavigateFunction } from 'react-router-dom';
-import { getMySeatHold, getPendingFnb, getShowtimeSeatMap, replacePendingFnb } from '@/api/bookingApi';
-import { getPublicFnbMenu } from '@/api/fnbApi';
+import { getMySeatHold, getPendingFnb, getShowtimeSeatMap, replacePendingFnb } from '@/api/booking/bookingApi';
+import { getPublicFnbMenu } from '@/api/fnb/fnbApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';

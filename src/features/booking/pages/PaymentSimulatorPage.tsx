@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { FlaskConical } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { useNavigate, useSearchParams, type NavigateFunction } from 'react-router-dom';
-import { simulateGatewayCallback } from '@/api/paymentApi';
+import { simulateGatewayCallback } from '@/api/payment/paymentApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { PAYMENT_RESULT_PATH } from '@/lib/booking/bookingPaths';

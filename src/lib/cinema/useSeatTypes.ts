@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getSeatTypes } from '@/api/cinemaApi';
+import { getSeatTypes } from '@/api/cinema/cinemaApi';
 import { SEAT_TYPES_KEY } from '@/lib/cinema/cinemaQueryKeys';
 import type { SeatType } from '@/types/cinema/cinema';
 

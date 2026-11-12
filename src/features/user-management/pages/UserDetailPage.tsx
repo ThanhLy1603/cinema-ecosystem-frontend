@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getAdminUser } from '@/api/adminUserApi';
+import { getAdminUser } from '@/api/auth/adminUserApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import UserAvatar from '@/components/common/UserAvatar';
 import Alert from '@/components/ui/Alert';

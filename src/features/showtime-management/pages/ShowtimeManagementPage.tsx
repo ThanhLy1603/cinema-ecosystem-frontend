@@ -1,8 +1,8 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { ChevronLeft, ChevronRight, CopyPlus, Plus } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { listAdminShowtimes } from '@/api/showtimeApi';
-import { listHalls } from '@/api/hallApi';
+import { listAdminShowtimes } from '@/api/showtime/showtimeApi';
+import { listHalls } from '@/api/cinema/hallApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import LinkButton from '@/components/ui/LinkButton';

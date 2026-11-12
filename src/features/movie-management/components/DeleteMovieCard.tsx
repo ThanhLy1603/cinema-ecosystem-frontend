@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Trash2 } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { useNavigate, type NavigateFunction } from 'react-router-dom';
-import { deleteMovie } from '@/api/movieApi';
+import { deleteMovie } from '@/api/movie/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

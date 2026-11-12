@@ -2,9 +2,9 @@ import { useQuery, useQueryClient, type QueryClient, type UseQueryResult } from 
 import { ArrowLeft, CalendarX } from 'lucide-react';
 import { useCallback, useMemo, type ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getPublicCinemas } from '@/api/cinemaApi';
-import { getPublicMovie } from '@/api/movieApi';
-import { getMovieShowtimeDates, getMovieShowtimesByDate } from '@/api/showtimeApi';
+import { getPublicCinemas } from '@/api/cinema/cinemaApi';
+import { getPublicMovie } from '@/api/movie/movieApi';
+import { getMovieShowtimeDates, getMovieShowtimesByDate } from '@/api/showtime/showtimeApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';

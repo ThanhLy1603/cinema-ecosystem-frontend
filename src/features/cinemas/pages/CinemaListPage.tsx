@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
-import { getPublicCinemas, getPublicCities } from '@/api/cinemaApi';
+import { getPublicCinemas, getPublicCities } from '@/api/cinema/cinemaApi';
 import PageBanner from '@/components/common/PageBanner';
 import Reveal from '@/components/common/Reveal';
 import Alert from '@/components/ui/Alert';

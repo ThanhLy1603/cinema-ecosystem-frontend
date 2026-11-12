@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { simulatePrices } from '@/api/pricingApi';
+import { simulatePrices } from '@/api/showtime/pricingApi';
 import { parseValidMoneyInput } from '@/lib/common/moneyInput';
 import { priceSimulationKey } from '@/lib/showtime/priceQueryKeys';
 import { useDebouncedValue } from '@/lib/common/useDebouncedValue';

@@ -1,8 +1,8 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
-import { getPublicCinemas } from '@/api/cinemaApi';
-import { getPublicFnbMenu } from '@/api/fnbApi';
-import { searchPublicMovies } from '@/api/movieApi';
+import { getPublicCinemas } from '@/api/cinema/cinemaApi';
+import { getPublicFnbMenu } from '@/api/fnb/fnbApi';
+import { searchPublicMovies } from '@/api/movie/movieApi';
 import { publicCinemaListKey } from '@/lib/cinema/cinemaQueryKeys';
 import { PUBLIC_FNB_KEY } from '@/lib/fnb/fnbQueryKeys';
 import { publicMovieListKey } from '@/lib/movie/movieQueryKeys';

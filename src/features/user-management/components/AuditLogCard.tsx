@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useState, type ReactElement } from 'react';
-import { getAuditLogs } from '@/api/adminUserApi';
+import { getAuditLogs } from '@/api/auth/adminUserApi';
 import Pagination from '@/components/common/Pagination';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';

@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { MapPin, Phone } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { getPublicCinemas } from '@/api/cinemaApi';
+import { getPublicCinemas } from '@/api/cinema/cinemaApi';
 import Reveal from '@/components/common/Reveal';
 import Alert from '@/components/ui/Alert';
 import { publicCinemaListKey } from '@/lib/cinema/cinemaQueryKeys';

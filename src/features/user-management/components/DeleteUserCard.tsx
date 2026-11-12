@@ -2,7 +2,7 @@ import { useMutation, useQueryClient, type QueryClient, type UseMutationResult }
 import { Trash2 } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { useNavigate, type NavigateFunction } from 'react-router-dom';
-import { deleteUser } from '@/api/adminUserApi';
+import { deleteUser } from '@/api/auth/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

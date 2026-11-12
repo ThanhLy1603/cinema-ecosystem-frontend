@@ -14,9 +14,9 @@ import {
 } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { searchUsers } from '@/api/adminUserApi';
-import { getCinemaOptions } from '@/api/cinemaApi';
-import { searchAdminMovies } from '@/api/movieApi';
+import { searchUsers } from '@/api/auth/adminUserApi';
+import { getCinemaOptions } from '@/api/cinema/cinemaApi';
+import { searchAdminMovies } from '@/api/movie/movieApi';
 import PageHeader from '@/components/common/PageHeader';
 import LinkButton from '@/components/ui/LinkButton';
 import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';

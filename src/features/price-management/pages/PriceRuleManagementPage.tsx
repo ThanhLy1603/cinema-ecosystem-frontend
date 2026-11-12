@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { listPriceRules } from '@/api/pricingApi';
+import { listPriceRules } from '@/api/showtime/pricingApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';

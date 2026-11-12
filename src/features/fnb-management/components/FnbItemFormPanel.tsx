@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
-import { createFnbItem, updateFnbItem } from '@/api/fnbApi';
+import { createFnbItem, updateFnbItem } from '@/api/fnb/fnbApi';
 import MediaUploadField from '@/components/common/MediaUploadField';
 import SidePanel from '@/components/common/SidePanel';
 import Alert from '@/components/ui/Alert';

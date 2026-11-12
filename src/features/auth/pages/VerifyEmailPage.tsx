@@ -2,7 +2,7 @@ import { useMutation, useQueryClient, type QueryClient, type UseMutationResult }
 import { CircleAlert, CircleCheck, LoaderCircle } from 'lucide-react';
 import { useEffect, useRef, type ReactElement, type RefObject } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { verifyEmail } from '@/api/authApi';
+import { verifyEmail } from '@/api/auth/authApi';
 import LinkButton from '@/components/ui/LinkButton';
 import { getErrorMessage } from '@/lib/common/apiError';
 import { useAuthStore } from '@/stores/useAuthStore';

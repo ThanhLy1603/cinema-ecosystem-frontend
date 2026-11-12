@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Crown, Link2, Star } from 'lucide-react';
 import type { ReactElement } from 'react';
-import { getMyProfile } from '@/api/userApi';
+import { getMyProfile } from '@/api/auth/userApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import UserAvatar from '@/components/common/UserAvatar';
 import Alert from '@/components/ui/Alert';

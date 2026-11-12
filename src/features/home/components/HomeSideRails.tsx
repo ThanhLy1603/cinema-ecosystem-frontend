@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Clapperboard, Clock, Gift, UtensilsCrossed } from 'lucide-react';
 import type { ReactElement, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
-import { getPublicPromotions } from '@/api/promotionApi';
+import { getPublicPromotions } from '@/api/promotion/promotionApi';
 import AgeRatingLabel from '@/components/common/AgeRatingLabel';
 import { formatVnd } from '@/lib/common/currencyFormat';
 import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';

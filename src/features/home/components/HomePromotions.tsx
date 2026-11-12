@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Check, Copy } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { getPublicPromotions } from '@/api/promotionApi';
+import { getPublicPromotions } from '@/api/promotion/promotionApi';
 import Reveal from '@/components/common/Reveal';
 import SectionBanner from '@/components/common/SectionBanner';
 import Alert from '@/components/ui/Alert';

@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getSeatMap } from '@/api/hallApi';
+import { getSeatMap } from '@/api/cinema/hallApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';

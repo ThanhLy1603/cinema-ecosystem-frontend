@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { UserPlus } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { searchUsers } from '@/api/adminUserApi';
+import { searchUsers } from '@/api/auth/adminUserApi';
 import Pagination from '@/components/common/Pagination';
 import Alert from '@/components/ui/Alert';
 import LinkButton from '@/components/ui/LinkButton';

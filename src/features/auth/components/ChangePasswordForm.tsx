@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
 import { KeyRound, Lock, ShieldCheck } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
-import { changeMyPassword } from '@/api/userApi';
+import { changeMyPassword } from '@/api/auth/userApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';

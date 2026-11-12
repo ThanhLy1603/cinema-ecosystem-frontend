@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { ArrowLeft, KeyRound, Mail } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { forgotPassword } from '@/api/authApi';
+import { forgotPassword } from '@/api/auth/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';

@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { CopyPlus, Check, Eye, X } from 'lucide-react';
 import { useEffect, useState, type ReactElement } from 'react';
-import { copyShowtimeDay, duplicateShowtime } from '@/api/showtimeApi';
+import { copyShowtimeDay, duplicateShowtime } from '@/api/showtime/showtimeApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

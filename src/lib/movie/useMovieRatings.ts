@@ -1,5 +1,5 @@
 import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getMovieRatingSummaries } from '@/api/movieApi';
+import { getMovieRatingSummaries } from '@/api/movie/movieApi';
 import type { MovieRatingSummary } from '@/types/movie/movie';
 import { movieRatingSummariesKey } from './movieQueryKeys';
 

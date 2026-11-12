@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { MailWarning } from 'lucide-react';
 import type { ReactElement } from 'react';
-import { resendVerification } from '@/api/authApi';
+import { resendVerification } from '@/api/auth/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Lock, LockOpen } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { updateUserStatus } from '@/api/adminUserApi';
+import { updateUserStatus } from '@/api/auth/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

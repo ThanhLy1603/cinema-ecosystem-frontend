@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
-import { updateUserInfo } from '@/api/adminUserApi';
+import { updateUserInfo } from '@/api/auth/adminUserApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';

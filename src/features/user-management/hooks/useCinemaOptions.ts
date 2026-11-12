@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getCinemaOptions } from '@/api/cinemaApi';
+import { getCinemaOptions } from '@/api/cinema/cinemaApi';
 import type { CinemaOption } from '@/types/cinema/cinema';
 import { CINEMA_OPTIONS_QUERY_KEY } from '../utils/queryKeys';
 

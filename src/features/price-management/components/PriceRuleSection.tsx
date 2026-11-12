@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { deletePriceRule, restorePriceRule } from '@/api/pricingApi';
+import { deletePriceRule, restorePriceRule } from '@/api/showtime/pricingApi';
 import RestoreButton from '@/components/common/RestoreButton';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';

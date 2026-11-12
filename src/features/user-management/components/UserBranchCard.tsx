@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult, type UseQueryResult } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { assignBranches } from '@/api/staffApi';
+import { assignBranches } from '@/api/auth/staffApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

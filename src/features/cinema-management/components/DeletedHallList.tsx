@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
-import { listHalls, restoreHall } from '@/api/hallApi';
+import { listHalls, restoreHall } from '@/api/cinema/hallApi';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';
 import type { Hall } from '@/types/cinema/cinema';

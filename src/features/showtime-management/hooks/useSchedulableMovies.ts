@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getSchedulableMovies } from '@/api/showtimeApi';
+import { getSchedulableMovies } from '@/api/showtime/showtimeApi';
 import type { MovieInfo } from '@/types/showtime/showtime';
 import { SCHEDULABLE_MOVIES_KEY } from '../utils/queryKeys';
 

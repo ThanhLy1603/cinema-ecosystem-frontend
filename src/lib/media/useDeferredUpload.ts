@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getUploadErrorMessage, uploadPendingMedia } from '@/api/mediaApi';
+import { getUploadErrorMessage, uploadPendingMedia } from '@/api/media/mediaApi';
 import type { MediaFieldState, MediaPurpose } from '@/types/media/media';
 
 export interface PendingUploadRequest {

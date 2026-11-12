@@ -1,4 +1,4 @@
-import { refreshSession } from '@/api/authApi';
+import { refreshSession } from '@/api/auth/authApi';
 import { getErrorCode, REFRESH_IN_PROGRESS_ERROR_CODE } from '@/lib/common/apiError';
 import { wait } from '@/lib/common/utils';
 import { useAuthStore } from '@/stores/useAuthStore';

@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getPersonOptions } from '@/api/movieApi';
+import { getPersonOptions } from '@/api/movie/movieApi';
 import type { PersonOption } from '@/types/movie/movie';
 import { PERSON_OPTIONS_KEY } from '../utils/queryKeys';
 

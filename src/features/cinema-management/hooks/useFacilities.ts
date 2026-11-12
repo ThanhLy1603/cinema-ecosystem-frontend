@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getFacilities } from '@/api/cinemaApi';
+import { getFacilities } from '@/api/cinema/cinemaApi';
 import type { Facility } from '@/types/cinema/cinema';
 import { ADMIN_FACILITIES_KEY } from '../utils/queryKeys';
 

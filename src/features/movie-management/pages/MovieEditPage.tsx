@@ -2,7 +2,7 @@ import { useMutation, useQuery, type UseMutationResult, type UseQueryResult } fr
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getAdminMovie, updateMovie } from '@/api/movieApi';
+import { getAdminMovie, updateMovie } from '@/api/movie/movieApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import SectionCard from '@/components/common/SectionCard';
 import Alert from '@/components/ui/Alert';

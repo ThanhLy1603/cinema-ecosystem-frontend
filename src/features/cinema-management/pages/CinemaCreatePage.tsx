@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult, type UseQueryResult } from '@tanst
 import { ArrowLeft } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
-import { createCinema } from '@/api/cinemaApi';
+import { createCinema } from '@/api/cinema/cinemaApi';
 import SectionCard from '@/components/common/SectionCard';
 import { getErrorMessage, getFieldErrors } from '@/lib/common/apiError';
 import type { CinemaDetail, CinemaRequest, Facility } from '@/types/cinema/cinema';

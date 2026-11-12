@@ -1,7 +1,7 @@
 import { Clapperboard } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { restoreMovie } from '@/api/movieApi';
+import { restoreMovie } from '@/api/movie/movieApi';
 import AgeRatingBadge from '@/components/common/AgeRatingBadge';
 import RestoreButton from '@/components/common/RestoreButton';
 import { formatDuration, formatReleaseDate } from '@/lib/movie/movieFormat';

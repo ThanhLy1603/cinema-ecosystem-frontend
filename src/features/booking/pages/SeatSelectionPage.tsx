@@ -2,7 +2,13 @@ import { useMutation, useQuery, useQueryClient, type QueryClient, type UseQueryR
 import { ArrowLeft } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactElement } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { cancelPendingBooking, getMySeatHold, getShowtimeSeatMap, holdSeat, releaseSeat } from '@/api/bookingApi';
+import {
+   cancelPendingBooking,
+   getMySeatHold,
+   getShowtimeSeatMap,
+   holdSeat,
+   releaseSeat,
+} from '@/api/booking/bookingApi';
 import type { ConnectionState } from '@/api/websocketClient';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import SeatGrid from '@/components/common/SeatGrid';

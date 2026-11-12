@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useState, type ReactElement } from 'react';
-import { simulatePrices } from '@/api/pricingApi';
+import { simulatePrices } from '@/api/showtime/pricingApi';
 import ShowtimePriceTable from '@/components/common/ShowtimePriceTable';
 import Alert from '@/components/ui/Alert';
 import SelectField from '@/components/ui/SelectField';

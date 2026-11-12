@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Ticket } from 'lucide-react';
 import type { ReactElement } from 'react';
-import { getMyBookings } from '@/api/bookingApi';
+import { getMyBookings } from '@/api/booking/bookingApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import LinkButton from '@/components/ui/LinkButton';

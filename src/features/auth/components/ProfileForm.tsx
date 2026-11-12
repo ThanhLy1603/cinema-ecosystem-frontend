@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
 import { Calendar, Mail, Phone, Save, User as UserIcon } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
-import { updateMyProfile } from '@/api/userApi';
+import { updateMyProfile } from '@/api/auth/userApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';

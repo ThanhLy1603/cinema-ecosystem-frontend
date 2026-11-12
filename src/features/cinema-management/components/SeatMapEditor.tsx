@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-query';
 import { Grid3x3, Redo2, RotateCcw, Save, Undo2 } from 'lucide-react';
 import { useEffect, useMemo, useState, type ReactElement } from 'react';
-import { getSeatMap, getSeatMapLock, saveSeatMap } from '@/api/hallApi';
+import { getSeatMap, getSeatMapLock, saveSeatMap } from '@/api/cinema/hallApi';
 import SeatGrid from '@/components/common/SeatGrid';
 import SeatLegend from '@/components/common/SeatLegend';
 import SectionCard from '@/components/common/SectionCard';

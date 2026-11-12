@@ -2,8 +2,8 @@ import { useMutation, useQuery, useQueryClient, type QueryClient, type UseQueryR
 import { ArrowLeft, CreditCard, ShieldCheck } from 'lucide-react';
 import { useEffect, useMemo, type ReactElement } from 'react';
 import { Link, Navigate, useNavigate, useParams, type NavigateFunction } from 'react-router-dom';
-import { getPendingBooking } from '@/api/bookingApi';
-import { createVnpayPayment } from '@/api/paymentApi';
+import { getPendingBooking } from '@/api/booking/bookingApi';
+import { createVnpayPayment } from '@/api/payment/paymentApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';

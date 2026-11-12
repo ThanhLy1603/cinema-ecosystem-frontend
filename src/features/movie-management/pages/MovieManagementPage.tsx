@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { Plus, Tags, Users } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { searchAdminMovies } from '@/api/movieApi';
+import { searchAdminMovies } from '@/api/movie/movieApi';
 import Pagination from '@/components/common/Pagination';
 import Alert from '@/components/ui/Alert';
 import LinkButton from '@/components/ui/LinkButton';

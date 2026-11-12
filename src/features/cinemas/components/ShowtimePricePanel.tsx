@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
-import { getPublicShowtimePrice } from '@/api/pricingApi';
+import { getPublicShowtimePrice } from '@/api/showtime/pricingApi';
 import ShowtimePriceTable from '@/components/common/ShowtimePriceTable';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';

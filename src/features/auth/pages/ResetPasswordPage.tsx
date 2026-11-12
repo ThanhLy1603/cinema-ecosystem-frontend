@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { KeyRound, ShieldCheck } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { Link, useNavigate, useSearchParams, type NavigateFunction } from 'react-router-dom';
-import { resetPassword } from '@/api/authApi';
+import { resetPassword } from '@/api/auth/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import LinkButton from '@/components/ui/LinkButton';

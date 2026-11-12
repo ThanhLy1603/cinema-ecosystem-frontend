@@ -1,6 +1,6 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { useState, type ReactElement } from 'react';
-import { getPublicFnbMenu } from '@/api/fnbApi';
+import { getPublicFnbMenu } from '@/api/fnb/fnbApi';
 import fnbBannerImageUrl from '@/assets/banners/fnb-banner.jpg';
 import FnbComboCard from '@/components/common/FnbComboCard';
 import Reveal from '@/components/common/Reveal';

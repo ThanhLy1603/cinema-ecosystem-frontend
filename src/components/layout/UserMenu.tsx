@@ -2,7 +2,7 @@ import { useMutation, useQueryClient, type QueryClient, type UseMutationResult }
 import { ChevronDown, LayoutDashboard, LogOut, MonitorSmartphone, Store, Ticket, UserCog } from 'lucide-react';
 import { useCallback, useRef, useState, type ReactElement } from 'react';
 import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
-import { logout, logoutAll } from '@/api/authApi';
+import { logout, logoutAll } from '@/api/auth/authApi';
 import { getErrorMessage } from '@/lib/common/apiError';
 import UserAvatar from '@/components/common/UserAvatar';
 import { getPrimaryRoleLabel } from '@/lib/auth/roleLabels';

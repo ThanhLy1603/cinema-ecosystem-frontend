@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { FileVideo, Upload, X } from 'lucide-react';
 import { useEffect, useRef, useState, type ChangeEvent, type ReactElement } from 'react';
-import { getUploadErrorMessage, getUploadSignature, validateMediaFile } from '@/api/mediaApi';
+import { getUploadErrorMessage, getUploadSignature, validateMediaFile } from '@/api/media/mediaApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';

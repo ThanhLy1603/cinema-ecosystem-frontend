@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { LogIn, Lock, Mail } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
-import { login } from '@/api/authApi';
+import { login } from '@/api/auth/authApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';

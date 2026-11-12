@@ -2,7 +2,7 @@ import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Armchair, Pencil, Trash2 } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { deleteHall } from '@/api/hallApi';
+import { deleteHall } from '@/api/cinema/hallApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

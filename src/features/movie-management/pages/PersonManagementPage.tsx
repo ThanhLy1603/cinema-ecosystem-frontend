@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react
 import { ArrowLeft, Plus, Search } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { searchAdminPersons } from '@/api/movieApi';
+import { searchAdminPersons } from '@/api/movie/movieApi';
 import Pagination from '@/components/common/Pagination';
 import SectionCard from '@/components/common/SectionCard';
 import Alert from '@/components/ui/Alert';

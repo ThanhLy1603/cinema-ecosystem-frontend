@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery, type UseQueryResult } from '@tanstack/react-query';
 import type { ReactElement } from 'react';
 import { useSearchParams, type SetURLSearchParams } from 'react-router-dom';
-import { getPublicGenres, searchPublicMovies } from '@/api/movieApi';
+import { getPublicGenres, searchPublicMovies } from '@/api/movie/movieApi';
 import MovieCard from '@/components/common/MovieCard';
 import MovieStatusTabs from '@/components/common/MovieStatusTabs';
 import Reveal from '@/components/common/Reveal';

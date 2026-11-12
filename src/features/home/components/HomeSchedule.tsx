@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { CalendarX, ChevronLeft, ChevronRight, Clapperboard, Phone } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import { getPublicShowtimes } from '@/api/showtimeApi';
+import { getPublicShowtimes } from '@/api/showtime/showtimeApi';
 import AgeRatingLabel from '@/components/common/AgeRatingLabel';
 import SectionHeading from '@/components/common/SectionHeading';
 import Alert from '@/components/ui/Alert';

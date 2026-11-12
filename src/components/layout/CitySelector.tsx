@@ -1,7 +1,7 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { MapPin } from 'lucide-react';
 import type { ReactElement } from 'react';
-import { getPublicCities } from '@/api/cinemaApi';
+import { getPublicCities } from '@/api/cinema/cinemaApi';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';
 import { PUBLIC_CITIES_KEY } from '@/lib/cinema/cinemaQueryKeys';
 import { useCityStore } from '@/stores/useCityStore';

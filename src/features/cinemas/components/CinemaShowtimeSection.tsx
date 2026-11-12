@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { CalendarX } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { useSearchParams, type SetURLSearchParams } from 'react-router-dom';
-import { getPublicShowtimes } from '@/api/showtimeApi';
+import { getPublicShowtimes } from '@/api/showtime/showtimeApi';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';
 import { publicShowtimeListKey } from '@/lib/showtime/showtimeQueryKeys';

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
 import { Pencil, Trash2 } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
-import { deleteFacility, restoreFacility } from '@/api/cinemaApi';
+import { deleteFacility, restoreFacility } from '@/api/cinema/cinemaApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import { getErrorMessage } from '@/lib/common/apiError';

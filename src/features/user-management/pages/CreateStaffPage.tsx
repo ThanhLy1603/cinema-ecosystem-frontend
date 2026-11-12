@@ -8,7 +8,7 @@ import {
 import { ArrowLeft, Mail, Phone, User as UserIcon, UserPlus } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
 import { Link, useNavigate, type NavigateFunction } from 'react-router-dom';
-import { createStaff } from '@/api/staffApi';
+import { createStaff } from '@/api/auth/staffApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import SelectField, { type SelectOption } from '@/components/ui/SelectField';

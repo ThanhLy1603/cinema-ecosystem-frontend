@@ -2,8 +2,8 @@ import { useQuery, useQueryClient, type QueryClient, type UseQueryResult } from 
 import { CheckCircle2, CircleAlert, CircleX, LoaderCircle } from 'lucide-react';
 import { useEffect, type ReactElement } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { getPendingBooking } from '@/api/bookingApi';
-import { getPaymentResult } from '@/api/paymentApi';
+import { getPendingBooking } from '@/api/booking/bookingApi';
+import { getPaymentResult } from '@/api/payment/paymentApi';
 import Alert from '@/components/ui/Alert';
 import LinkButton from '@/components/ui/LinkButton';
 import { getPaymentPath, MY_TICKETS_PATH } from '@/lib/booking/bookingPaths';

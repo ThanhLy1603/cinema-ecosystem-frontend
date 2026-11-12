@@ -1,5 +1,5 @@
 import { useQuery, type UseQueryResult } from '@tanstack/react-query';
-import { getAdminGenres } from '@/api/movieApi';
+import { getAdminGenres } from '@/api/movie/movieApi';
 import type { Genre } from '@/types/movie/movie';
 import { ADMIN_GENRES_KEY } from '../utils/queryKeys';
 

@@ -2,7 +2,7 @@ import { useQuery, type UseQueryResult } from '@tanstack/react-query';
 import { ArrowLeft } from 'lucide-react';
 import type { ReactElement } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { getPublicMovie } from '@/api/movieApi';
+import { getPublicMovie } from '@/api/movie/movieApi';
 import FullPageSpinner from '@/components/common/FullPageSpinner';
 import Alert from '@/components/ui/Alert';
 import { getErrorMessage } from '@/lib/common/apiError';

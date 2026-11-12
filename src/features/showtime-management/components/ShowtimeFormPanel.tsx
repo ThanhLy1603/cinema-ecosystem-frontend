@@ -1,7 +1,7 @@
 import { useMutation, type UseMutationResult, type UseQueryResult } from '@tanstack/react-query';
 import { Ban, CalendarClock, Copy, Save, X } from 'lucide-react';
 import { useEffect, useState, type FormEvent, type ReactElement } from 'react';
-import { cancelShowtime, createShowtime, updateShowtime } from '@/api/showtimeApi';
+import { cancelShowtime, createShowtime, updateShowtime } from '@/api/showtime/showtimeApi';
 import ShowtimePriceTable from '@/components/common/ShowtimePriceTable';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';

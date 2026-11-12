@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
 import { Save } from 'lucide-react';
 import { useState, type FormEvent, type ReactElement } from 'react';
-import { createPerson, updatePerson } from '@/api/movieApi';
+import { createPerson, updatePerson } from '@/api/movie/movieApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import MediaUploadField from '@/components/common/MediaUploadField';

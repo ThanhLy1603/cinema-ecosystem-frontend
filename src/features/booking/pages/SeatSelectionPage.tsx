@@ -30,10 +30,10 @@ import type { SeatAvailability, ShowtimeSeat, ShowtimeSeatMap } from '@/types/bo
 import type { SeatType } from '@/types/cinema/cinema';
 import BookingStepper from '../components/BookingStepper';
 import BookingSummaryAside, { type SummarySeat } from '../components/BookingSummaryAside';
-import ConnectionBadge from '../components/ConnectionBadge';
-import { useHoldCountdown } from '../hooks/useHoldCountdown';
-import { useSeatMapRealtime } from '../hooks/useSeatMapRealtime';
-import { buildDisplayedSeatIds, toGridSeat } from '../utils/seatSelection';
+import ConnectionBadge from '@/components/common/ConnectionBadge';
+import { useHoldCountdown } from '@/lib/booking/useHoldCountdown';
+import { useSeatMapRealtime } from '@/lib/booking/useSeatMapRealtime';
+import { buildDisplayedSeatIds, toGridSeat } from '@/lib/booking/seatSelection';
 import { parsePositiveInteger } from '../utils/selectionParams';
 
 const PENDING_OTHER_SHOWTIME_CODE: string = 'PENDING_BOOKING_OTHER_SHOWTIME';

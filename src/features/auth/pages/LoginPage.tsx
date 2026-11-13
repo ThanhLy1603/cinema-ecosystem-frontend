@@ -11,7 +11,7 @@ import { useAuthStore } from '@/stores/useAuthStore';
 import type { LoginRequest, LoginResponse, User } from '@/types/auth/auth';
 import GoogleAuthSection from '../components/GoogleAuthSection';
 import { getLoginNotice, PASSWORD_RESET_NOTICE } from '../utils/loginNotice';
-import { getRedirectPath } from '../utils/redirect';
+import { getPostLoginPath, getRedirectPath } from '../utils/redirect';
 import { validateEmail, validateLoginPassword } from '@/lib/auth/validation';
 
 interface LoginFieldErrors {
@@ -32,7 +32,7 @@ export function LoginPage(): ReactElement {
 
    function handleLoginSuccess(loginResponse: LoginResponse): void {
       setAuth(loginResponse.user);
-      navigate(redirectPath, { replace: true });
+      navigate(getPostLoginPath(redirectPath, loginResponse.user), { replace: true });
    }
 
    const loginMutation: UseMutationResult<LoginResponse, unknown, LoginRequest> = useMutation<

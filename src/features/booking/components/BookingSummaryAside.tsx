@@ -19,7 +19,7 @@ import { formatClockRange, formatDisplayDate, toVietnamDate } from '@/lib/common
 import { formatDuration } from '@/lib/movie/movieFormat';
 import type { ScreenType } from '@/types/cinema/cinema';
 import type { AgeRating } from '@/types/movie/movie';
-import { formatCountdown } from '../utils/seatSelection';
+import { formatCountdown } from '@/lib/booking/seatSelection';
 
 const HOLD_WARNING_SECONDS: number = 120;
 

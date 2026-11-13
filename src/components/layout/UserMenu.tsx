@@ -1,5 +1,14 @@
 import { useMutation, useQueryClient, type QueryClient, type UseMutationResult } from '@tanstack/react-query';
-import { ChevronDown, LayoutDashboard, LogOut, MonitorSmartphone, Store, Ticket, UserCog } from 'lucide-react';
+import {
+   ChevronDown,
+   LayoutDashboard,
+   LogOut,
+   MonitorSmartphone,
+   ScanLine,
+   Store,
+   Ticket,
+   UserCog,
+} from 'lucide-react';
 import { useCallback, useRef, useState, type ReactElement } from 'react';
 import { Link, useLocation, useNavigate, type Location, type NavigateFunction } from 'react-router-dom';
 import { logout, logoutAll } from '@/api/auth/authApi';
@@ -52,7 +61,9 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
    });
    const isSigningOut: boolean = logoutMutation.isPending || logoutAllMutation.isPending;
    const canAccessAdmin: boolean = user.roles.includes('ROLE_ADMIN') || user.roles.includes('ROLE_MANAGER');
+   const canAccessStaff: boolean = canAccessAdmin || user.roles.includes('ROLE_STAFF');
    const isInAdminRoute: boolean = location.pathname.startsWith('/admin');
+   const isInStaffRoute: boolean = location.pathname.startsWith('/staff');
 
    return (
       <div ref={containerRef} className="relative">
@@ -122,6 +133,21 @@ export function UserMenu({ user }: UserMenuProps): ReactElement {
                            <LayoutDashboard className="size-[18px]" aria-hidden="true" />
                         )}
                         {isInAdminRoute ? 'Trang khách hàng' : 'Trang quản trị'}
+                     </Link>
+                  )}
+                  {canAccessStaff && (
+                     <Link
+                        to={isInStaffRoute ? '/' : '/staff'}
+                        role="menuitem"
+                        onClick={closeMenu}
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink-700 transition-colors hover:bg-brand-50 hover:text-brand-700"
+                     >
+                        {isInStaffRoute ? (
+                           <Store className="size-[18px]" aria-hidden="true" />
+                        ) : (
+                           <ScanLine className="size-[18px]" aria-hidden="true" />
+                        )}
+                        {isInStaffRoute ? 'Trang khách hàng' : 'Trang nhân viên'}
                      </Link>
                   )}
                   <button

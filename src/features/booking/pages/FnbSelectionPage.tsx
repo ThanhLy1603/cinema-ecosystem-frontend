@@ -34,7 +34,7 @@ import type { FnbCategory, FnbItem, FnbMenu } from '@/types/fnb/fnb';
 import BookingStepper from '../components/BookingStepper';
 import BookingSummaryAside, { type SummaryFnbLine, type SummarySeat } from '../components/BookingSummaryAside';
 import FnbProductCard from '../components/FnbProductCard';
-import { useHoldCountdown } from '../hooks/useHoldCountdown';
+import { useHoldCountdown } from '@/lib/booking/useHoldCountdown';
 import { parsePositiveInteger } from '../utils/selectionParams';
 import { buildSummaryFnbLines, buildSummarySeats } from '../utils/summaryLines';
 

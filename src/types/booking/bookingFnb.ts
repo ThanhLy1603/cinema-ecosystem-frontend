@@ -16,6 +16,8 @@ export interface BookingFnbLine {
   quantity: number;
   unitPrice: number;
   lineAmount: number;
+  deliveredQuantity: number;
+  deliveredAt: string | null;
 }
 
 export interface BookingFnb {

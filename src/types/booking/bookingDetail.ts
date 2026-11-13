@@ -25,6 +25,7 @@ export interface BookingSeat {
   seatId: number;
   label: string;
   seatTypeName: string | null;
+  seatTypeCode: string | null;
   price: number;
 }
 

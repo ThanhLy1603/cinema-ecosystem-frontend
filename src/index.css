@@ -225,3 +225,23 @@
       radial-gradient(1100px 800px at 10% 78%, rgb(214 230 170 / 0.24), transparent 65%),
       linear-gradient(180deg, #eef5f1 0%, #e6eff0 55%, #eaf1ec 100%);
 }
+
+@media print {
+   body * {
+      visibility: hidden;
+   }
+
+   #counter-receipt-print,
+   #counter-receipt-print * {
+      visibility: visible;
+   }
+
+   #counter-receipt-print {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      max-width: none;
+      box-shadow: none;
+   }
+}

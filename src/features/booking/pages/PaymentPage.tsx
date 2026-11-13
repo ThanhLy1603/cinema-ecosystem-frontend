@@ -21,7 +21,7 @@ import type { BookingDetail } from '@/types/booking/bookingDetail';
 import type { PaymentUrl } from '@/types/payment/payment';
 import BookingStepper from '../components/BookingStepper';
 import BookingSummaryAside, { type SummaryFnbLine, type SummarySeat } from '../components/BookingSummaryAside';
-import { useHoldCountdown } from '../hooks/useHoldCountdown';
+import { useHoldCountdown } from '@/lib/booking/useHoldCountdown';
 import { parsePositiveInteger } from '../utils/selectionParams';
 
 const HOLD_LOST_CODES: string[] = ['NO_PENDING_BOOKING', 'HOLD_EXPIRING_SOON', 'SEAT_GAP_LEFT'];

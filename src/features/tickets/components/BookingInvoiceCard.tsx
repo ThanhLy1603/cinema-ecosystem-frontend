@@ -4,6 +4,7 @@ import { formatVnd } from '@/lib/common/currencyFormat';
 import { formatClockRange, formatDisplayDate, toVietnamDate } from '@/lib/common/vietnamTime';
 import { cn } from '@/lib/common/utils';
 import type { BookingDetail, BookingStatus } from '@/types/booking/bookingDetail';
+import type { BookingFnbLine } from '@/types/booking/bookingFnb';
 
 interface BookingInvoiceCardProps {
    bookingDetail: BookingDetail;
@@ -13,6 +14,16 @@ const STATUS_LABELS: Partial<Record<BookingStatus, string>> = {
    PAID: 'Đã thanh toán',
    REFUND_REQUIRED: 'Chờ hoàn tiền',
 };
+
+function formatFnbDeliveryStatus(bookingFnbLine: BookingFnbLine): string {
+   if (bookingFnbLine.deliveredQuantity >= bookingFnbLine.quantity) {
+      return 'Đã nhận';
+   }
+   if (bookingFnbLine.deliveredQuantity > 0) {
+      return `Đã nhận ${bookingFnbLine.deliveredQuantity}/${bookingFnbLine.quantity}`;
+   }
+   return 'Chưa nhận';
+}
 
 export function BookingInvoiceCard({ bookingDetail }: BookingInvoiceCardProps): ReactElement {
    const { showtime } = bookingDetail;
@@ -85,6 +96,18 @@ export function BookingInvoiceCard({ bookingDetail }: BookingInvoiceCardProps): 
                      >
                         <span>
                            {bookingFnbLine.quantity} × {bookingFnbLine.name}
+                           {isPaid && (
+                              <span
+                                 className={cn(
+                                    'ml-2 rounded-full px-2 py-0.5 text-xs font-bold',
+                                    bookingFnbLine.deliveredQuantity >= bookingFnbLine.quantity
+                                       ? 'bg-ink-100 text-ink-600'
+                                       : 'bg-emerald-50 text-emerald-700',
+                                 )}
+                              >
+                                 {formatFnbDeliveryStatus(bookingFnbLine)}
+                              </span>
+                           )}
                         </span>
                         <span>{formatVnd(bookingFnbLine.lineAmount)}</span>
                      </li>

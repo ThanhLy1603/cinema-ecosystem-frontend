@@ -4,10 +4,16 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import ComingSoonPage from '@/components/common/ComingSoonPage';
 import ForbiddenPage from '@/components/common/ForbiddenPage';
 import AdminLayout from '@/components/layout/AdminLayout';
+import StaffLayout from '@/components/layout/StaffLayout';
 import AuthLayout from '@/components/layout/AuthLayout';
 import MainLayout from '@/components/layout/MainLayout';
 import AboutPage from '@/features/about/pages/AboutPage';
 import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
+import CheckInPage from '@/features/staff/pages/CheckInPage';
+import FnbPickupPage from '@/features/staff/pages/FnbPickupPage';
+import StaffDashboardPage from '@/features/staff/pages/StaffDashboardPage';
+import TicketSalesPage from '@/features/staff/pages/TicketSalesPage';
+import { STAFF_NAV_ITEMS, type StaffNavItem } from '@/lib/staff/staffNavItems';
 import GuestRoute from '@/features/auth/guards/GuestRoute';
 import ProtectedRoute from '@/features/auth/guards/ProtectedRoute';
 import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage';
@@ -45,6 +51,24 @@ import ShowtimeManagementPage from '@/features/showtime-management/pages/Showtim
 import CreateStaffPage from '@/features/user-management/pages/CreateStaffPage';
 import UserDetailPage from '@/features/user-management/pages/UserDetailPage';
 import UserManagementPage from '@/features/user-management/pages/UserManagementPage';
+
+function renderStaffComingSoonRoute(staffNavItem: StaffNavItem): ReactElement {
+   return (
+      <Route
+         key={staffNavItem.to}
+         path={staffNavItem.to.replace('/staff/', '')}
+         element={
+            <ComingSoonPage
+               title={staffNavItem.label}
+               description={staffNavItem.description}
+               icon={staffNavItem.icon}
+               backTo="/staff"
+               backLabel="Về trang nhân viên"
+            />
+         }
+      />
+   );
+}
 
 export function AppRoutes(): ReactElement {
    return (
@@ -102,6 +126,18 @@ export function AppRoutes(): ReactElement {
             </Route>
             <Route path="/forbidden" element={<ForbiddenPage />} />
             <Route path="*" element={<Navigate to="/" replace />} />
+         </Route>
+
+         <Route element={<ProtectedRoute roles={['ROLE_STAFF', 'ROLE_MANAGER', 'ROLE_ADMIN']} />}>
+            <Route path="/staff" element={<StaffLayout />}>
+               <Route index element={<StaffDashboardPage />} />
+               <Route path="check-in" element={<CheckInPage />} />
+               <Route path="fnb-pickup" element={<FnbPickupPage />} />
+               <Route path="ticket-sales" element={<TicketSalesPage />} />
+               {STAFF_NAV_ITEMS.filter((staffNavItem) => !staffNavItem.end && !staffNavItem.isReady).map(
+                  renderStaffComingSoonRoute,
+               )}
+            </Route>
          </Route>
 
          <Route element={<ProtectedRoute roles={['ROLE_ADMIN', 'ROLE_MANAGER']} />}>

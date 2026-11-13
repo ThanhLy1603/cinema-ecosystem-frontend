@@ -14,7 +14,7 @@ export type CheckInResultCode =
   | 'WRONG_BRANCH'
   | 'NOT_FOUND';
 
-export type ScanBookingStatus = 'PENDING' | 'PAID' | 'EXPIRED' | 'CANCELLED' | 'REFUND_REQUIRED';
+export type ScanBookingStatus = 'PENDING' | 'PAID' | 'EXPIRED' | 'CANCELLED' | 'REFUND_REQUIRED' | 'REFUNDED';
 
 export type TicketScanAction = 'LOOKUP' | 'CHECK_IN' | 'UNDO';
 

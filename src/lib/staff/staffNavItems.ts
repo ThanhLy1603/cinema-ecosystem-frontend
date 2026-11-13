@@ -44,13 +44,13 @@ export const STAFF_NAV_ITEMS: StaffNavItem[] = [
       to: '/staff/fnb-sales',
       icon: Popcorn,
       description: 'Bán combo và đồ uống lẻ tại quầy.',
-      isReady: false,
+      isReady: true,
    },
    {
       label: 'Ca làm việc',
       to: '/staff/shifts',
       icon: Timer,
       description: 'Mở ca, đóng ca và đối soát tiền thu.',
-      isReady: false,
+      isReady: true,
    },
 ];

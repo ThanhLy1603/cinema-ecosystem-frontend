@@ -2,7 +2,7 @@ import type { ScreenType } from '@/types/cinema/cinema';
 import type { AgeRating } from '@/types/movie/movie';
 import type { BookingFnbLine } from '@/types/booking/bookingFnb';
 
-export type BookingStatus = 'PENDING' | 'PAID' | 'EXPIRED' | 'CANCELLED' | 'REFUND_REQUIRED';
+export type BookingStatus = 'PENDING' | 'PAID' | 'EXPIRED' | 'CANCELLED' | 'REFUND_REQUIRED' | 'REFUNDED';
 
 export interface BookingShowtime {
   showtimeId: number;

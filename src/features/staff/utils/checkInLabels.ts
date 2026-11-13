@@ -41,6 +41,7 @@ export const SCAN_BOOKING_STATUS_LABELS: Record<ScanBookingStatus, string> = {
    EXPIRED: 'Hết hạn giữ chỗ',
    CANCELLED: 'Đã hủy',
    REFUND_REQUIRED: 'Chờ hoàn tiền',
+   REFUNDED: 'Đã hoàn tiền',
 };
 
 export const SCAN_BOOKING_STATUS_TONES: Record<ScanBookingStatus, CheckInTone> = {
@@ -49,11 +50,7 @@ export const SCAN_BOOKING_STATUS_TONES: Record<ScanBookingStatus, CheckInTone> =
    EXPIRED: 'danger',
    CANCELLED: 'danger',
    REFUND_REQUIRED: 'warning',
+   REFUNDED: 'warning',
 };
 
-export const PAYMENT_METHOD_LABELS: Record<string, string> = {
-   VNPAY: 'VNPAY',
-   CASH: 'Tiền mặt',
-   CARD: 'Thẻ',
-   TRANSFER: 'Chuyển khoản',
-};
+export { PAYMENT_METHOD_LABELS } from '@/lib/staff/operationsLabels';

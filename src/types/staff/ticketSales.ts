@@ -30,3 +30,8 @@ export interface CounterReceipt {
   customerName: string | null;
   paidAt: string;
 }
+
+export interface CounterReceiptFile {
+  fileName: string;
+  directory: string;
+}

@@ -49,6 +49,8 @@ export function TicketSalesPage(): ReactElement {
       queryKey: pendingBookingKey(),
       queryFn: getPendingBooking,
       enabled: step === 'showtime',
+      staleTime: 0,
+      refetchOnMount: 'always',
       gcTime: 0,
    });
    const discardMutation: UseMutationResult<void, unknown, void> = useMutation<void, unknown, void>({

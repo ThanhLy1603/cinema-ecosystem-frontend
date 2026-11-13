@@ -20,6 +20,9 @@ const ADMIN_TITLE_RULES: RouteTitleRule[] = [
    { prefix: '/admin/showtimes', title: 'Suất chiếu' },
    { prefix: '/admin/price-rules', title: 'Cấu hình giá vé' },
    { prefix: '/admin/fnb', title: 'Đồ ăn & nước' },
+   { prefix: '/admin/operations/history', title: 'Lịch sử vận hành' },
+   { prefix: '/admin/operations/revenue', title: 'Báo cáo doanh thu' },
+   { prefix: '/admin/operations/exceptions', title: 'Xử lý ngoại lệ' },
    { prefix: '/admin/promotions', title: 'Khuyến mãi' },
    { prefix: '/admin/community', title: 'Cộng đồng & blog' },
 ];

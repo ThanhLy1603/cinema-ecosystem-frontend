@@ -13,6 +13,7 @@ interface BookingInvoiceCardProps {
 const STATUS_LABELS: Partial<Record<BookingStatus, string>> = {
    PAID: 'Đã thanh toán',
    REFUND_REQUIRED: 'Chờ hoàn tiền',
+   REFUNDED: 'Đã hoàn tiền',
 };
 
 function formatFnbDeliveryStatus(bookingFnbLine: BookingFnbLine): string {

@@ -6,18 +6,18 @@ import {
    type UseMutationResult,
    type UseQueryResult,
 } from '@tanstack/react-query';
-import { ArrowLeft, Banknote, CreditCard, Landmark, Search, UserRound, X, type LucideIcon } from 'lucide-react';
+import { ArrowLeft, Search, UserRound, X } from 'lucide-react';
 import { useState, type ReactElement } from 'react';
 import { getPendingBooking } from '@/api/booking/bookingApi';
 import { checkoutTicketSale, lookupCustomer } from '@/api/staff/ticketSalesApi';
 import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
 import TextField from '@/components/ui/TextField';
+import CounterPaymentPanel from './CounterPaymentPanel';
 import { pendingBookingKey } from '@/lib/booking/bookingQueryKeys';
 import { getErrorMessage } from '@/lib/common/apiError';
 import { formatVnd } from '@/lib/common/currencyFormat';
-import { cn } from '@/lib/common/utils';
-import { parseValidMoneyInput } from '@/lib/common/moneyInput';
+import { evaluateCounterPayment, type CounterPaymentEvaluation } from '@/lib/staff/counterPayment';
 import { formatClockRange, formatDisplayDate, toVietnamDate } from '@/lib/common/vietnamTime';
 import type { BookingDetail } from '@/types/booking/bookingDetail';
 import type {
@@ -26,20 +26,6 @@ import type {
    CounterReceipt,
    CustomerLookup,
 } from '@/types/staff/ticketSales';
-
-interface PaymentMethodOption {
-   method: CounterPaymentMethod;
-   label: string;
-   icon: LucideIcon;
-}
-
-const PAYMENT_METHOD_OPTIONS: PaymentMethodOption[] = [
-   { method: 'CASH', label: 'Tiền mặt', icon: Banknote },
-   { method: 'CARD', label: 'Thẻ', icon: CreditCard },
-   { method: 'TRANSFER', label: 'Chuyển khoản', icon: Landmark },
-];
-
-const QUICK_CASH_AMOUNTS: number[] = [50000, 100000, 200000, 500000];
 
 interface SalesPaymentStepProps {
    cinemaId: number;
@@ -58,6 +44,8 @@ export function SalesPaymentStep({ cinemaId, onBack, onPaid }: SalesPaymentStepP
    const bookingQuery: UseQueryResult<BookingDetail | null> = useQuery<BookingDetail | null>({
       queryKey: pendingBookingKey(),
       queryFn: getPendingBooking,
+      staleTime: 0,
+      refetchOnMount: 'always',
       gcTime: 0,
    });
    const lookupMutation: UseMutationResult<CustomerLookup | null, unknown, string> = useMutation<
@@ -86,10 +74,12 @@ export function SalesPaymentStep({ cinemaId, onBack, onPaid }: SalesPaymentStepP
    });
    const bookingDetail: BookingDetail | null | undefined = bookingQuery.data;
    const finalAmount: number = bookingDetail?.finalAmount ?? 0;
-   const cashReceived: number | null = parseValidMoneyInput(cashInput);
-   const changeAmount: number = cashReceived === null ? 0 : cashReceived - finalAmount;
-   const isCashValid: boolean = paymentMethod !== 'CASH' || (cashReceived !== null && changeAmount >= 0);
-   const canCheckout: boolean = bookingDetail !== null && bookingDetail !== undefined && isCashValid;
+   const { cashReceived, isValid: isPaymentValid }: CounterPaymentEvaluation = evaluateCounterPayment(
+      paymentMethod,
+      cashInput,
+      finalAmount,
+   );
+   const canCheckout: boolean = bookingDetail !== null && bookingDetail !== undefined && isPaymentValid;
 
    function handleLookup(): void {
       const trimmedKeyword: string = keyword.trim();
@@ -208,86 +198,14 @@ export function SalesPaymentStep({ cinemaId, onBack, onPaid }: SalesPaymentStepP
                />
             </section>
 
-            <section className="space-y-4 rounded-2xl bg-white p-5 shadow-md ring-1 ring-ink-100">
-               <h2 className="text-sm font-extrabold uppercase tracking-wide text-ink-700">Thanh toán</h2>
-               <div className="grid gap-3 sm:grid-cols-3" role="radiogroup" aria-label="Phương thức thanh toán">
-                  {PAYMENT_METHOD_OPTIONS.map((paymentMethodOption) => {
-                     const MethodIcon: LucideIcon = paymentMethodOption.icon;
-                     const isSelected: boolean = paymentMethodOption.method === paymentMethod;
-                     return (
-                        <button
-                           key={paymentMethodOption.method}
-                           type="button"
-                           role="radio"
-                           aria-checked={isSelected}
-                           onClick={() => setPaymentMethod(paymentMethodOption.method)}
-                           className={cn(
-                              'flex items-center justify-center gap-2 rounded-xl border-2 px-4 py-3 text-sm font-extrabold transition-colors',
-                              isSelected
-                                 ? 'border-brand-600 bg-brand-50 text-brand-800'
-                                 : 'border-ink-200 text-ink-700 hover:bg-ink-50',
-                           )}
-                        >
-                           <MethodIcon className="size-5" aria-hidden="true" />
-                           {paymentMethodOption.label}
-                        </button>
-                     );
-                  })}
-               </div>
-               {paymentMethod === 'CASH' && (
-                  <div className="space-y-3">
-                     <TextField
-                        id="sales-cash-received"
-                        label="Tiền khách đưa"
-                        value={cashInput}
-                        onChange={setCashInput}
-                        placeholder="Nhập số tiền khách đưa"
-                        error={
-                           cashInput.trim() !== '' && cashReceived === null
-                              ? 'Số tiền không hợp lệ'
-                              : cashReceived !== null && changeAmount < 0
-                                ? 'Số tiền khách đưa chưa đủ'
-                                : undefined
-                        }
-                     />
-                     <div className="flex flex-wrap gap-2">
-                        <button
-                           type="button"
-                           onClick={() => setCashInput(String(finalAmount))}
-                           className="rounded-md border border-brand-600 px-3 py-1.5 text-xs font-bold text-brand-700 hover:bg-brand-50"
-                        >
-                           Đủ tiền
-                        </button>
-                        {QUICK_CASH_AMOUNTS.filter((quickAmount) => quickAmount >= finalAmount).map((quickAmount) => (
-                           <button
-                              key={quickAmount}
-                              type="button"
-                              onClick={() => setCashInput(String(quickAmount))}
-                              className="rounded-md border border-ink-300 px-3 py-1.5 text-xs font-bold text-ink-700 hover:bg-ink-50"
-                           >
-                              {formatVnd(quickAmount)}
-                           </button>
-                        ))}
-                     </div>
-                     <p className="flex items-center justify-between rounded-xl bg-accent-50 px-4 py-3 text-sm font-bold text-ink-900">
-                        <span>Tiền thối lại khách</span>
-                        <span className="text-xl font-extrabold text-accent-700">
-                           {formatVnd(cashReceived !== null && changeAmount > 0 ? changeAmount : 0)}
-                        </span>
-                     </p>
-                  </div>
-               )}
-               {paymentMethod === 'CARD' && (
-                  <p className="rounded-xl bg-ink-50 px-4 py-3 text-sm text-ink-700">
-                     Quẹt thẻ trên máy POS đúng số tiền {formatVnd(finalAmount)} rồi bấm xác nhận.
-                  </p>
-               )}
-               {paymentMethod === 'TRANSFER' && (
-                  <p className="rounded-xl bg-ink-50 px-4 py-3 text-sm text-ink-700">
-                     Chỉ bấm xác nhận sau khi đã nhận được khoản chuyển {formatVnd(finalAmount)} vào tài khoản rạp.
-                  </p>
-               )}
-            </section>
+            <CounterPaymentPanel
+               idPrefix="sales"
+               finalAmount={finalAmount}
+               paymentMethod={paymentMethod}
+               cashInput={cashInput}
+               onChangePaymentMethod={setPaymentMethod}
+               onChangeCashInput={setCashInput}
+            />
          </div>
 
          <aside className="space-y-4 rounded-2xl bg-white p-5 shadow-md ring-1 ring-ink-100">

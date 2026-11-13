@@ -15,3 +15,15 @@ export function fnbPickupHistoryKey(cinemaId: number): readonly (string | number
 export function checkInQueueKey(cinemaId: number): readonly (string | number)[] {
    return ['staff', 'check-in', 'queue', cinemaId];
 }
+
+export const CURRENT_SHIFT_KEY: readonly string[] = ['staff', 'shift', 'current'];
+
+export const MY_SHIFTS_KEY: readonly string[] = ['staff', 'shift', 'mine'];
+
+export function staffOverviewKey(cinemaId: number): readonly (string | number)[] {
+   return ['staff', 'overview', cinemaId];
+}
+
+export function shiftReportKey(shiftId: number): readonly (string | number)[] {
+   return ['staff', 'shift', 'report', shiftId];
+}

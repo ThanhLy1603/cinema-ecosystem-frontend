@@ -6,6 +6,7 @@ import { formatDisplayDate, todayInVietnam } from '@/lib/common/vietnamTime';
 import { STAFF_NAV_ITEMS, type StaffNavItem } from '@/lib/staff/staffNavItems';
 import { useStaffBranch, type StaffBranchSelection } from '@/lib/staff/useStaffBranch';
 import { useAuthStore } from '@/stores/useAuthStore';
+import StaffOverviewPanel from '../components/StaffOverviewPanel';
 import type { User } from '@/types/auth/auth';
 
 export function StaffDashboardPage(): ReactElement {
@@ -28,6 +29,10 @@ export function StaffDashboardPage(): ReactElement {
                <span>{formatDisplayDate(todayInVietnam())}</span>
             </p>
          </header>
+
+         {staffBranchSelection.currentBranch !== null && (
+            <StaffOverviewPanel cinemaId={staffBranchSelection.currentBranch.cinemaId} />
+         )}
 
          <section aria-labelledby="staff-work-heading" className="space-y-4">
             <h2 id="staff-work-heading" className="text-sm font-extrabold uppercase tracking-wider text-ink-500">

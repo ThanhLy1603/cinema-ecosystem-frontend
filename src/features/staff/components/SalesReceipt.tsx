@@ -1,11 +1,15 @@
+import { useMutation, type UseMutationResult } from '@tanstack/react-query';
 import { Printer } from 'lucide-react';
 import type { ReactElement } from 'react';
+import { saveCounterReceiptFile } from '@/api/staff/ticketSalesApi';
+import Alert from '@/components/ui/Alert';
 import Button from '@/components/ui/Button';
+import { getErrorMessage } from '@/lib/common/apiError';
 import { formatVnd } from '@/lib/common/currencyFormat';
 import { formatClockRange, formatDisplayDate, toVietnamDate, toVietnamTimeOfDay } from '@/lib/common/vietnamTime';
 import type { BookingFnbLine } from '@/types/booking/bookingFnb';
-import type { CounterReceipt } from '@/types/staff/ticketSales';
-import { PAYMENT_METHOD_LABELS } from '../utils/checkInLabels';
+import type { CounterReceipt, CounterReceiptFile } from '@/types/staff/ticketSales';
+import { PAYMENT_METHOD_LABELS } from '@/lib/staff/operationsLabels';
 
 interface SalesReceiptProps {
    counterReceipt: CounterReceipt;
@@ -31,8 +35,20 @@ export function SalesReceipt({ counterReceipt, onNewSale }: SalesReceiptProps): 
    const { booking } = counterReceipt;
    const { showtime } = booking;
 
+   const saveReceiptFileMutation: UseMutationResult<CounterReceiptFile, unknown, void> = useMutation<
+      CounterReceiptFile,
+      unknown,
+      void
+   >({
+      mutationFn: (): Promise<CounterReceiptFile> => saveCounterReceiptFile(booking.bookingCode),
+   });
+
    function handlePrint(): void {
-      window.print();
+      saveReceiptFileMutation.mutate(undefined, {
+         onSettled: (): void => {
+            window.print();
+         },
+      });
    }
 
    return (
@@ -70,13 +86,11 @@ export function SalesReceipt({ counterReceipt, onNewSale }: SalesReceiptProps): 
 
             <section className="space-y-1 border-t border-dashed border-ink-300 pt-4">
                <h3 className="text-xs font-extrabold uppercase tracking-wider text-ink-500">Ghế</h3>
-               <ul className="flex flex-wrap gap-2">
+               <ul className="space-y-1 text-sm text-ink-800">
                   {booking.tickets.map((bookingTicket) => (
-                     <li
-                        key={bookingTicket.ticketId}
-                        className="rounded-md bg-ink-100 px-2.5 py-1 text-sm font-extrabold text-ink-900"
-                     >
-                        {bookingTicket.seatLabel}
+                     <li key={bookingTicket.ticketId} className="flex justify-between gap-4">
+                        <span>Ghế {bookingTicket.seatLabel}</span>
+                        <span>{formatVnd(bookingTicket.price)}</span>
                      </li>
                   ))}
                </ul>
@@ -140,10 +154,27 @@ export function SalesReceipt({ counterReceipt, onNewSale }: SalesReceiptProps): 
             </footer>
          </article>
 
+         {saveReceiptFileMutation.isSuccess && (
+            <div className="mx-auto max-w-md print:hidden">
+               <Alert variant="success">
+                  Đã lưu hóa đơn {saveReceiptFileMutation.data.fileName} vào thư mục
+                  <span className="mt-0.5 block break-all font-mono text-xs">
+                     {saveReceiptFileMutation.data.directory}
+                  </span>
+               </Alert>
+            </div>
+         )}
+         {saveReceiptFileMutation.isError && (
+            <div className="mx-auto max-w-md print:hidden">
+               <Alert variant="error">{getErrorMessage(saveReceiptFileMutation.error)}</Alert>
+            </div>
+         )}
+
          <div className="flex flex-wrap justify-center gap-3 print:hidden">
             <Button
                className="h-12 px-6 text-base"
                icon={<Printer className="size-5" aria-hidden="true" />}
+               isLoading={saveReceiptFileMutation.isPending}
                onClick={handlePrint}
             >
                In vé và hóa đơn

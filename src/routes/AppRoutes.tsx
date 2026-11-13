@@ -12,6 +12,8 @@ import AdminDashboardPage from '@/features/admin/pages/AdminDashboardPage';
 import CheckInPage from '@/features/staff/pages/CheckInPage';
 import FnbPickupPage from '@/features/staff/pages/FnbPickupPage';
 import StaffDashboardPage from '@/features/staff/pages/StaffDashboardPage';
+import FnbSalesPage from '@/features/staff/pages/FnbSalesPage';
+import ShiftPage from '@/features/staff/pages/ShiftPage';
 import TicketSalesPage from '@/features/staff/pages/TicketSalesPage';
 import { STAFF_NAV_ITEMS, type StaffNavItem } from '@/lib/staff/staffNavItems';
 import GuestRoute from '@/features/auth/guards/GuestRoute';
@@ -38,6 +40,9 @@ import CinemaListPage from '@/features/cinemas/pages/CinemaListPage';
 import CinemaPublicPage from '@/features/cinemas/pages/CinemaPublicPage';
 import HomePage from '@/features/home/pages/HomePage';
 import FnbMenuPage from '@/features/fnb/pages/FnbMenuPage';
+import BookingExceptionPage from '@/features/operations-management/pages/BookingExceptionPage';
+import OperationsHistoryPage from '@/features/operations-management/pages/OperationsHistoryPage';
+import RevenueReportPage from '@/features/operations-management/pages/RevenueReportPage';
 import FnbManagementPage from '@/features/fnb-management/pages/FnbManagementPage';
 import GenreManagementPage from '@/features/movie-management/pages/GenreManagementPage';
 import MovieCreatePage from '@/features/movie-management/pages/MovieCreatePage';
@@ -134,6 +139,8 @@ export function AppRoutes(): ReactElement {
                <Route path="check-in" element={<CheckInPage />} />
                <Route path="fnb-pickup" element={<FnbPickupPage />} />
                <Route path="ticket-sales" element={<TicketSalesPage />} />
+               <Route path="fnb-sales" element={<FnbSalesPage />} />
+               <Route path="shifts" element={<ShiftPage />} />
                {STAFF_NAV_ITEMS.filter((staffNavItem) => !staffNavItem.end && !staffNavItem.isReady).map(
                   renderStaffComingSoonRoute,
                )}
@@ -159,6 +166,9 @@ export function AppRoutes(): ReactElement {
                <Route path="fnb" element={<FnbManagementPage />} />
                <Route path="showtimes" element={<ShowtimeManagementPage />} />
                <Route path="price-rules" element={<PriceRuleManagementPage />} />
+               <Route path="operations/history" element={<OperationsHistoryPage />} />
+               <Route path="operations/revenue" element={<RevenueReportPage />} />
+               <Route path="operations/exceptions" element={<BookingExceptionPage />} />
                <Route
                   path="promotions"
                   element={
